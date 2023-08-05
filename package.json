@@ -13,7 +13,8 @@
     "@types/node": "^18.16.19",
     "eslint": "^8.46.0",
     "eslint-plugin-vue": "^9.16.1",
-    "nuxt": "^3.6.2"
+    "nuxt": "^3.6.2",
+    "sass": "^1.64.2"
   },
   "dependencies": {
     "eslint-config-airbnb": "^19.0.4",
