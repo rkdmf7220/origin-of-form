@@ -54,6 +54,16 @@ export default defineComponent({
           path: "/research"
         }
       ] as INavData[],
+      navPosition: 10
+    }
+  },
+  computed: {
+    calcNavPosition() {
+      if (this.$route.name === 'index') {
+        return window.innerHeight - 100;
+      } else {
+        return 0
+      }
       navPosition: 0
     }
   },
