@@ -10,13 +10,20 @@
 import Intro from "~/layouts/intro.vue";
 import {defineComponent} from "vue";
 
+interface IIntroData {
+  isMount: boolean;
+  showDelayed: boolean;
+  timeoutId: null | ReturnType<typeof setTimeout>
+}
+
 export default defineComponent({
   name: "default",
   components: {Intro},
-  data() {
+  data(): IIntroData {
     return {
       isMount: true,
-      showDelayed: true
+      showDelayed: true,
+      timeoutId: null
     }
   },
   mounted() {
@@ -25,13 +32,16 @@ export default defineComponent({
   watch: {
     $route(to, from) {
       if (to.path === '/' && from.path != to.path) {
+        if (this.timeoutId) {
+          clearTimeout(this.timeoutId)
+        }
         this.isMount = true
         setTimeout(() => this.showDelayed = true, 10)
       } else {
-        setTimeout(() => this.isMount = false, 500)
+        this.timeoutId = setTimeout(() => this.isMount = false, 500)
         this.showDelayed = false
       }
-      console.log('path >>', to.path, from.path)
+      setTimeout(() => console.log('result >>', this.isMount, this.showDelayed), 550)
     }
   }
 })
