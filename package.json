@@ -17,7 +17,12 @@
     "sass": "^1.64.2"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-airbnb-typescript": "^17.1.0"
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "pinia": "^2.1.6"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
