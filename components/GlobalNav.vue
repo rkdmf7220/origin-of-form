@@ -2,7 +2,9 @@
   <ClientOnly>
     <div :class="[$route.name === 'index' ? '--main' : '--sub']" :style="{'top': navPosition + 'px'}" class="nav-menu">
       <ul class="nav-list">
-        <li :class="{'is-active': $route.name === item.id}" class="nav-item" v-for="item in navData" :key="item.id">
+        <li :class="[{'is-active': $route.name === item.id}, {'is-active': item.id === 'origin' && $route.name === 'origin-id'}]"
+            class="nav-item"
+            v-for="item in navData" :key="item.id">
           <NuxtLink :to="item.path">
             {{ item.title }}
           </NuxtLink>
@@ -21,6 +23,7 @@ export default defineComponent({
   mounted() {
     this.calcNavPosition()
     addEventListener("resize", this.onResizeNavPosition)
+    console.log('route >>', this.$route, toRaw(this.$route.meta))
   },
   unmounted() {
     removeEventListener("resize", this.onResizeNavPosition)
@@ -59,11 +62,7 @@ export default defineComponent({
   },
   methods: {
     calcNavPosition() {
-      if (this.$route.name === 'index') {
-        this.navPosition = window.innerHeight - 100;
-      } else {
-        this.navPosition = 0
-      }
+      this.navPosition = window.innerHeight - 100;
     },
     onResizeNavPosition() {
       this.calcNavPosition();
@@ -78,12 +77,13 @@ export default defineComponent({
   height: 100px;
   position: fixed;
   z-index: 100;
-  backdrop-filter: none;
   background-color: rgba(13, 13, 13, 0.1);
   box-sizing: border-box;
   border-bottom: 1px solid #666;
   top: 0;
   transition: top, 0.3s;
+  box-shadow: 0 5px 10px rgba(100, 100, 100, 0.1);
+  backdrop-filter: blur(5px);
 
   &.--main {
     background-color: #131313;
