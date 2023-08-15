@@ -1,7 +1,7 @@
 export interface IPeople {
   id: string;
   name: string;
-  info: IInfo;
+  info: IInfo[];
   textList: string[];
   indicators: IIndicator[];
   order: ICoordinates;
@@ -9,10 +9,8 @@ export interface IPeople {
 }
 
 export interface IInfo {
-  year: string;
-  country: string;
-  activity: string;
-  category: string;
+  id: string;
+  text: string;
 }
 
 export interface IIndicator {
