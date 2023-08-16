@@ -10,6 +10,7 @@ export interface IPeople {
 
 export interface IInfo {
   id: string;
+  title: string;
   text: string;
 }
 
