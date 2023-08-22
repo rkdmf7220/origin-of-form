@@ -1,6 +1,6 @@
 <template>
-  <div class="people-card-item">
-    <NuxtLink :to="`/origin/${itemData?.id}`">
+  <div :class="{'is-active': itemData?.id === $route.params.id && isRendered}" class="people-card-item">
+    <NuxtLink draggable="false" :to="`/origin/${itemData?.id}`">
       {{ itemData.name }}
     </NuxtLink>
   </div>
@@ -14,10 +14,20 @@ export default defineComponent({
   name: "PeopleCardItem",
   props: {
     itemData: {
-      type: Object as () => IPeople,
+      type: Object as () => IPeople
     }
+  },
+  data() {
+    return {
+      isRendered: false
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isRendered = true;
+    }, 10);
   }
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -31,11 +41,20 @@ export default defineComponent({
   color: white;
   font-size: 2.5em;
   font-weight: 700;
+  position: relative;
+  transition: all 0.3s;
+
+  &.is-active {
+    border-width: 2px;
+    z-index: 10;
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+  }
 
   a {
     display: inline-block;
     width: 100%;
     height: 100%;
+    user-select: none;
   }
 }
 </style>

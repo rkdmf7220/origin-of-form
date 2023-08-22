@@ -24,14 +24,14 @@ export default {
     const getPeopleInfo = computed(() => {
       const peopleId = instance?.proxy?.$route?.params.id;
       const result = peopleStore.getPeopleInformation(peopleId as string);
-      return result ? result : 'null'
+      return result ? result : "null";
       // todo: handling null error
-    })
+    });
     return {
       getPeopleInfo
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -39,6 +39,7 @@ export default {
   width: 50vw;
   height: 100vh;
   position: fixed;
+  z-index: 60;
   top: 0;
   right: 0;
   bottom: 0;

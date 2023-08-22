@@ -1,23 +1,26 @@
 <template>
   <ul class="people-card-list">
-    <li :style="[{'grid-column': `${item.order.x}/${item.order.x + 1}`},{'grid-row': `${item.order.y}/${item.order.y + 1}`}]"
-        v-if="store.peopleList" v-for="item in store.peopleList">
-      <PeopleCardItem :item-data="item" :key="item.id"/>
+    <li
+      :style="[{'grid-column': `${item.order.x}/${item.order.x + 1}`},{'grid-row': `${item.order.y}/${item.order.y + 1}`}]"
+      v-if="store.peopleList" v-for="item in store.peopleList">
+      <PeopleCardItem :item-data="item" :key="item.id" />
     </li>
   </ul>
 </template>
 
 <script lang="ts">
 import {usePeopleStore} from "~/stores/PeopleStore";
+import PeopleCardItem from "~/components/origin/PeopleCardItem.vue";
 
 export default {
   name: "PeopleCardList",
+  components: {PeopleCardItem},
   data() {
     return {
-      store: usePeopleStore(),
-    }
+      store: usePeopleStore()
+    };
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

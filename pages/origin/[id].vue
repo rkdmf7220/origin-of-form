@@ -1,18 +1,18 @@
 <template>
   <div class="origin-wrap">
-    <PeopleDetail/>
-    <PeopleCardList/>
+    <PeopleDetail />
+    <PeopleCardList />
   </div>
 </template>
 
 <script lang="ts">
-import PeopleDetail from "~/components/PeopleDetail.vue";
-import PeopleCardList from "~/components/PeopleCardList.vue";
+import PeopleDetail from "~/components/origin/PeopleDetail.vue";
+import PeopleCardList from "~/components/origin/PeopleCardList.vue";
 
 export default {
   name: "[id]",
   components: {PeopleCardList, PeopleDetail}
-}
+};
 </script>
 
 <style scoped lang="scss">

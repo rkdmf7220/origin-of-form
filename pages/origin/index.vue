@@ -1,16 +1,16 @@
 <template>
   <div class="origin-wrap">
-    <PeopleCardList/>
+    <PeopleCardSwiper />
   </div>
 </template>
 
 <script lang="ts">
-import PeopleCardList from "~/components/PeopleCardList.vue";
+import PeopleCardSwiper from "~/components/origin/PeopleCardSwiper.vue";
 
 export default {
   name: "index",
-  components: {PeopleCardList}
-}
+  components: {PeopleCardSwiper}
+};
 </script>
 
 <style scoped lang="scss">
