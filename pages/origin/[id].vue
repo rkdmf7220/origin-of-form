@@ -1,17 +1,17 @@
 <template>
   <div class="origin-wrap">
     <PeopleDetail />
-    <PeopleCardList />
+    <PeopleCardSwiper />
   </div>
 </template>
 
 <script lang="ts">
 import PeopleDetail from "~/components/origin/PeopleDetail.vue";
-import PeopleCardList from "~/components/origin/PeopleCardList.vue";
+import PeopleCardSwiper from "~/components/origin/PeopleCardSwiper.vue";
 
 export default {
   name: "[id]",
-  components: {PeopleCardList, PeopleDetail}
+  components: {PeopleDetail, PeopleCardSwiper}
 };
 </script>
 
