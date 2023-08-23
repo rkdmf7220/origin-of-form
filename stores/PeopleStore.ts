@@ -5,7 +5,8 @@ export const usePeopleStore = defineStore("people", {
   state: () => {
     return {
       peopleList: [] as IPeople[],
-      swiperPosition: {} as IPosition
+      swiperPosition: {} as IPosition,
+      isLoaded: false
     };
   },
   getters: {
@@ -21,6 +22,7 @@ export const usePeopleStore = defineStore("people", {
       await nextTick();
       const fetchData = await useFetch("/data/people.json");
       this.peopleList = fetchData.data.value as IPeople[];
+      this.isLoaded = true;
     },
     async setSwiperPosition(xPosition: number, yPosition: number) {
       await nextTick();
