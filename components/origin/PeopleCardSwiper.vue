@@ -3,6 +3,7 @@
     <div class="origin-swiper-contents"
          ref="swiper-contents"
          :class="[{'is-grabbing': isMouseDown}, {'is-swipe': isSwipe}]"
+         :style="{'transform': `translate(${isSwiperPosition.xPosition}px, ${isSwiperPosition.yPosition}px)`}"
          @mousedown="(e) => onDragStartSlider(e)"
     >
       <PeopleCardList />
@@ -13,11 +14,8 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import PeopleCardList from "~/components/origin/PeopleCardList.vue";
-
-interface IPosition {
-  xPosition: number;
-  yPosition: number;
-}
+import {usePeopleStore} from "~/stores/PeopleStore";
+import {IPosition} from "~/interfaces/PeopleInterface";
 
 export default defineComponent({
   name: "PeopleCardSwiper",
@@ -25,11 +23,19 @@ export default defineComponent({
   computed: {
     isTouchDevice() {
       return navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
+    },
+    isSwiperPosition() {
+      // todo: maximum/minimum position
+      return usePeopleStore().swiperPosition;
     }
   },
   mounted() {
     window.addEventListener("mousemove", this.onDragSwiper);
     window.addEventListener("mouseup", (e) => this.onDropSwiper(e));
+  },
+  unmounted() {
+    window.removeEventListener("mousemove", this.onDragSwiper);
+    window.removeEventListener("mouseup", (e) => this.onDropSwiper(e));
   },
   data() {
     return {
@@ -38,15 +44,15 @@ export default defineComponent({
       isPreventTransition: true,
       startDragPointX: 0 as number,
       startDragPointY: 0 as number,
-      savedDragPointX: 0 as number,
-      savedDragPointY: 0 as number,
       currentZoomPositionX: 0,
       currentZoomPositionY: 0,
-      prevZoomScale: 0 as number
+      prevZoomScale: 0 as number,
+      store: usePeopleStore()
     };
   },
   methods: {
     // todo: swiperStore 만들어서 좌표를 store에 저장하는 방식 사용.
+    // todo: swiper 이동 한계 구현
     applyMovedSwiperPosition({xPosition, yPosition}: IPosition) {
       const swiperContents = this.$refs["swiper-contents"] as HTMLDivElement;
       swiperContents.style.transform = `translate(${xPosition}px, ${yPosition}px)`;
@@ -81,11 +87,9 @@ export default defineComponent({
       // compute drag distance
       const moveDragDistanceX = currentPointX! - this.startDragPointX;
       const moveDragDistanceY = currentPointY! - this.startDragPointY;
-      const movedDragPositionX = this.savedDragPointX + moveDragDistanceX;
-      const movedDragPositionY = this.savedDragPointY + moveDragDistanceY;
-      console.log("positionX", this.startDragPointX, this.savedDragPointX, moveDragDistanceX, movedDragPositionX);
-      console.log("positionY", this.startDragPointY, this.savedDragPointY, moveDragDistanceY, movedDragPositionY);
-      console.log("======");
+      const movedDragPositionX = this.store.swiperPosition.xPosition + moveDragDistanceX;
+      const movedDragPositionY = this.store.swiperPosition.yPosition + moveDragDistanceY;
+      // todo: maximum/minimum position
       return {xPosition: movedDragPositionX, yPosition: movedDragPositionY};
     },
     moveSwiperPosition(e: MouseEvent | TouchEvent) {
@@ -100,8 +104,7 @@ export default defineComponent({
       this.isMouseDown = false;
       this.isSwipe = false;
       const {xPosition, yPosition} = this.calcSwipePosition(e);
-      this.savedDragPointX = xPosition;
-      this.savedDragPointY = yPosition;
+      this.store.setSwiperPosition(xPosition, yPosition);
     }
   }
 });
@@ -116,6 +119,7 @@ export default defineComponent({
   overflow: hidden;
 
   .origin-swiper-contents {
+    padding: 100px;
     cursor: grab;
 
     &.is-grabbing {

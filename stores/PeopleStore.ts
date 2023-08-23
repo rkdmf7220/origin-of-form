@@ -1,11 +1,12 @@
 import {defineStore} from "pinia";
-import {IPeople} from "~/interfaces/PeopleInterface";
+import {IPeople, IPosition} from "~/interfaces/PeopleInterface";
 
-export const usePeopleStore = defineStore('people', {
+export const usePeopleStore = defineStore("people", {
   state: () => {
     return {
-      peopleList: [] as IPeople[]
-    }
+      peopleList: [] as IPeople[],
+      swiperPosition: {} as IPosition
+    };
   },
   getters: {
     getPeopleList: (state) => {
@@ -17,9 +18,14 @@ export const usePeopleStore = defineStore('people', {
   },
   actions: {
     async setPeopleList() {
-      await nextTick()
+      await nextTick();
       const fetchData = await useFetch("/data/people.json");
-      this.peopleList = fetchData.data.value as IPeople[]
+      this.peopleList = fetchData.data.value as IPeople[];
+    },
+    async setSwiperPosition(xPosition: number, yPosition: number) {
+      await nextTick();
+      this.swiperPosition = {xPosition, yPosition};
+      return this.swiperPosition;
     }
   }
-})
+});
