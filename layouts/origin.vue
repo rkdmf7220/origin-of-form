@@ -1,7 +1,7 @@
 <template>
-  <div class="origin-wrap">
+  <div id="origin" class="contents origin-wrap">
+    <PeopleCardSwiper @set:peopleId="setPeopleId" />
     <PeopleDetail />
-    <PeopleCardSwiper />
   </div>
 </template>
 
@@ -12,19 +12,25 @@ import {defineComponent} from "vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
 
 export default defineComponent({
-  name: "[id]",
+  name: "origin",
   components: {PeopleDetail, PeopleCardSwiper},
   data() {
     return {
-      store: usePeopleStore()
+      store: usePeopleStore(),
+      peopleId: null as null | string
     };
   },
-  async mounted() {
-    if (Object.keys(this.store.swiperPosition).length === 0) {
-      const found = this.store.peopleList.find((item) => (item.id === this.$route.params.id));
-      await this.store.setSwiperPosition(found!.order.x * 100, found!.order.y * 100);
+  methods: {
+    setPeopleId(id: string) {
+      this.peopleId = id;
     }
   }
+  // async mounted() {
+  //   if (Object.keys(this.store.swiperPosition).length === 0) {
+  //     const found = this.store.peopleList.find((item) => (item.id === this.$route.params.id));
+  //     await this.store.setSwiperPosition(found!.order.x * 100, found!.order.y * 100);
+  //   }
+  // }
 });
 </script>
 

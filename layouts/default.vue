@@ -1,33 +1,36 @@
 <template>
   <div class="wrap">
-    <Intro :is-mount="isMount" :show-delayed="showDelayed" />
+    <Main @scroll.prevent="onHandleScroll" :show-delayed="showDelayed" />
     <GlobalNav />
+    <Origin />
+    <Works />
+    <Introduction />
+    <Research />
     <slot />
   </div>
 </template>
 
 <script lang="ts">
-import Intro from "~/layouts/intro.vue";
 import {defineComponent} from "vue";
+import Main from "~/layouts/main.vue";
+import Origin from "~/layouts/origin.vue";
+import Works from "~/layouts/works.vue";
+import Introduction from "~/layouts/introduction.vue";
+import Research from "~/layouts/research.vue";
 
 interface IIntroData {
-  isMount: boolean;
   showDelayed: boolean;
   timeoutId: null | ReturnType<typeof setTimeout>;
 }
 
 export default defineComponent({
   name: "default",
-  components: {Intro},
+  components: {Research, Introduction, Works, Origin, Intro},
   data(): IIntroData {
     return {
-      isMount: true,
       showDelayed: true,
       timeoutId: null
     };
-  },
-  mounted() {
-    this.isMount = this.$route.name === "index";
   },
   watch: {
     $route(to, from) {

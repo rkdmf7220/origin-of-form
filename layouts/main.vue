@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isMount" :class="{'is-show': showDelayed}" class="intro-container">
+  <div :class="{'is-show': showDelayed}" class="intro-container">
     intro section
   </div>
 </template>
@@ -8,12 +8,11 @@
 import {defineComponent} from "vue";
 
 export default defineComponent({
-  name: "intro",
+  name: "main",
   props: {
-    isMount: Boolean,
     showDelayed: Boolean
-  },
-})
+  }
+});
 </script>
 
 <style scoped lang="scss">
@@ -26,7 +25,7 @@ export default defineComponent({
   background-color: #0cf;
 
   &.intro-container.is-show {
-    height: 100vh;
+    height: 90vh;
   }
 }
 </style>

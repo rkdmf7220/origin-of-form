@@ -7,9 +7,15 @@
           :class="[{'is-active': $route.name === item.id}, {'is-active': item.id === 'origin' && $route.name === 'origin-id'}]"
           class="nav-item"
           v-for="item in navData" :key="item.id">
-          <NuxtLink :to="item.path">
+          <!--        <NuxtLink :to="item.path">-->
+          <!--          {{ item.title }}-->
+          <!--        </NuxtLink>-->
+          <a :href="item.path">
             {{ item.title }}
-          </NuxtLink>
+          </a>
+          <!--          <a :href="item.path" v-scroll-to="{element: item.path, duration: 100, easing: 'ease', lazy: false}">-->
+          <!--            {{ item.title }}-->
+          <!--          </a>-->
         </li>
       </ul>
     </div>
@@ -22,54 +28,39 @@ import {INavData} from "~/interfaces/NavigationInterface";
 
 export default defineComponent({
   name: "GlobalNav",
-  mounted() {
-    this.calcNavPosition();
-    addEventListener("resize", this.onResizeNavPosition);
-    console.log("route >>", this.$route, toRaw(this.$route.meta));
-  },
-  unmounted() {
-    removeEventListener("resize", this.onResizeNavPosition);
-  },
   data() {
     return {
       navData: [
         {
           id: "index",
           title: "메인",
-          path: "/"
+          path: "#"
         },
         {
           id: "origin",
           title: "형태의 뿌리",
-          path: "/origin"
+          path: "#origin"
         },
         {
           id: "works",
           title: "손원혁 작품",
-          path: "/works"
+          path: "#works"
         },
         {
           id: "introduction",
           title: "전시 소개",
-          path: "/introduction"
+          path: "#introduction"
         },
         {
           id: "research",
           title: "연구 결과",
-          path: "/research"
+          path: "#research"
         }
       ] as INavData[],
       navPosition: 0
     };
   },
-  methods: {
-    calcNavPosition() {
-      this.navPosition = window.innerHeight - 100;
-    },
-    onResizeNavPosition() {
-      this.calcNavPosition();
-    }
-  }
+  methods: {}
 });
 </script>
 
@@ -77,7 +68,7 @@ export default defineComponent({
 .nav-menu {
   width: 100%;
   height: 100px;
-  position: fixed;
+  position: sticky;
   z-index: 100;
   background-color: rgba(13, 13, 13, 0.1);
   box-sizing: border-box;
@@ -90,10 +81,6 @@ export default defineComponent({
   &.--main {
     background-color: #131313;
     border-bottom: none;
-  }
-
-  &.--sub {
-    top: 0 !important;
   }
 
   &.is-hide {

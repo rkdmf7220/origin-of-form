@@ -1,8 +1,6 @@
 <template>
   <div :class="{'is-active': itemData?.id === $route.params.id && isRendered}" class="people-card-item">
-    <NuxtLink draggable="false" :to="`/origin/${itemData?.id}`">
-      {{ itemData.name }}
-    </NuxtLink>
+    {{ itemData.name }}
   </div>
 </template>
 

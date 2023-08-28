@@ -4,9 +4,7 @@
       <Loading :is-loaded="isLoaded" :show-delayed="showDelayed" />
     </slot>
     <slot v-if="usePeopleStore().isLoaded">
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
+      <NuxtLayout />
     </slot>
   </div>
 </template>
@@ -33,6 +31,7 @@ watch(() => usePeopleStore().isLoaded, (newValue, oldValue) => {
 });
 </script>
 
-<style>
+<style lang="scss">
 @import "assets/styles/reset.css";
+@import "assets/styles/default";
 </style>
