@@ -6,7 +6,9 @@ export const usePeopleStore = defineStore("people", {
     return {
       peopleList: [] as IPeople[],
       swiperPosition: {} as IPosition,
-      isLoaded: false
+      // isLoaded: false,
+      isLoaded: false,
+      selectedPeopleId: null as string | null
     };
   },
   getters: {
@@ -28,6 +30,10 @@ export const usePeopleStore = defineStore("people", {
       await nextTick();
       this.swiperPosition = {xPosition, yPosition};
       return this.swiperPosition;
+    },
+    setSelectedPeopleId(id: string | null) {
+      console.log("in store >>", id);
+      return this.selectedPeopleId = id;
     }
   }
 });

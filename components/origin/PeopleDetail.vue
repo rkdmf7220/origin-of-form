@@ -1,22 +1,21 @@
 <template>
-  <div class="people-detail-wrap">
-    <div v-if="getPeopleInfo" class="people-detail-inner">
-      <NuxtLink to="/origin">
-        <button :style="{backgroundImage: 'url(' + svgIcon.get(`closeIcon`) + ')'}" class="btn-close"></button>
-      </NuxtLink>
-      <h2>{{ getPeopleInfo.name }}</h2>
+  <div v-if="peopleData" class="people-detail-wrap">
+    <div class="people-detail-inner">
+      <button @click="onClickCloseBtn" :style="{backgroundImage: 'url(' + svgIcon.get(`closeIcon`) + ')'}"
+              class="btn-close"></button>
+      <h2>{{ peopleData.name }}</h2>
       <ul class="people-info-list">
-        <li v-for="info in getPeopleInfo.info" :key="info.id" class="people-info-item">
+        <li v-for="info in peopleData.info" :key="info.id" class="people-info-item">
           <span class="text-bold">{{ info.title }} : </span>{{ info.text }}
         </li>
       </ul>
       <div class="people-text-list">
-        <p v-for="textItem in getPeopleInfo.textList" class="people-text-item">{{ textItem }}</p>
+        <p v-for="textItem in peopleData.textList" class="people-text-item">{{ textItem }}</p>
       </div>
       <div class="people-indicator-wrap">
         <h4 class="people-indicator-title">분석지표</h4>
         <ul class="indicator-text-list">
-          <li v-for="indicatorText in getPeopleInfo.indicators.filter((item) => (item.id === indicatorID.Text))"
+          <li v-for="indicatorText in peopleData.indicators.filter((item) => (item.id === indicatorId.Text))"
               class="indicator-text-item">
             <p class="title text-bold">{{ indicatorText.title }}</p>
             <p>{{ indicatorText.text }}</p>
@@ -49,37 +48,68 @@
 
 <script lang="ts">
 import {usePeopleStore} from "~/stores/PeopleStore";
-import {computed} from "@vue/runtime-core";
 import svgIcon from "public/imgs/svgIcon";
-import {ID} from "~/interfaces/PeopleInterface";
+import {ID, IPeople} from "~/interfaces/PeopleInterface";
+
+const store = usePeopleStore();
 
 export default {
   name: "PeopleDetail",
-  setup() {
-    const instance = getCurrentInstance();
-    const peopleStore = usePeopleStore();
-    const indicatorID = ID;
-    const getPeopleInfo = computed(() => {
-      const peopleId = instance?.proxy?.$route?.params.id;
-      const result = peopleStore.getPeopleInformation(peopleId as string);
-      return result ? result : "null";
-      // todo: handling null error
-    });
-    const peopleIndicatorMap = computed(() => {
-      return getPeopleInfo.value.indicators.find((item) => item.id === indicatorID.Map);
-    });
-    const peopleIndicatorIndex = computed(() => {
-      return getPeopleInfo.value.indicators.find((item) => item.id === indicatorID.Indicator);
-    });
-
+  computed: {
+    svgIcon() {
+      return svgIcon;
+    },
+    peopleData: function(): IPeople | undefined {
+      const result = toRaw(store.getPeopleInformation(store.selectedPeopleId!));
+      console.log("result >>", result);
+      return result;
+    },
+    peopleIndicatorMap: function() {
+      if (!this.peopleData) return;
+      console.log("peopleData >>", this.peopleData);
+      return this.peopleData.indicators.find((item) => item.id === ID.Map);
+    },
+    peopleIndicatorIndex: function() {
+      if (!this.peopleData) return;
+      return this.peopleData.indicators.find((item) => item.id === ID.Indicator);
+    }
+  },
+  data() {
     return {
-      getPeopleInfo,
-      ...{svgIcon},
-      indicatorID,
-      peopleIndicatorMap,
-      peopleIndicatorIndex
+      indicatorId: ID,
+      peopleStore: usePeopleStore()
     };
+  },
+  methods: {
+    onClickCloseBtn() {
+      store.setSelectedPeopleId(null);
+    }
   }
+  // setup() {
+  //   const instance = getCurrentInstance();
+  //   const peopleStore = usePeopleStore();
+  //   const indicatorID = ID;
+  //   const getPeopleInfo = computed(() => {
+  //     const peopleId = instance?.proxy?.$route?.params.id;
+  //     const result = peopleStore.getPeopleInformation(peopleId as string);
+  //     return result ? result : "null";
+  //     // todo: handling null error
+  //   });
+  //   const peopleIndicatorMap = computed(() => {
+  //     return getPeopleInfo.value.indicators.find((item) => item.id === indicatorID.Map);
+  //   });
+  //   const peopleIndicatorIndex = computed(() => {
+  //     return getPeopleInfo.value.indicators.find((item) => item.id === indicatorID.Indicator);
+  //   });
+  //
+  //   return {
+  //     getPeopleInfo,
+  //     ...{svgIcon},
+  //     indicatorID,
+  //     peopleIndicatorMap,
+  //     peopleIndicatorIndex
+  //   };
+  // }
 };
 </script>
 

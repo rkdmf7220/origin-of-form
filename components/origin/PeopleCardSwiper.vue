@@ -87,9 +87,12 @@ export default defineComponent({
       // compute drag distance
       const moveDragDistanceX = currentPointX! - this.startDragPointX;
       const moveDragDistanceY = currentPointY! - this.startDragPointY;
-      const movedDragPositionX = this.store.swiperPosition.xPosition + moveDragDistanceX;
-      const movedDragPositionY = this.store.swiperPosition.yPosition + moveDragDistanceY;
+      const movedDragPositionX = this.currentZoomPositionX + moveDragDistanceX;
+      const movedDragPositionY = this.currentZoomPositionY + moveDragDistanceY;
+      // const movedDragPositionX = this.store.swiperPosition.xPosition + moveDragDistanceX;
+      // const movedDragPositionY = this.store.swiperPosition.yPosition + moveDragDistanceY;
       // todo: maximum/minimum position
+      console.log("result >>", currentPointX, currentPointY, this.startDragPointX, this.startDragPointY, moveDragDistanceX, moveDragDistanceY, movedDragPositionX, movedDragPositionY);
       return {xPosition: movedDragPositionX, yPosition: movedDragPositionY};
     },
     moveSwiperPosition(e: MouseEvent | TouchEvent) {
@@ -104,7 +107,9 @@ export default defineComponent({
       this.isMouseDown = false;
       this.isSwipe = false;
       const {xPosition, yPosition} = this.calcSwipePosition(e);
-      this.store.setSwiperPosition(xPosition, yPosition);
+      // this.store.setSwiperPosition(xPosition, yPosition);
+      this.currentZoomPositionX = xPosition;
+      this.currentZoomPositionY = yPosition;
     }
   }
 });
