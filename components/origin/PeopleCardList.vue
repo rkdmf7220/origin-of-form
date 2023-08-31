@@ -1,8 +1,13 @@
 <template>
   <ul class="people-card-list">
     <li
-      :style="[{'grid-column': `${item.order.x}/${item.order.x + 1}`},{'grid-row': `${item.order.y}/${item.order.y + 1}`}]"
-      v-if="store.peopleList" v-for="item in store.peopleList">
+      :style="[
+        {'grid-column': `${item.order.x}/${item.order.x + 1}`},
+        {'grid-row': `${item.order.y}/${item.order.y + 1}`}
+      ]"
+      v-if="store.peopleList"
+      v-for="item in store.peopleList"
+    >
       <PeopleCardItem @click="() => onClickCardItem(item)" :item-data="item" :key="item.id" />
     </li>
   </ul>
@@ -35,6 +40,8 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 200px);
   grid-template-rows: repeat(5, 200px);
+  transition: transform 0.3s;
+  transform-style: preserve-3d;
 
   li {
     width: 200px;

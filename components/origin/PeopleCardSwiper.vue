@@ -1,13 +1,14 @@
 <template>
   <div class="origin-swiper">
-    <div class="origin-swiper-contents"
-         ref="swiper-contents"
-         :class="[{'is-grabbing': isMouseDown}, {'is-swipe': isSwipe}]"
-         :style="{'transform': `translate(${isSwiperPosition.xPosition}px, ${isSwiperPosition.yPosition}px)`}"
-         @mousedown="(e) => onDragStartSlider(e)"
+    <div
+      class="origin-swiper-contents"
+      ref="swiper-contents"
+      :class="[{'is-grabbing': isMouseDown}, {'is-swipe': isSwipe}]"
+      :style="[{transform: `translate(${isSwiperPosition.xPosition}px, ${isSwiperPosition.yPosition}px)`}]"
     >
-      <PeopleCardList />
+      <PeopleCardList :style="{transform: `scale(${currentZoomScale / 4})`}" @mousedown="(e) => onDragStartSlider(e)" />
     </div>
+    <ZoomIconWrap @change:zoom="applyZoomScale" :current-zoom-scale="currentZoomScale" />
   </div>
 </template>
 
@@ -16,10 +17,11 @@ import {defineComponent} from "vue";
 import PeopleCardList from "~/components/origin/PeopleCardList.vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
 import {IPosition} from "~/interfaces/PeopleInterface";
+import ZoomIconWrap from "~/components/origin/ZoomIconWrap.vue";
 
 export default defineComponent({
   name: "PeopleCardSwiper",
-  components: {PeopleCardList},
+  components: {ZoomIconWrap, PeopleCardList},
   computed: {
     isTouchDevice() {
       return navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
@@ -46,7 +48,9 @@ export default defineComponent({
       startDragPointY: 0 as number,
       currentZoomPositionX: 0,
       currentZoomPositionY: 0,
-      prevZoomScale: 0 as number,
+      currentZoomScale: 4 as number,
+      prevZoomScale: 4 as number,
+      transitionDuration: 0,
       store: usePeopleStore()
     };
   },
@@ -92,7 +96,6 @@ export default defineComponent({
       // const movedDragPositionX = this.store.swiperPosition.xPosition + moveDragDistanceX;
       // const movedDragPositionY = this.store.swiperPosition.yPosition + moveDragDistanceY;
       // todo: maximum/minimum position
-      console.log("result >>", currentPointX, currentPointY, this.startDragPointX, this.startDragPointY, moveDragDistanceX, moveDragDistanceY, movedDragPositionX, movedDragPositionY);
       return {xPosition: movedDragPositionX, yPosition: movedDragPositionY};
     },
     moveSwiperPosition(e: MouseEvent | TouchEvent) {
@@ -107,9 +110,29 @@ export default defineComponent({
       this.isMouseDown = false;
       this.isSwipe = false;
       const {xPosition, yPosition} = this.calcSwipePosition(e);
-      // this.store.setSwiperPosition(xPosition, yPosition);
       this.currentZoomPositionX = xPosition;
       this.currentZoomPositionY = yPosition;
+    },
+    applyZoomScale(zoomOpt: string) {
+      // todo: zoom scale handling
+      const swiperContents = this.$refs["swiper-contents"] as HTMLDivElement;
+      swiperContents.style.transitionDuration = "0.3s";
+      if (zoomOpt === "zoomIn") {
+        this.currentZoomScale++;
+      } else {
+        this.currentZoomScale--;
+      }
+      // calc new xy position
+      const xPosition = (this.currentZoomPositionX / this.prevZoomScale) * this.currentZoomScale;
+      const yPosition = (this.currentZoomPositionY / this.prevZoomScale) * this.currentZoomScale;
+      // store new xy position
+      this.currentZoomPositionX = xPosition;
+      this.currentZoomPositionY = yPosition;
+      this.applyMovedSwiperPosition({xPosition, yPosition});
+      this.prevZoomScale = this.currentZoomScale;
+      setTimeout(() => {
+        swiperContents.style.transitionDuration = "0s";
+      }, 0.3);
     }
   }
 });
@@ -124,7 +147,7 @@ export default defineComponent({
   overflow: hidden;
 
   .origin-swiper-contents {
-    padding: 100px;
+    margin: 100px;
     cursor: grab;
 
     &.is-grabbing {
