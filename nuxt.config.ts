@@ -5,8 +5,14 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true
   },
+  vue: {
+    config: {
+      productionTip: false,
+      devtools: true
+    }
+  },
   modules: [
-    '@pinia/nuxt',
+    "@pinia/nuxt"
   ],
   // import: {
   //   dirs: ['./stores']
@@ -14,11 +20,11 @@ export default defineNuxtConfig({
   pinia: {
     autoImports: [
       // automatically imports `defineStore`
-      'defineStore', // import { defineStore } from 'pinia'
+      "defineStore" // import { defineStore } from 'pinia'
       // ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
-    ],
+    ]
   },
   experimental: {
     renderJsonPayloads: false
   }
-})
+});
