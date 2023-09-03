@@ -40,8 +40,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 200px);
   grid-template-rows: repeat(5, 200px);
-  transition: transform 0.3s;
-  transform-style: preserve-3d;
 
   li {
     width: 200px;

@@ -6,7 +6,9 @@
       :class="[{'is-grabbing': isMouseDown}, {'is-swipe': isSwipe}]"
       :style="[{transform: `translate(${isSwiperPosition.xPosition}px, ${isSwiperPosition.yPosition}px)`}]"
     >
-      <PeopleCardList :style="{transform: `scale(${currentZoomScale / 4})`}" @mousedown="(e) => onDragStartSlider(e)" />
+      <div :style="{transform: `scale(${currentZoomScale / 4})`}" ref="people-card-wrap" class="people-card-wrap">
+        <PeopleCardList @mousedown="(e) => onDragStartSlider(e)" />
+      </div>
     </div>
     <ZoomIconWrap @change:zoom="applyZoomScale" :current-zoom-scale="currentZoomScale" />
   </div>
@@ -29,6 +31,20 @@ export default defineComponent({
     isSwiperPosition() {
       // todo: maximum/minimum position
       return usePeopleStore().swiperPosition;
+    },
+    swiperMaxWidth(): number {
+      // 스와이퍼는 (0, 0) ~ (swiperMaxWidth, swiperMaxHeight)까지 움직일 수 있음
+      const peopleCardWrap = this.$refs["people-card-wrap"] as HTMLDivElement;
+      const contentsSize = (peopleCardWrap.offsetWidth / 4) * this.currentZoomScale;
+      // 회댓값 = 화면 크기 - 배율 반영된 div 크기 - 200(상하단 margin 각 100씩 추가)
+      const result = window.innerWidth - contentsSize - 200;
+      return result > 0 ? 0 : result;
+    },
+    swiperMaxHeight(): number {
+      const peopleCardWrap = this.$refs["people-card-wrap"] as HTMLDivElement;
+      const contentsSize = (peopleCardWrap.offsetHeight / 4) * this.currentZoomScale;
+      const result = window.innerHeight - contentsSize - 200;
+      return result > 0 ? 0 : result;
     }
   },
   mounted() {
@@ -55,8 +71,6 @@ export default defineComponent({
     };
   },
   methods: {
-    // todo: swiperStore 만들어서 좌표를 store에 저장하는 방식 사용.
-    // todo: swiper 이동 한계 구현
     applyMovedSwiperPosition({xPosition, yPosition}: IPosition) {
       const swiperContents = this.$refs["swiper-contents"] as HTMLDivElement;
       swiperContents.style.transform = `translate(${xPosition}px, ${yPosition}px)`;
@@ -88,14 +102,24 @@ export default defineComponent({
         currentPointX = e.clientX;
         currentPointY = e.clientY;
       }
-      // compute drag distance
+      // compute dragged distance
       const moveDragDistanceX = currentPointX! - this.startDragPointX;
       const moveDragDistanceY = currentPointY! - this.startDragPointY;
-      const movedDragPositionX = this.currentZoomPositionX + moveDragDistanceX;
-      const movedDragPositionY = this.currentZoomPositionY + moveDragDistanceY;
-      // const movedDragPositionX = this.store.swiperPosition.xPosition + moveDragDistanceX;
-      // const movedDragPositionY = this.store.swiperPosition.yPosition + moveDragDistanceY;
-      // todo: maximum/minimum position
+      // compute dragged position
+      let movedDragPositionX = this.currentZoomPositionX + moveDragDistanceX;
+      let movedDragPositionY = this.currentZoomPositionY + moveDragDistanceY;
+      // compute maximum/minimum X position
+      if (movedDragPositionX > 0) {
+        movedDragPositionX = 0;
+      } else if (movedDragPositionX < this.swiperMaxWidth) {
+        movedDragPositionX = this.swiperMaxWidth;
+      }
+      // compute maximum/minimum Y position
+      if (movedDragPositionY > 0) {
+        movedDragPositionY = 0;
+      } else if (movedDragPositionY < this.swiperMaxHeight) {
+        movedDragPositionY = this.swiperMaxHeight;
+      }
       return {xPosition: movedDragPositionX, yPosition: movedDragPositionY};
     },
     moveSwiperPosition(e: MouseEvent | TouchEvent) {
@@ -147,7 +171,7 @@ export default defineComponent({
   overflow: hidden;
 
   .origin-swiper-contents {
-    margin: 100px;
+    padding: 100px;
     cursor: grab;
 
     &.is-grabbing {
@@ -156,6 +180,12 @@ export default defineComponent({
 
     &.is-swipe {
       pointer-events: none;
+    }
+
+    .people-card-wrap {
+      transition: transform 0.3s;
+      transform-style: preserve-3d;
+      transform-origin: 0 0;
     }
   }
 }
