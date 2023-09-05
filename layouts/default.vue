@@ -1,8 +1,8 @@
 <template>
   <div class="wrap">
-    <Intro :is-mount="isMount" :show-delayed="showDelayed"/>
-    <GlobalNav/>
-    <slot/>
+    <Intro :is-mount="isMount" :show-delayed="showDelayed" />
+    <GlobalNav />
+    <slot />
   </div>
 </template>
 
@@ -13,7 +13,7 @@ import {defineComponent} from "vue";
 interface IIntroData {
   isMount: boolean;
   showDelayed: boolean;
-  timeoutId: null | ReturnType<typeof setTimeout>
+  timeoutId: null | ReturnType<typeof setTimeout>;
 }
 
 export default defineComponent({
@@ -24,29 +24,27 @@ export default defineComponent({
       isMount: true,
       showDelayed: true,
       timeoutId: null
-    }
+    };
   },
   mounted() {
-    this.isMount = this.$route.name === 'index';
+    this.isMount = this.$route.name === "index";
   },
   watch: {
     $route(to, from) {
-      if (to.path === '/' && from.path != to.path) {
+      if (to.path === "/" && from.path != to.path) {
         if (this.timeoutId) {
-          clearTimeout(this.timeoutId)
+          clearTimeout(this.timeoutId);
         }
-        this.isMount = true
-        setTimeout(() => this.showDelayed = true, 10)
+        this.isMount = true;
+        setTimeout(() => this.showDelayed = true, 10);
       } else {
-        this.timeoutId = setTimeout(() => this.isMount = false, 500)
-        this.showDelayed = false
+        this.timeoutId = setTimeout(() => this.isMount = false, 500);
+        this.showDelayed = false;
       }
-      setTimeout(() => console.log('result >>', this.isMount, this.showDelayed), 550)
     }
   }
-})
+});
 </script>
 
 <style>
-@import "assets/styles/reset.css";
 </style>

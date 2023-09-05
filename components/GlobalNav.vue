@@ -1,10 +1,12 @@
 <template>
   <ClientOnly>
-    <div :class="[$route.name === 'index' ? '--main' : '--sub']" :style="{'top': navPosition + 'px'}" class="nav-menu">
+    <div :class="[$route.name === 'index' ? '--main' : '--sub', $route.params.id ? 'is-hide' : '']"
+         :style="{'top': navPosition + 'px'}" class="nav-menu">
       <ul class="nav-list">
-        <li :class="[{'is-active': $route.name === item.id}, {'is-active': item.id === 'origin' && $route.name === 'origin-id'}]"
-            class="nav-item"
-            v-for="item in navData" :key="item.id">
+        <li
+          :class="[{'is-active': $route.name === item.id}, {'is-active': item.id === 'origin' && $route.name === 'origin-id'}]"
+          class="nav-item"
+          v-for="item in navData" :key="item.id">
           <NuxtLink :to="item.path">
             {{ item.title }}
           </NuxtLink>
@@ -21,12 +23,12 @@ import {INavData} from "~/interfaces/NavigationInterface";
 export default defineComponent({
   name: "GlobalNav",
   mounted() {
-    this.calcNavPosition()
-    addEventListener("resize", this.onResizeNavPosition)
-    console.log('route >>', this.$route, toRaw(this.$route.meta))
+    this.calcNavPosition();
+    addEventListener("resize", this.onResizeNavPosition);
+    console.log("route >>", this.$route, toRaw(this.$route.meta));
   },
   unmounted() {
-    removeEventListener("resize", this.onResizeNavPosition)
+    removeEventListener("resize", this.onResizeNavPosition);
   },
   data() {
     return {
@@ -58,7 +60,7 @@ export default defineComponent({
         }
       ] as INavData[],
       navPosition: 0
-    }
+    };
   },
   methods: {
     calcNavPosition() {
@@ -68,7 +70,7 @@ export default defineComponent({
       this.calcNavPosition();
     }
   }
-})
+});
 </script>
 
 <style scoped lang="scss">
@@ -92,6 +94,10 @@ export default defineComponent({
 
   &.--sub {
     top: 0 !important;
+  }
+
+  &.is-hide {
+    top: -100px !important;
   }
 
   .nav-list {

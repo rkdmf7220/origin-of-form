@@ -40,3 +40,8 @@ export interface IRelation {
   left: string;
   right: string;
 }
+
+export interface IPosition {
+  xPosition: number;
+  yPosition: number;
+}

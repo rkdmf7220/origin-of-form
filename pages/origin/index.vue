@@ -1,16 +1,28 @@
 <template>
   <div class="origin-wrap">
-    <PeopleCardList/>
+    <PeopleCardSwiper />
   </div>
 </template>
 
 <script lang="ts">
-import PeopleCardList from "~/components/PeopleCardList.vue";
+import PeopleCardSwiper from "~/components/origin/PeopleCardSwiper.vue";
+import {usePeopleStore} from "~/stores/PeopleStore";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   name: "index",
-  components: {PeopleCardList}
-}
+  components: {PeopleCardSwiper},
+  data() {
+    return {
+      store: usePeopleStore()
+    };
+  },
+  async mounted() {
+    if (Object.keys(this.store.swiperPosition).length === 0) {
+      await this.store.setSwiperPosition(50, 50);
+    }
+  }
+});
 </script>
 
 <style scoped lang="scss">
