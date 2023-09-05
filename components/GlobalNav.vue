@@ -1,12 +1,16 @@
 <template>
   <ClientOnly>
-    <div :class="[$route.name === 'index' ? '--main' : '--sub', $route.params.id ? 'is-hide' : '']"
-         :style="{'top': navPosition + 'px'}" class="nav-menu">
+    <div :class="[$route.name === 'index' ? '--main' : '--sub', hideGlobalNav ? 'is-hide' : '']" class="nav-menu">
       <ul class="nav-list">
         <li
-          :class="[{'is-active': $route.name === item.id}, {'is-active': item.id === 'origin' && $route.name === 'origin-id'}]"
+          :class="[
+            {'is-active': $route.name === item.id},
+            {'is-active': item.id === 'origin' && $route.name === 'origin-id'}
+          ]"
           class="nav-item"
-          v-for="item in navData" :key="item.id">
+          v-for="item in navData"
+          :key="item.id"
+        >
           <!--        <NuxtLink :to="item.path">-->
           <!--          {{ item.title }}-->
           <!--        </NuxtLink>-->
@@ -25,9 +29,15 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import {INavData} from "~/interfaces/NavigationInterface";
+import {usePeopleStore} from "~/stores/PeopleStore";
 
 export default defineComponent({
   name: "GlobalNav",
+  computed: {
+    hideGlobalNav(): boolean {
+      return !!this.store.selectedPeopleId;
+    }
+  },
   data() {
     return {
       navData: [
@@ -57,7 +67,7 @@ export default defineComponent({
           path: "#research"
         }
       ] as INavData[],
-      navPosition: 0
+      store: usePeopleStore()
     };
   },
   methods: {}
@@ -97,7 +107,7 @@ export default defineComponent({
       position: relative;
 
       &::after {
-        content: '';
+        content: "";
         width: 0;
         height: 2px;
         transition: all 0.5s ease-in-out;
@@ -107,8 +117,9 @@ export default defineComponent({
         left: 15px;
       }
 
-      &.is-active::after, &:hover::after {
-        content: '';
+      &.is-active::after,
+      &:hover::after {
+        content: "";
         width: calc(100% - 30px);
         transition: all 0.5s ease-in-out;
       }
