@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot>
-      <Loading :is-loaded="isLoaded" :show-delayed="showDelayed" />
+      <!--      <Loading :is-loaded="isLoaded" :show-delayed="showDelayed" />-->
     </slot>
     <slot v-if="usePeopleStore().isLoaded">
       <NuxtLayout />
@@ -18,17 +18,21 @@ const showDelayed = ref(false);
 onMounted(() => {
   const peopleStore = usePeopleStore();
   peopleStore.setPeopleList();
+  peopleStore.setMarqueeTextList();
 });
-watch(() => usePeopleStore().isLoaded, (newValue, oldValue) => {
-  if (newValue === true) {
-    setTimeout(() => {
-      showDelayed.value = true;
-    }, 1500);
-    setTimeout(() => {
-      isLoaded.value = true;
-    }, 2000);
+watch(
+  () => usePeopleStore().isLoaded,
+  (newValue, oldValue) => {
+    if (newValue === true) {
+      setTimeout(() => {
+        showDelayed.value = true;
+      }, 1500);
+      setTimeout(() => {
+        isLoaded.value = true;
+      }, 2000);
+    }
   }
-});
+);
 </script>
 
 <style lang="scss">

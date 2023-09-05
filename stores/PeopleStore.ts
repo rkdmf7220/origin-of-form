@@ -5,6 +5,7 @@ export const usePeopleStore = defineStore("people", {
   state: () => {
     return {
       peopleList: [] as IPeople[],
+      marqueeTextList: [] as string[],
       swiperPosition: {} as IPosition,
       // isLoaded: false,
       isLoaded: false,
@@ -26,14 +27,18 @@ export const usePeopleStore = defineStore("people", {
       this.peopleList = fetchData.data.value as IPeople[];
       this.isLoaded = true;
     },
-    async setSwiperPosition(xPosition: number, yPosition: number) {
+    async setMarqueeTextList() {
       await nextTick();
-      this.swiperPosition = {xPosition, yPosition};
-      return this.swiperPosition;
+      const fetchData = await useFetch("/data/introName.json");
+      this.marqueeTextList = fetchData.data.value as string[];
     },
+    // async setSwiperPosition(xPosition: number, yPosition: number) {
+    //   await nextTick();
+    //   this.swiperPosition = {xPosition, yPosition};
+    //   return this.swiperPosition;
+    // },
     setSelectedPeopleId(id: string | null) {
-      console.log("in store >>", id);
-      return this.selectedPeopleId = id;
+      return (this.selectedPeopleId = id);
     }
   }
 });
