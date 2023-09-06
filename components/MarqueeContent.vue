@@ -34,6 +34,7 @@ export default {
   gap: 20px;
   font-size: 2.5em;
   overflow: hidden;
+  pointer-events: none;
 
   .marquee-item {
     height: 100%;
@@ -62,6 +63,7 @@ export default {
         flex-direction: column;
         position: absolute;
         transform: translate3d(0, $MOVE_INITIAL, 0);
+        gap: 40px;
         //animation: marquee 5s linear infinite;
       }
 
@@ -69,12 +71,15 @@ export default {
         //color: #ffffff;
         color: #4d4d4d;
         font-weight: 700;
-        margin-bottom: 20px;
         writing-mode: vertical-lr;
         letter-spacing: 0.1em;
       }
     }
   }
+}
+
+.mask-wrap .marquee-item .marquee-inner .marquee-text {
+  color: #000;
 }
 
 @keyframes marquee {

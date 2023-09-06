@@ -1,16 +1,18 @@
 <template>
   <div :class="{'is-show': showDelayed}" class="main-container">
     <MarqueeContent />
+    <ClippingMask />
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from "vue";
 import MarqueeContent from "~/components/MarqueeContent.vue";
+import ClippingMask from "~/components/ClippingMask.vue";
 
 export default defineComponent({
   name: "main",
-  components: {MarqueeContent},
+  components: {MarqueeContent, ClippingMask},
   props: {
     showDelayed: Boolean
   }
