@@ -1,5 +1,8 @@
 <template>
-  <div :class="{'is-active': itemData?.id === $route.params.id && isRendered}" class="people-card-item">
+  <div
+    :class="[{'is-active': itemData?.id === store.selectedPeopleId && isRendered}, {'is-clickable': itemData?.detail}]"
+    class="people-card-item"
+  >
     {{ itemData.name }}
   </div>
 </template>
@@ -7,6 +10,7 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import {IPeople} from "~/interfaces/PeopleInterface";
+import {usePeopleStore} from "~/stores/PeopleStore";
 
 export default defineComponent({
   name: "PeopleCardItem",
@@ -17,7 +21,8 @@ export default defineComponent({
   },
   data() {
     return {
-      isRendered: false
+      isRendered: false,
+      store: usePeopleStore()
     };
   },
   mounted() {
@@ -29,23 +34,31 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-
 .people-card-item {
   width: 200px;
   height: 200px;
-  border: 1px solid #ffffff;
+  border: 1px solid #dddddd;
   box-sizing: border-box;
-  background-color: #666666;
-  color: white;
+  color: #cccccc;
+  background-color: #3c3c3c;
   font-size: 2.5em;
   font-weight: 700;
   position: relative;
   transition: all 0.3s;
+  text-align: center;
+  padding: 5px;
 
   &.is-active {
     border-width: 2px;
     z-index: 10;
     box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+  }
+
+  &.is-clickable {
+    z-index: 10;
+    color: #ffffff;
+    background-color: #666666;
+    border-color: #ffffff;
   }
 
   a {

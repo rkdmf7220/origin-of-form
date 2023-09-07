@@ -28,18 +28,25 @@ export default {
   },
   methods: {
     onClickCardItem(item: IPeople) {
-      this.store.setSelectedPeopleId(item.id);
-      console.log("item id >>", item.id);
+      /*if (item.detail) {
+        this.store.setSelectedPeopleId(item.id);
+      } else {
+        this.store.setSelectedPeopleId(null);
+      }*/
+      item.detail ? this.store.setSelectedPeopleId(item.id) : this.store.setSelectedPeopleId(null);
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
+@import "assets/styles/variables";
+
 .people-card-list {
+  width: fit-content;
   display: grid;
-  grid-template-columns: repeat(5, 200px);
-  grid-template-rows: repeat(5, 200px);
+  grid-template-columns: repeat($CARD_COLUMNS, 200px);
+  grid-template-rows: repeat($CARD_ROWS, 200px);
 
   li {
     width: 200px;

@@ -138,7 +138,7 @@ export default defineComponent({
       this.currentZoomPositionY = yPosition;
     },
     applyZoomScale(zoomOpt: string) {
-      // todo: zoom scale handling
+      // todo: run moveSwiperPosition when zoom scale changes
       const swiperContents = this.$refs["swiper-contents"] as HTMLDivElement;
       swiperContents.style.transitionDuration = "0.3s";
       if (zoomOpt === "zoomIn") {
@@ -183,6 +183,7 @@ export default defineComponent({
     }
 
     .people-card-wrap {
+      width: fit-content;
       transition: transform 0.3s;
       transform-style: preserve-3d;
       transform-origin: 0 0;

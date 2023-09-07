@@ -1,11 +1,12 @@
 export interface IPeople {
   id: string;
   name: string;
-  info: IInfo[];
-  textList: string[];
-  indicators: IIndicator[];
+  detail: boolean;
+  info: IInfo[] | null;
+  textList: string[] | null;
+  indicators: IIndicator[] | null;
   order: ICoordinates;
-  relation: IRelation;
+  relation: IRelation | null;
 }
 
 export interface IInfo {
@@ -26,7 +27,7 @@ export interface IIndicator {
 export enum ID {
   Indicator = "indicator",
   Map = "map",
-  Text = "text",
+  Text = "text"
 }
 
 export interface ICoordinates {
