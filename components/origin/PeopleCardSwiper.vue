@@ -3,7 +3,7 @@
     <div
       class="origin-swiper-contents"
       ref="swiper-contents"
-      :class="[{'is-grabbing': isMouseDown}, {'is-swipe': isSwipe}]"
+      :class="{'is-swipe': isSwipe}"
       :style="[{transform: `translate(${isSwiperPosition.xPosition}px, ${isSwiperPosition.yPosition}px)`}]"
     >
       <div :style="{transform: `scale(${currentZoomScale / 4})`}" ref="people-card-wrap" class="people-card-wrap">
@@ -172,11 +172,6 @@ export default defineComponent({
 
   .origin-swiper-contents {
     padding: 100px;
-    cursor: grab;
-
-    &.is-grabbing {
-      cursor: grabbing;
-    }
 
     &.is-swipe {
       pointer-events: none;
