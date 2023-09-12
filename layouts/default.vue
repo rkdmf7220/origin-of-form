@@ -9,6 +9,8 @@
       <Introduction />
       <Research />
     </div>
+
+    <ClippingMask ref="clipping-mask" />
     <slot />
   </div>
 </template>
@@ -21,6 +23,12 @@ import Works from "~/layouts/works.vue";
 import Introduction from "~/layouts/introduction.vue";
 import Research from "~/layouts/research.vue";
 
+interface IClippingData {
+  xPosition: number;
+  yPosition: number;
+  size: string;
+}
+
 export default defineComponent({
   name: "default",
   components: {Research, Introduction, Works, Origin, Main},
@@ -30,6 +38,8 @@ export default defineComponent({
       e.stopPropagation();
     };
     // window.addEventListener("wheel", (e) => preventScroll(e), {passive: false});
+    window.addEventListener("mousemove", (e) => this.getCursorPosition(e));
+    window.addEventListener("wheel", (e) => this.getCursorPosition(e));
   },
   data() {
     return {
@@ -38,8 +48,20 @@ export default defineComponent({
       timeoutId: null,
       showGlobalNav: false
     };
+  },
+  methods: {
+    getCursorPosition(e: MouseEvent): void {
+      // todo: smooth behavior
+      const clippingMask = this.$refs["clipping-mask"] as IClippingData;
+      clippingMask.xPosition = e.pageX;
+      clippingMask.yPosition = e.pageY;
+    }
   }
 });
 </script>
 
-<style></style>
+<style>
+.wrap {
+  position: relative;
+}
+</style>

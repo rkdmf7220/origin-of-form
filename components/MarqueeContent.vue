@@ -1,10 +1,13 @@
 <template>
-  <div class="marquee-list">
+  <div @mouseenter="() => onHoverMarquee('enter')" @mouseleave="() => onHoverMarquee('leave')" class="marquee-list">
     <div v-for="item in marqueeList" class="marquee-item">
       <div class="marquee-inner">
         <div class="marquee-text-wrapper">
-          <span class="marquee-text" v-for="name in item">{{ name }}</span>
-          <span class="marquee-text" v-for="name in item">{{ name }}</span>
+          <div class="marquee-text-list" v-for="index in 2">
+            <span :key="index" class="marquee-text" v-for="name in item">
+              {{ name }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -12,16 +15,22 @@
 </template>
 
 <script lang="ts">
+import {defineComponent} from "vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
 
-export default {
+export default defineComponent({
   name: "MarqueeContent",
   computed: {
     marqueeList(): string[] {
       return usePeopleStore().marqueeTextList;
     }
+  },
+  methods: {
+    onHoverMarquee(type: string): void {
+      this.$emit("hover", type);
+    }
   }
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -34,7 +43,7 @@ export default {
   gap: 20px;
   font-size: 2.5em;
   overflow: hidden;
-  pointer-events: none;
+  pointer-events: auto;
 
   .marquee-item {
     height: 100%;

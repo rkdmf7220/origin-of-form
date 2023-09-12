@@ -1,7 +1,6 @@
 <template>
   <div :class="{'is-show': showDelayed}" class="main-container">
     <MarqueeContent />
-    <ClippingMask />
   </div>
 </template>
 
