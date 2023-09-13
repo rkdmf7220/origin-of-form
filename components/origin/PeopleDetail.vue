@@ -1,8 +1,11 @@
 <template>
   <div v-if="peopleData" class="people-detail-wrap">
     <div class="people-detail-inner">
-      <button @click="onClickCloseBtn" :style="{backgroundImage: 'url(' + svgIcon.get(`closeIcon`) + ')'}"
-              class="btn-close"></button>
+      <button
+        @click="onClickCloseBtn"
+        :style="{backgroundImage: 'url(' + svgIcon.get(`closeIcon`) + ')'}"
+        class="btn-close"
+      ></button>
       <h2>{{ peopleData.name }}</h2>
       <ul class="people-info-list">
         <li v-for="info in peopleData.info" :key="info.id" class="people-info-item">
@@ -15,8 +18,10 @@
       <div class="people-indicator-wrap">
         <h4 class="people-indicator-title">분석지표</h4>
         <ul class="indicator-text-list">
-          <li v-for="indicatorText in peopleData.indicators.filter((item) => (item.id === indicatorId.Text))"
-              class="indicator-text-item">
+          <li
+            v-for="indicatorText in peopleData.indicators.filter((item) => item.id === indicatorId.Text)"
+            class="indicator-text-item"
+          >
             <p class="title text-bold">{{ indicatorText.title }}</p>
             <p>{{ indicatorText.text }}</p>
           </li>
@@ -25,19 +30,25 @@
           <li class="indicator-chart-item">
             <p class="title text-bold">{{ peopleIndicatorMap.title }}</p>
             <div class="indicator-map">
-              <span v-for="(item, index) in peopleIndicatorMap.coordinates"
-                    :style="[{left: item.x + 'px'}, {top: item.y + 'px'}]" :key="index"
-                    class="indicator-coordinate"></span>
+              <span
+                v-for="(item, index) in peopleIndicatorMap.coordinates"
+                :style="[{left: item.x + 'px'}, {top: item.y + 'px'}]"
+                :key="index"
+                class="indicator-coordinate"
+              ></span>
             </div>
           </li>
           <li class="indicator-chart-item">
             <p class="title text-bold">{{ peopleIndicatorIndex.title }}</p>
-            <div :style="{backgroundImage: 'url(' + svgIcon.get('indexIcon') + ')'}" class="indicator-index">
-              <span :style="[{left: peopleIndicatorIndex.x + 'px'}, {top: peopleIndicatorIndex.y + 'px'}]"
-                    class="indicator-coordinate"></span>
+            <div class="indicator-index-wrap">
+              <span
+                :style="[{left: peopleIndicatorIndex.x + 'px'}, {top: peopleIndicatorIndex.y + 'px'}]"
+                class="indicator-coordinate"
+              ></span>
               <span class="indicator-index-axis top-axis">동시대 기술 활용도</span>
               <span class="indicator-index-axis left-axis">구성</span>
               <span class="indicator-index-axis right-axis">추상</span>
+              <div :style="{backgroundImage: 'url(' + svgIcon.get('indexIcon') + ')'}" class="indicator-index"></div>
             </div>
           </li>
         </ul>
@@ -49,7 +60,7 @@
 <script lang="ts">
 import {usePeopleStore} from "~/stores/PeopleStore";
 import svgIcon from "public/imgs/svgIcon";
-import {ID, IPeople} from "~/interfaces/PeopleInterface";
+import {ID, IIndicator, IPeople} from "~/interfaces/PeopleInterface";
 
 const store = usePeopleStore();
 
@@ -59,19 +70,14 @@ export default {
     svgIcon() {
       return svgIcon;
     },
-    peopleData: function(): IPeople | undefined {
-      const result = toRaw(store.getPeopleInformation(store.selectedPeopleId!));
-      console.log("result >>", result);
-      return result;
+    peopleData: function (): IPeople {
+      return toRaw(store.getPeopleInformation(store.selectedPeopleId));
     },
-    peopleIndicatorMap: function() {
-      if (!this.peopleData) return;
-      console.log("peopleData >>", this.peopleData);
-      return this.peopleData.indicators.find((item) => item.id === ID.Map);
+    peopleIndicatorMap: function (): IIndicator {
+      return this.peopleData.indicators.find((item: IIndicator) => item.id === ID.Map);
     },
-    peopleIndicatorIndex: function() {
-      if (!this.peopleData) return;
-      return this.peopleData.indicators.find((item) => item.id === ID.Indicator);
+    peopleIndicatorIndex: function (): IIndicator {
+      return this.peopleData.indicators.find((item: IIndicator) => item.id === ID.Indicator);
     }
   },
   data() {
@@ -82,34 +88,9 @@ export default {
   },
   methods: {
     onClickCloseBtn() {
-      store.setSelectedPeopleId(null);
+      store.setSelectedPeopleId("");
     }
   }
-  // setup() {
-  //   const instance = getCurrentInstance();
-  //   const peopleStore = usePeopleStore();
-  //   const indicatorID = ID;
-  //   const getPeopleInfo = computed(() => {
-  //     const peopleId = instance?.proxy?.$route?.params.id;
-  //     const result = peopleStore.getPeopleInformation(peopleId as string);
-  //     return result ? result : "null";
-  //     // todo: handling null error
-  //   });
-  //   const peopleIndicatorMap = computed(() => {
-  //     return getPeopleInfo.value.indicators.find((item) => item.id === indicatorID.Map);
-  //   });
-  //   const peopleIndicatorIndex = computed(() => {
-  //     return getPeopleInfo.value.indicators.find((item) => item.id === indicatorID.Indicator);
-  //   });
-  //
-  //   return {
-  //     getPeopleInfo,
-  //     ...{svgIcon},
-  //     indicatorID,
-  //     peopleIndicatorMap,
-  //     peopleIndicatorIndex
-  //   };
-  // }
 };
 </script>
 
@@ -214,7 +195,7 @@ export default {
           position: relative;
         }
 
-        .indicator-index {
+        .indicator-index-wrap {
           width: 280px;
           height: 240px;
           position: relative;
@@ -230,15 +211,23 @@ export default {
 
             &.left-axis {
               left: 0;
-              top: 57%;
+              top: 53%;
               transform: translateY(-50%);
             }
 
             &.right-axis {
               right: 0;
-              top: 57%;
+              top: 53%;
               transform: translateY(-50%);
             }
+          }
+
+          .indicator-index {
+            width: 194px;
+            height: 200px;
+            top: 30px;
+            left: 40px;
+            position: absolute;
           }
         }
 
@@ -253,7 +242,6 @@ export default {
     }
   }
 }
-
 
 .title {
   margin-bottom: 15px;
