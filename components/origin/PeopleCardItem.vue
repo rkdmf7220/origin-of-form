@@ -42,6 +42,7 @@ export default defineComponent({
   color: #cccccc;
   background-color: #3c3c3c;
   font-size: 2.5em;
+  word-break: break-all;
   font-weight: 700;
   position: relative;
   transition: all 0.3s;

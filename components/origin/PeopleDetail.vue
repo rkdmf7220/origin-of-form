@@ -110,9 +110,14 @@ export default {
   color: #fff;
   overflow: auto;
   line-height: 1.5em;
+  transition: right 0.3s;
+
+  &.is-show {
+    right: 0;
+  }
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 10px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -136,9 +141,15 @@ export default {
       height: 40px;
       border: none;
       background-color: transparent;
-      position: absolute;
-      right: 0;
+      position: sticky;
+      float: right;
+      top: 0;
+      margin-right: -60px;
       cursor: pointer;
+    }
+
+    .people-name {
+      margin-bottom: 40px;
     }
 
     .people-info-list {
@@ -170,7 +181,7 @@ export default {
 
     .indicator-text-list {
       width: 100%;
-      max-height: 900px;
+      max-height: 650px;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
@@ -180,6 +191,7 @@ export default {
 
       .indicator-text-item {
         width: calc(50% - 20px);
+        word-break: keep-all;
       }
     }
 
