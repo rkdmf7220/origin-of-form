@@ -1,17 +1,17 @@
 <template>
   <div class="zoom-btn-wrap">
     <button
-      :class="{'is-disable': currentZoomScale === 6}"
-      :style="{backgroundImage: `url(${svgIcon.get('zoomInIcon')})`}"
-      @click="onclickZoomBtn('zoomIn')"
-      class="zoom-btn zoom-in-btn"
-    ></button>
-    <span class="zoom-scale">{{ currentZoomScale * 25 + "%" }}</span>
-    <button
       :class="{'is-disable': currentZoomScale === 2}"
       :style="{backgroundImage: `url(${svgIcon.get('zoomOutIcon')})`}"
       @click="onclickZoomBtn('zoomOut')"
-      class="zoom-btn zoom-out-btn"
+      class="zoom-btn zoom-out-btn is-clickable"
+    ></button>
+    <span class="zoom-scale">{{ currentZoomScale * 25 + "%" }}</span>
+    <button
+      :class="{'is-disable': currentZoomScale === 8}"
+      :style="{backgroundImage: `url(${svgIcon.get('zoomInIcon')})`}"
+      @click="onclickZoomBtn('zoomIn')"
+      class="zoom-btn zoom-in-btn"
     ></button>
   </div>
 </template>
