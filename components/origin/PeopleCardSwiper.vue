@@ -64,8 +64,8 @@ export default defineComponent({
       startDragPointY: 0 as number,
       currentZoomPositionX: 0,
       currentZoomPositionY: 0,
-      currentZoomScale: 4 as number,
-      prevZoomScale: 4 as number,
+      currentZoomScale: 2 as number,
+      prevZoomScale: 2 as number,
       transitionDuration: 0,
       store: usePeopleStore()
     };
