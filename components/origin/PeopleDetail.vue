@@ -41,14 +41,15 @@
           <li class="indicator-chart-item">
             <p class="title text-bold">{{ peopleIndicatorIndex.title }}</p>
             <div class="indicator-index-wrap">
-              <span
-                :style="[{left: peopleIndicatorIndex.x + 'px'}, {top: peopleIndicatorIndex.y + 'px'}]"
-                class="indicator-coordinate"
-              ></span>
               <span class="indicator-index-axis top-axis">동시대 기술 활용도</span>
               <span class="indicator-index-axis left-axis">구성</span>
               <span class="indicator-index-axis right-axis">추상</span>
-              <div :style="{backgroundImage: 'url(' + svgIcon.get('indexIcon') + ')'}" class="indicator-index"></div>
+              <div :style="{backgroundImage: 'url(' + svgIcon.get('indexIcon') + ')'}" class="indicator-index">
+                <span
+                  :style="[{left: peopleIndicatorIndex.x + 'px'}, {top: peopleIndicatorIndex.y + 'px'}]"
+                  class="indicator-coordinate"
+                ></span>
+              </div>
             </div>
           </li>
         </ul>
@@ -63,8 +64,6 @@ import svgIcon from "public/imgs/svgIcon";
 import {ID, IIndicator, IPeople} from "~/interfaces/PeopleInterface";
 import {defineComponent} from "vue";
 
-const store = usePeopleStore();
-
 export default defineComponent({
   name: "PeopleDetail",
   computed: {
@@ -72,7 +71,7 @@ export default defineComponent({
       return svgIcon;
     },
     peopleData: function (): IPeople {
-      return toRaw(store.getPeopleInformation(store.selectedPeopleId));
+      return toRaw(this.peopleStore.getPeopleInformation(this.peopleStore.selectedPeopleId));
     },
     peopleIndicatorMap: function (): IIndicator {
       return this.peopleData.indicators!.find((item: IIndicator) => item.id === ID.Map)!;
@@ -95,7 +94,7 @@ export default defineComponent({
   },
   methods: {
     onClickCloseBtn() {
-      store.setSelectedPeopleId("");
+      this.peopleStore.setSelectedPeopleId("");
     }
   }
 });
