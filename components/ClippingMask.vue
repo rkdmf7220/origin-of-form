@@ -4,23 +4,23 @@
     ref="mask-wrap"
     :style="[
       {
-        maskPosition: `calc(${xPosition}px - calc(${size}px/2)) calc(${yPosition}px - calc(${size}px/2))`
+        maskPosition: `calc(${xPosition}px - calc(${store.maskSize}px/2)) calc(${yPosition}px - calc(${store.maskSize}px/2))`
       },
       {maskImage: `url(${svgIcon.get('maskImage')})`},
-      {maskSize: `${size}px`}
+      {maskSize: `${store.maskSize}px`},
+      {backgroundColor: maskBackgroundColor}
     ]"
     id="mask-wrap"
     class="mask-wrap"
   >
-    <MarqueeContent @hover="(value) => setMaskSize(value)" />
+    <MarqueeContent />
   </div>
 </template>
 
 <script lang="ts">
 import svgIcon from "public/imgs/svgIcon";
 import {defineComponent} from "vue";
-
-let intervalId: number | undefined;
+import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 
 export default defineComponent({
   name: "ClippingMask",
@@ -29,25 +29,13 @@ export default defineComponent({
       svgIcon,
       xPosition: 0 as number,
       yPosition: 0 as number,
-      size: 40 as number
+      size: 40 as number,
+      store: useClippingMaskStore()
     };
   },
-  methods: {
-    setMaskSize(value: string): void {
-      if (intervalId) {
-        window.clearInterval(intervalId);
-        intervalId = undefined;
-      }
-      intervalId = window.setInterval(() => {
-        if (value === "enter" && this.size < 400) {
-          this.size = this.size + 4;
-        } else if (value === "leave" && this.size > 40) {
-          this.size = this.size - 4;
-        } else {
-          window.clearInterval(intervalId);
-          intervalId = undefined;
-        }
-      }, 1);
+  computed: {
+    maskBackgroundColor() {
+      return this.store.getClickable ? "#ffffff" : "#dddddd";
     }
   }
 });
@@ -72,5 +60,6 @@ $Y: 0px;
   mask-origin: content-box;
   mask-position: calc($X - 10vh), calc($Y - 10vh);
   pointer-events: none;
+  transition: background-color 0.3s;
 }
 </style>

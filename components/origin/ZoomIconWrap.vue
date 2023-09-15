@@ -4,6 +4,8 @@
       :class="{'is-disable': currentZoomScale === 2}"
       :style="{backgroundImage: `url(${svgIcon.get('zoomOutIcon')})`}"
       @click="onclickZoomBtn('zoomOut')"
+      @mouseenter="store.setClickable(true)"
+      @mouseleave="store.setClickable(false)"
       class="zoom-btn zoom-out-btn is-clickable"
     ></button>
     <span class="zoom-scale">{{ currentZoomScale * 25 + "%" }}</span>
@@ -11,6 +13,8 @@
       :class="{'is-disable': currentZoomScale === 8}"
       :style="{backgroundImage: `url(${svgIcon.get('zoomInIcon')})`}"
       @click="onclickZoomBtn('zoomIn')"
+      @mouseenter="store.setClickable(true)"
+      @mouseleave="store.setClickable(false)"
       class="zoom-btn zoom-in-btn"
     ></button>
   </div>
@@ -19,6 +23,7 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import svgIcon from "public/imgs/svgIcon";
+import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 
 export default defineComponent({
   name: "ZoomIconWrap",
@@ -30,7 +35,8 @@ export default defineComponent({
   },
   data() {
     return {
-      svgIcon
+      svgIcon,
+      store: useClippingMaskStore()
     };
   },
   methods: {
@@ -62,7 +68,7 @@ $BORDER_COLOR: #777777;
   .zoom-btn {
     width: 40px;
     height: 40px;
-    cursor: pointer;
+    cursor: none;
     background-color: transparent;
     border: none;
     transition: opacity 0.3s;

@@ -3,6 +3,8 @@
     <div v-if="peopleData" class="people-detail-inner">
       <button
         @click="onClickCloseBtn"
+        @mouseenter="clippingMaskStore.setClickable(true)"
+        @mouseleave="clippingMaskStore.setClickable(false)"
         :style="{backgroundImage: 'url(' + svgIcon.get(`closeIcon`) + ')'}"
         class="btn-close"
       ></button>
@@ -63,6 +65,7 @@ import {usePeopleStore} from "~/stores/PeopleStore";
 import svgIcon from "public/imgs/svgIcon";
 import {ID, IIndicator, IPeople} from "~/interfaces/PeopleInterface";
 import {defineComponent} from "vue";
+import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 
 export default defineComponent({
   name: "PeopleDetail",
@@ -89,6 +92,7 @@ export default defineComponent({
     return {
       indicatorId: ID,
       peopleStore: usePeopleStore(),
+      clippingMaskStore: useClippingMaskStore(),
       showDelayed: false
     };
   },
@@ -151,7 +155,7 @@ export default defineComponent({
       float: right;
       top: 0;
       margin-right: -60px;
-      cursor: pointer;
+      cursor: none;
     }
 
     .people-name {

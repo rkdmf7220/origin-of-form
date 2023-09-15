@@ -10,16 +10,12 @@
           class="nav-item"
           v-for="item in navData"
           :key="item.id"
+          @mouseenter="clippingMaskStore.setClickable(true)"
+          @mouseleave="clippingMaskStore.setClickable(false)"
         >
-          <!--        <NuxtLink :to="item.path">-->
-          <!--          {{ item.title }}-->
-          <!--        </NuxtLink>-->
           <a :href="item.path">
             {{ item.title }}
           </a>
-          <!--          <a :href="item.path" v-scroll-to="{element: item.path, duration: 100, easing: 'ease', lazy: false}">-->
-          <!--            {{ item.title }}-->
-          <!--          </a>-->
         </li>
       </ul>
     </div>
@@ -30,6 +26,7 @@
 import {defineComponent} from "vue";
 import {INavData} from "~/interfaces/NavigationInterface";
 import {usePeopleStore} from "~/stores/PeopleStore";
+import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 
 export default defineComponent({
   name: "GlobalNav",
@@ -67,7 +64,8 @@ export default defineComponent({
           path: "#research"
         }
       ] as INavData[],
-      store: usePeopleStore()
+      store: usePeopleStore(),
+      clippingMaskStore: useClippingMaskStore()
     };
   },
   methods: {}
@@ -129,6 +127,7 @@ export default defineComponent({
         color: #fff;
         padding: 10px 15px;
         font-weight: 700;
+        cursor: none;
       }
     }
   }

@@ -17,9 +17,15 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
+import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 
 export default defineComponent({
   name: "MarqueeContent",
+  data() {
+    return {
+      store: useClippingMaskStore()
+    };
+  },
   computed: {
     marqueeList(): string[] {
       return usePeopleStore().marqueeTextList;
@@ -27,7 +33,7 @@ export default defineComponent({
   },
   methods: {
     onHoverMarquee(type: string): void {
-      this.$emit("hover", type);
+      this.store.setMaskSize(type);
     }
   }
 });
