@@ -1,12 +1,12 @@
 <template>
-  <div v-if="peopleData" class="people-detail-wrap">
-    <div class="people-detail-inner">
+  <div :class="{'is-show': showDelayed}" class="people-detail-wrap">
+    <div v-if="peopleData" class="people-detail-inner">
       <button
         @click="onClickCloseBtn"
         :style="{backgroundImage: 'url(' + svgIcon.get(`closeIcon`) + ')'}"
         class="btn-close"
       ></button>
-      <h2>{{ peopleData.name }}</h2>
+      <h2 class="people-name">{{ peopleData.name }}</h2>
       <ul class="people-info-list">
         <li v-for="info in peopleData.info" :key="info.id" class="people-info-item">
           <span class="text-bold">{{ info.title }} : </span>{{ info.text }}
@@ -61,10 +61,11 @@
 import {usePeopleStore} from "~/stores/PeopleStore";
 import svgIcon from "public/imgs/svgIcon";
 import {ID, IIndicator, IPeople} from "~/interfaces/PeopleInterface";
+import {defineComponent} from "vue";
 
 const store = usePeopleStore();
 
-export default {
+export default defineComponent({
   name: "PeopleDetail",
   computed: {
     svgIcon() {
@@ -74,16 +75,22 @@ export default {
       return toRaw(store.getPeopleInformation(store.selectedPeopleId));
     },
     peopleIndicatorMap: function (): IIndicator {
-      return this.peopleData.indicators.find((item: IIndicator) => item.id === ID.Map);
+      return this.peopleData.indicators!.find((item: IIndicator) => item.id === ID.Map)!;
     },
     peopleIndicatorIndex: function (): IIndicator {
-      return this.peopleData.indicators.find((item: IIndicator) => item.id === ID.Indicator);
+      return this.peopleData.indicators!.find((item: IIndicator) => item.id === ID.Indicator)!;
+    }
+  },
+  watch: {
+    peopleData(newVal) {
+      this.showDelayed = !!newVal;
     }
   },
   data() {
     return {
       indicatorId: ID,
-      peopleStore: usePeopleStore()
+      peopleStore: usePeopleStore(),
+      showDelayed: false
     };
   },
   methods: {
@@ -91,17 +98,17 @@ export default {
       store.setSelectedPeopleId("");
     }
   }
-};
+});
 </script>
 
 <style scoped lang="scss">
 .people-detail-wrap {
   width: 50vw;
   height: 100vh;
-  position: fixed;
+  position: absolute;
   z-index: 60;
   top: 0;
-  right: 0;
+  right: -50vw;
   bottom: 0;
   padding: 100px 0 100px 100px;
   box-sizing: border-box;
