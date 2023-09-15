@@ -36,14 +36,14 @@ export default defineComponent({
       // 스와이퍼는 (0, 0) ~ (swiperMaxWidth, swiperMaxHeight)까지 움직일 수 있음
       const peopleCardWrap = this.$refs["people-card-wrap"] as HTMLDivElement;
       const contentsSize = (peopleCardWrap.offsetWidth / 4) * this.currentZoomScale;
-      // 회댓값 = 화면 크기 - 배율 반영된 div 크기 - 200(상하단 margin 각 100씩 추가)
-      const result = window.innerWidth - contentsSize - 200;
+      // 회댓값 = 화면 크기 - 배율 반영된 div 크기 - 600(상하단 margin 각 300씩 추가)
+      const result = window.innerWidth - contentsSize - 600;
       return result > 0 ? 0 : result;
     },
     swiperMaxHeight(): number {
       const peopleCardWrap = this.$refs["people-card-wrap"] as HTMLDivElement;
       const contentsSize = (peopleCardWrap.offsetHeight / 4) * this.currentZoomScale;
-      const result = window.innerHeight - contentsSize - 200;
+      const result = window.innerHeight - contentsSize - 600;
       return result > 0 ? 0 : result;
     }
   },
@@ -171,7 +171,7 @@ export default defineComponent({
   overflow: hidden;
 
   .origin-swiper-contents {
-    padding: 100px;
+    padding: 300px;
 
     &.is-swipe {
       pointer-events: none;
