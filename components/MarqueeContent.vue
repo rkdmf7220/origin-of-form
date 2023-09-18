@@ -50,6 +50,14 @@ export default defineComponent({
   font-size: 2.5em;
   overflow: hidden;
   pointer-events: auto;
+  justify-content: center;
+  font-family: "KOTRA Bold", serif;
+  font-weight: bold;
+
+  .marquee-test {
+    display: flex;
+    gap: 20px;
+  }
 
   .marquee-item {
     height: 100%;
@@ -85,7 +93,7 @@ export default defineComponent({
       .marquee-text {
         //color: #ffffff;
         color: #4d4d4d;
-        font-weight: 700;
+        //font-weight: bold;
         writing-mode: vertical-lr;
         letter-spacing: 0.1em;
       }
