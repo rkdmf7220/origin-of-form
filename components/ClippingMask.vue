@@ -4,10 +4,10 @@
     ref="mask-wrap"
     :style="[
       {
-        maskPosition: `calc(${xPosition}px - calc(${store.maskSize}px/2)) calc(${yPosition}px - calc(${store.maskSize}px/2))`
+        maskPosition: `calc(${xPosition}px - calc(${clippingMaskStore.maskSize}px/2)) calc(${yPosition}px - calc(${clippingMaskStore.maskSize}px/2))`
       },
       {maskImage: `url(${svgIcon.get('maskImage')})`},
-      {maskSize: `${store.maskSize}px`},
+      {maskSize: `${clippingMaskStore.maskSize}px`},
       {backgroundColor: maskBackgroundColor}
     ]"
     id="mask-wrap"
@@ -21,6 +21,7 @@
 import svgIcon from "public/imgs/svgIcon";
 import {defineComponent} from "vue";
 import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
+import {usePeopleStore} from "~/stores/PeopleStore";
 
 export default defineComponent({
   name: "ClippingMask",
@@ -29,13 +30,23 @@ export default defineComponent({
       svgIcon,
       xPosition: 0 as number,
       yPosition: 0 as number,
-      size: 40 as number,
-      store: useClippingMaskStore()
+      clippingMaskStore: useClippingMaskStore(),
+      peopleStore: usePeopleStore()
     };
   },
   computed: {
     maskBackgroundColor() {
-      return this.store.getClickable ? "#ffffff" : "#dddddd";
+      return this.clippingMaskStore.getClickable ? "#ffffff" : "#dddddd";
+    },
+    isLoaded() {
+      return this.peopleStore.isLoaded;
+    }
+  },
+  watch: {
+    isLoaded(newValue, oldValue) {
+      if (newValue) {
+        // setTimeout(() => {});
+      }
     }
   }
 });
