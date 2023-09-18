@@ -18,7 +18,7 @@ export const useClippingMaskStore = defineStore("clippingMask", {
       this.clickable = bool;
       this.setMaskSize(bool ? "clickable" : "clickable-leave");
     },
-    setMaskSize(value: string): void {
+    setMaskSize(value: "enter" | "leave" | "clickable" | "clickable-leave" | "is-loaded"): void {
       if (this.intervalId) {
         window.clearInterval(this.intervalId);
         this.intervalId = undefined;
@@ -52,6 +52,12 @@ export const useClippingMaskStore = defineStore("clippingMask", {
             // clickable mouseleave
             if (this.maskSize > 40) {
               this.maskSize -= 1;
+            }
+            break;
+
+          case "is-loaded":
+            if (this.maskSize < 40) {
+              this.maskSize += 1;
             }
             break;
 

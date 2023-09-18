@@ -32,7 +32,7 @@ export default defineComponent({
     }
   },
   methods: {
-    onHoverMarquee(type: string): void {
+    onHoverMarquee(type: "clickable" | "enter" | "leave" | "clickable-leave" | "is-loaded"): void {
       this.store.setMaskSize(type);
     }
   }
