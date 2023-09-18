@@ -79,7 +79,6 @@ export default defineComponent({
   position: sticky;
   z-index: 100;
   background-color: rgba(13, 13, 13, 0.1);
-  box-sizing: border-box;
   border-bottom: 1px solid #666;
   top: 0;
   transition: top, 0.3s;

@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'is-show': showDelayed}" class="main-container">
+  <div class="main-container">
     <MarqueeContent />
   </div>
 </template>
@@ -11,25 +11,18 @@ import ClippingMask from "~/components/ClippingMask.vue";
 
 export default defineComponent({
   name: "main",
-  components: {MarqueeContent, ClippingMask},
-  props: {
-    showDelayed: Boolean
-  }
+  components: {MarqueeContent, ClippingMask}
 });
 </script>
 
 <style scoped lang="scss">
 .main-container {
   width: 100%;
-  height: 0;
+  height: calc(100vh - 100px);
   transition: height 0.3s;
   overflow: hidden;
   position: relative;
   background: linear-gradient(180deg, #1e1e1e 0%, #000 100%), url(https://grainy-gradients.vercel.app/noise.svg);
-
-  &.main-container.is-show {
-    height: 90vh;
-  }
 
   &::before {
     content: "";
