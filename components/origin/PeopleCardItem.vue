@@ -1,19 +1,21 @@
 <template>
   <div
     v-if="itemData?.detail"
-    :class="[{'is-active': itemData?.id === store.selectedPeopleId && isRendered}, {'is-clickable': itemData?.detail}]"
-    class="people-card-item"
+    :class="[{'is-active': itemData?.id === store.selectedPeopleId && isRendered}]"
+    class="people-card-item is-clickable"
     @mouseenter="clippingMaskStore.setClickable(true)"
     @mouseleave="clippingMaskStore.setClickable(false)"
   >
-    {{ itemData.name }}
+    <div
+      :style="{backgroundImage: `url(public/imgs/thumbnails/${itemData.thumbnail})`}"
+      class="people-card-thumbnail"
+    ></div>
   </div>
-  <div
-    v-else
-    :class="[{'is-active': itemData?.id === store.selectedPeopleId && isRendered}, {'is-clickable': itemData?.detail}]"
-    class="people-card-item"
-  >
-    {{ itemData.name }}
+  <div v-else :class="[{'is-active': itemData?.id === store.selectedPeopleId && isRendered}]" class="people-card-item">
+    <div
+      :style="[{backgroundImage: `url(public/imgs/thumbnails/${itemData?.thumbnail})`}]"
+      class="people-card-thumbnail"
+    ></div>
   </div>
 </template>
 
@@ -49,7 +51,6 @@ export default defineComponent({
 .people-card-item {
   width: 200px;
   height: 200px;
-  border: 1px solid #dddddd;
   box-sizing: border-box;
   color: #cccccc;
   background-color: #3c3c3c;
@@ -59,7 +60,27 @@ export default defineComponent({
   position: relative;
   transition: all 0.3s;
   text-align: center;
-  padding: 5px;
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: inline-block;
+    //background-color: #949381;
+    //background-color: #4f4d4d;
+    background-color: #868694;
+    //background-color: #fff2e1;
+    opacity: 0.7;
+    mix-blend-mode: multiply;
+  }
+
+  &.is-clickable::before {
+    background-color: #fff2e1;
+  }
 
   &.is-active {
     border-width: 2px;
@@ -79,6 +100,14 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     user-select: none;
+  }
+
+  .people-card-thumbnail {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    filter: grayscale(95%);
   }
 }
 </style>

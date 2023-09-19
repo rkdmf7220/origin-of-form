@@ -7,6 +7,7 @@ export interface IPeople {
   indicators: IIndicator[] | null;
   order: ICoordinates;
   relation: IRelation | null;
+  thumbnail: string;
 }
 
 export interface IInfo {

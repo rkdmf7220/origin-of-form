@@ -10,7 +10,8 @@
       "x": 7,
       "y": 1
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "impressionism.jpg"
   },
   {
     "id": "postimpressionism",
@@ -23,7 +24,8 @@
       "x": 7,
       "y": 2
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "postimpressionism.jpg"
   },
   {
     "id": "marinetti",
@@ -36,7 +38,8 @@
       "x": 4,
       "y": 3
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "marinetti.jpg"
   },
   {
     "id": "apollinaire",
@@ -49,7 +52,8 @@
       "x": 5,
       "y": 3
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "apollinaire.jpg"
   },
   {
     "id": "cubism",
@@ -62,7 +66,8 @@
       "x": 7,
       "y": 3
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "cubism.jpg"
   },
   {
     "id": "expressionism",
@@ -75,7 +80,8 @@
       "x": 8,
       "y": 3
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "expressionism.jpg"
   },
   {
     "id": "tatlin",
@@ -88,7 +94,8 @@
       "x": 6,
       "y": 4
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "tatlin.jpg"
   },
   {
     "id": "malevich",
@@ -101,7 +108,8 @@
       "x": 7,
       "y": 4
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "malevich.jpg"
   },
   {
     "id": "kandinsky",
@@ -114,7 +122,8 @@
       "x": 8,
       "y": 4
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "kandinsky.jpg"
   },
   {
     "id": "jangseungeop",
@@ -127,7 +136,8 @@
       "x": 13,
       "y": 4
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "jangseungeop.jpg"
   },
   {
     "id": "stanley-morrison",
@@ -140,7 +150,8 @@
       "x": 1,
       "y": 5
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "stanley-morrison.jpg"
   },
   {
     "id": "eric-gill",
@@ -153,7 +164,8 @@
       "x": 2,
       "y": 5
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "eric-gill.jpg"
   },
   {
     "id": "paul-renner",
@@ -228,7 +240,8 @@
       "bottom": "jan-tschichold",
       "left": "",
       "right": "kurt-schwitters"
-    }
+    },
+    "thumbnail": "paul-renner.jpg"
   },
   {
     "id": "kurt-schwitters",
@@ -307,7 +320,8 @@
       "bottom": "",
       "left": "paul-renner",
       "right": "rodchenko"
-    }
+    },
+    "thumbnail": "kurt-schwitters.jpg"
   },
   {
     "id": "rodchenko",
@@ -320,7 +334,8 @@
       "x": 6,
       "y": 5
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "rodchenko.jpg"
   },
   {
     "id": "el-lissitzky",
@@ -399,7 +414,8 @@
       "bottom": "moholy-nagy",
       "left": "rodchenko",
       "right": "theo-van-doesburg"
-    }
+    },
+    "thumbnail": "el-lissitzky.jpg"
   },
   {
     "id": "theo-van-doesburg",
@@ -482,7 +498,8 @@
       "bottom": "",
       "left": "el-lissitzky",
       "right": ""
-    }
+    },
+    "thumbnail": "theo-van-doesburg.jpg"
   },
   {
     "id": "kimgyujin",
@@ -557,7 +574,8 @@
       "bottom": "leeungno",
       "left": "",
       "right": "ahnjungsik"
-    }
+    },
+    "thumbnail": "kimgyujin.jpg"
   },
   {
     "id": "ahnjungsik",
@@ -570,7 +588,8 @@
       "x": 13,
       "y": 5
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "ahnjungsik.jpg"
   },
   {
     "id": "jan-tschichold",
@@ -649,7 +668,8 @@
       "bottom": "Emil-Ruder",
       "left": "",
       "right": ""
-    }
+    },
+    "thumbnail": "jan-tschichold.jpg"
   },
   {
     "id": "moholy-nagy",
@@ -732,7 +752,8 @@
       "bottom": "Hebert-Bayer",
       "left": "",
       "right": ""
-    }
+    },
+    "thumbnail": "moholy-nagy.jpg"
   },
   {
     "id": "leeungno",
@@ -762,7 +783,8 @@
     ],
     "textList": [
       "이응노는 충청남도에서 넷째 아들로 출생하여 성장하였다. 그는 그림을 그리기 위해 17살 때 가출 및 전전하다가 송태회 선생에게 묵화의 기본을 배우고, 1923년 경성부에서 당시 유명한 서화가였던 김규진의 문하생이 되어 서예, 사군자, 묵화 등을 교습하고 죽사라는 호를 받았다. 1933년에 정병조 선생에게 고암이라는 호를 받았다. 1935년 가족과 함께 일본으로 건너가 동경에서 신문배급소를 운영하며 작품활동을 계속하였다. 일본 도쿄 가와바타 미술학교에서 수학하였다. 동경 본향회화연구소에서 서양화 기법을 공부하기도 했다. 일본 남화의 대가였던 마쓰바야시 게이게쓰의 덴코화숙에서도 공부했다. 그의 작품은 전통적인 사군자에서 벗어나 대상을 사실주의적으로 탐구한 현실풍경화가 주를 이뤘다.",
-      "1945년 해방과 함께 귀국하였고, 1948년 홍익대학관에 부임하여 1950년 6월까지 재직하였다. 1956년 '동양화의 감상과 기법'을 출판하였다. 1958년 12월에 한국을 떠나 프랑스로 작품 생활의 무대를 바꾸었다. 새롭게 출발한 그의 생활은 궁색하여 작품을 제작할 재료가 없어 뜰에 버려진 낡은 컬러판 잡지를 주워서 그것을 물감 대신 캔버스에 뜯어 붙였는데, 이것이 발전하여 새로운 전기가 되었다. 콜라주 기법을 발견한 것이었다. 단순히 뜯어 붙이는 것이 아니라 붓글씨를 쓸 때 느껴지는 '획'이 이 과정에서 부여되었다. 붙여지는 한 조각의 종이가 서예의 획과 같이 한 획 한 획의 힘과 절도가 중첩되고 집적되어 작품이 만들어졌다. 회갑이 된 그는 1964년 11월 초 프랑스화단의 예술가와 각계 인사의 후원으로 파리 세르누쉬 미술관 안에 파리동양미술학교를 설립하였다.",
+      "1945년 해방과 함께 귀국하였고, 1948년 홍익대학관에 부임하여 1950년 6월까지 재직하였다. 1956년 '동양화의 감상과 기법' 을 출판하였다. 1958년 12월에 한국을 떠나 프랑스로 작품 생활의 무대를 바꾸었다. 새롭게 출발한 그의 생활은 궁색하여 작품을 제작할 재료가 없어 뜰에 버려진 낡은 컬러판 잡지를 주워서 그것을 물감 대신 캔버스에 뜯어 붙였는데, 이것이 발전하여 새로운 전기가 되었다. 콜라주 기법을 발견한 것이었다. 단순히 뜯어 붙이는 것이 아니라 붓글씨를 쓸 때 느껴지는 '획'",
+      "이 이 과정에서 부여되었다. 붙여지는 한 조각의 종이가 서예의 획과 같이 한 획 한 획의 힘과 절도가 중첩되고 집적되어 작품이 만들어졌다. 회갑이 된 그는 1964년 11월 초 프랑스화단의 예술가와 각계 인사의 후원으로 파리 세르누쉬 미술관 안에 파리동양미술학교를 설립하였다.",
       "1967년 중앙정보부 요원들에 의해 동백림 사건이 조작되었고, 그는 한국 전쟁 때 헤어진 아들을 만나기 위해 동베를린에 갔다가 고국에 납치돼 감옥생활을 하게 된다. 감옥에서도 그의 예술혼은 시들지 않았다. 그는 감옥안에서도 나무 도시락을 이용해 작품을 만들었다. 그는 1983년 프랑스 시민권을 취득하였다. 이후 1985년 도쿄에서 마지막 개인전을 가졌으며, 1989년 프랑스 파리에서 심장마비로 타계하였다."
     ],
     "indicators": [
@@ -815,7 +837,8 @@
       "bottom": "",
       "left": "",
       "right": "kimeunho "
-    }
+    },
+    "thumbnail": "leeungno.jpg"
   },
   {
     "id": "kimeunho ",
@@ -828,7 +851,8 @@
       "x": 13,
       "y": 6
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "kimeunho.jpg"
   },
   {
     "id": "yoohigang",
@@ -841,7 +865,8 @@
       "x": 14,
       "y": 6
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "yoohigang.jpg"
   },
   {
     "id": "joseph-Müller-Brockmann",
@@ -916,7 +941,8 @@
       "bottom": "Wim-Crouwel",
       "left": "",
       "right": "Max-Miedinger"
-    }
+    },
+    "thumbnail": "joseph-Müller-Brockmann.jpg"
   },
   {
     "id": "Max-Miedinger",
@@ -991,7 +1017,8 @@
       "bottom": "",
       "left": "joseph-Müller-Brockmann",
       "right": "Emil-Ruder"
-    }
+    },
+    "thumbnail": "Max-Miedinger.jpg"
   },
   {
     "id": "Emil-Ruder",
@@ -1066,7 +1093,8 @@
       "bottom": "Helmut-Schmidt",
       "left": "Max-Miedinger",
       "right": "Armin-Hofmann"
-    }
+    },
+    "thumbnail": "Emil-Ruder.jpg"
   },
   {
     "id": "Armin-Hofmann",
@@ -1079,7 +1107,8 @@
       "x": 5,
       "y": 7
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "Armin-Hofmann.jpg"
   },
   {
     "id": "Max-Bill",
@@ -1092,7 +1121,8 @@
       "x": 6,
       "y": 7
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "Max-Bill.jpg"
   },
   {
     "id": "Hebert-Bayer",
@@ -1171,7 +1201,8 @@
       "bottom": "",
       "left": "Max-Bill",
       "right": "Paul-Rand"
-    }
+    },
+    "thumbnail": "Hebert-Bayer.jpg"
   },
   {
     "id": "Paul-Rand",
@@ -1246,7 +1277,8 @@
       "bottom": "",
       "left": "Hebert-Bayer",
       "right": "Herb-Lubalin"
-    }
+    },
+    "thumbnail": "Paul-Rand.jpg"
   },
   {
     "id": "Herb-Lubalin",
@@ -1259,7 +1291,8 @@
       "x": 9,
       "y": 7
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "herb-lubalin.jpg"
   },
   {
     "id": "choijeongho",
@@ -1272,7 +1305,8 @@
       "x": 11,
       "y": 7
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "choijeongho.jpg"
   },
   {
     "id": "gimgichang",
@@ -1285,7 +1319,8 @@
       "x": 13,
       "y": 7
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "gimgichang.jpg"
   },
   {
     "id": "ryuinsik",
@@ -1298,7 +1333,8 @@
       "x": 14,
       "y": 7
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "ryuinsik.jpg"
   },
   {
     "id": "jeonghageon",
@@ -1311,7 +1347,8 @@
       "x": 15,
       "y": 7
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "jeonghageon.jpg"
   },
   {
     "id": "wonjungsik",
@@ -1324,7 +1361,8 @@
       "x": 16,
       "y": 7
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "wonjungsik.jpg"
   },
   {
     "id": "bakserim",
@@ -1337,7 +1375,8 @@
       "x": 17,
       "y": 7
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "bakserim.jpg"
   },
   {
     "id": "Neville-Brody",
@@ -1412,7 +1451,8 @@
       "bottom": "",
       "left": "",
       "right": "Wim-Crouwel"
-    }
+    },
+    "thumbnail": "Neville-Brody.jpg"
   },
   {
     "id": "Wim-Crouwel",
@@ -1425,7 +1465,8 @@
       "x": 2,
       "y": 8
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "Wim-Crouwel.jpg"
   },
   {
     "id": "Helmut-Schmidt",
@@ -1508,7 +1549,8 @@
       "bottom": "",
       "left": "",
       "right": "Wolfgang-Weingart"
-    }
+    },
+    "thumbnail": "Helmut-Schmidt.jpg"
   },
   {
     "id": "Wolfgang-Weingart",
@@ -1583,7 +1625,8 @@
       "bottom": "Dan-Friedman",
       "left": "Helmut-Schmidt",
       "right": ""
-    }
+    },
+    "thumbnail": "Wolfgang-Weingart.jpg"
   },
   {
     "id": "Sugiura-Kohei",
@@ -1596,7 +1639,8 @@
       "x": 10,
       "y": 8
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "Sugiura-Kohei.jpg"
   },
   {
     "id": "AhnSangSoo",
@@ -1671,7 +1715,8 @@
       "bottom": "",
       "left": "Sugiura-Kohei",
       "right": "gimhodeuk"
-    }
+    },
+    "thumbnail": "AhnSangSoo.jpg"
   },
   {
     "id": "gimhodeuk",
@@ -1684,7 +1729,8 @@
       "x": 12,
       "y": 8
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "gimhodeuk.jpg"
   },
   {
     "id": "jeongtaehui",
@@ -1697,7 +1743,8 @@
       "x": 17,
       "y": 8
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "jeongtaehui.jpg"
   },
   {
     "id": "jeondojin",
@@ -1710,7 +1757,8 @@
       "x": 18,
       "y": 8
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "jeondojin.jpg"
   },
   {
     "id": "Stefan-Sagmeister",
@@ -1723,7 +1771,8 @@
       "x": 3,
       "y": 9
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "Stefan-Sagmeister.jpg"
   },
   {
     "id": "Dan-Friedman",
@@ -1736,7 +1785,8 @@
       "x": 5,
       "y": 9
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "Dan-Friedman.jpg"
   },
   {
     "id": "April-Greiman",
@@ -1749,7 +1799,8 @@
       "x": 6,
       "y": 9
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "April-Greiman.jpg"
   },
   {
     "id": "David-Carson",
@@ -1762,7 +1813,8 @@
       "x": 8,
       "y": 9
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "David-Carson.jpg"
   },
   {
     "id": "ryujingreon",
@@ -1775,6 +1827,7 @@
       "x": 10,
       "y": 9
     },
-    "relation": null
+    "relation": null,
+    "thumbnail": "ryujingreon.jpg"
   }
 ]
