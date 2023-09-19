@@ -17,8 +17,9 @@
 import {usePeopleStore} from "~/stores/PeopleStore";
 import PeopleCardItem from "~/components/origin/PeopleCardItem.vue";
 import {IPeople} from "~/interfaces/PeopleInterface";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   name: "PeopleCardList",
   components: {PeopleCardItem},
   data() {
@@ -28,15 +29,10 @@ export default {
   },
   methods: {
     onClickCardItem(item: IPeople) {
-      /*if (item.detail) {
-        this.store.setSelectedPeopleId(item.id);
-      } else {
-        this.store.setSelectedPeopleId(null);
-      }*/
-      item.detail ? this.store.setSelectedPeopleId(item.id) : this.store.setSelectedPeopleId(null);
+      item.detail ? this.store.setSelectedPeopleId(item.id) : this.store.setSelectedPeopleId("");
     }
   }
-};
+});
 </script>
 
 <style scoped lang="scss">

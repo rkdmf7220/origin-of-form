@@ -9,7 +9,7 @@ export const usePeopleStore = defineStore("people", {
       swiperPosition: {} as IPosition,
       // isLoaded: false,
       isLoaded: false,
-      selectedPeopleId: null as string | null
+      selectedPeopleId: "" as string
     };
   },
   getters: {
@@ -32,12 +32,7 @@ export const usePeopleStore = defineStore("people", {
       const fetchData = await useFetch("/data/introName.json");
       this.marqueeTextList = fetchData.data.value as string[];
     },
-    // async setSwiperPosition(xPosition: number, yPosition: number) {
-    //   await nextTick();
-    //   this.swiperPosition = {xPosition, yPosition};
-    //   return this.swiperPosition;
-    // },
-    setSelectedPeopleId(id: string | null) {
+    setSelectedPeopleId(id: string) {
       return (this.selectedPeopleId = id);
     }
   }
