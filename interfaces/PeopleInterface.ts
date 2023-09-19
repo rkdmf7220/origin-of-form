@@ -18,10 +18,10 @@ export interface IInfo {
 export interface IIndicator {
   id: ID;
   title: string;
-  text?: string;
-  coordinates?: ICoordinates[];
-  x?: number;
-  y?: number;
+  text: string;
+  coordinates: ICoordinates[];
+  x: number;
+  y: number;
 }
 
 export enum ID {
