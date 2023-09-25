@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import svgIcon from "public/imgs/svgIcon";
+import svgIcon from "public/images/svgIcon";
 import {defineComponent} from "vue";
 import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 import {usePeopleStore} from "~/stores/PeopleStore";

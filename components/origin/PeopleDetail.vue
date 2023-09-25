@@ -62,7 +62,7 @@
 
 <script lang="ts">
 import {usePeopleStore} from "~/stores/PeopleStore";
-import svgIcon from "public/imgs/svgIcon";
+import svgIcon from "public/images/svgIcon";
 import {ID, IIndicator, IPeople} from "~/interfaces/PeopleInterface";
 import {defineComponent} from "vue";
 import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
@@ -213,7 +213,7 @@ export default defineComponent({
         .indicator-map {
           width: 280px;
           height: 200px;
-          background-image: url("public/imgs/map.png");
+          background-image: url("public/images/map.png");
           position: relative;
         }
 

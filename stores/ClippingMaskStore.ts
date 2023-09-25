@@ -4,7 +4,7 @@ export const useClippingMaskStore = defineStore("clippingMask", {
   state: () => {
     return {
       clickable: false,
-      maskSize: 40,
+      maskSize: 0,
       intervalId: undefined as number | undefined
     };
   },

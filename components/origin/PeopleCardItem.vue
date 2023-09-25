@@ -7,13 +7,13 @@
     @mouseleave="clippingMaskStore.setClickable(false)"
   >
     <div
-      :style="{backgroundImage: `url(public/imgs/thumbnails/${itemData.thumbnail})`}"
+      :style="{backgroundImage: `url(public/images/thumbnails/${itemData.thumbnail})`}"
       class="people-card-thumbnail"
     ></div>
   </div>
   <div v-else :class="[{'is-active': itemData?.id === store.selectedPeopleId && isRendered}]" class="people-card-item">
     <div
-      :style="[{backgroundImage: `url(public/imgs/thumbnails/${itemData?.thumbnail})`}]"
+      :style="[{backgroundImage: `url(public/images/thumbnails/${itemData?.thumbnail})`}]"
       class="people-card-thumbnail"
     ></div>
   </div>
