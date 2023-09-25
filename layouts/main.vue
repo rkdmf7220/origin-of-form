@@ -22,15 +22,14 @@ export default defineComponent({
   transition: height 0.3s;
   overflow: hidden;
   position: relative;
-  background: linear-gradient(180deg, #1e1e1e 0%, #000 100%), url(https://grainy-gradients.vercel.app/noise.svg);
+  background: linear-gradient(180deg, #1e1e1e 0%, #000 100%), url(public/images/noise.svg);
 
   &::before {
     content: "";
     width: 100%;
     height: 100%;
     position: absolute;
-    background: linear-gradient(180deg, rgba(30, 30, 30, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%),
-      url(https://grainy-gradients.vercel.app/noise.svg);
+    background: linear-gradient(180deg, rgba(30, 30, 30, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%), url(public/images/noise.svg);
     mix-blend-mode: lighten;
     opacity: 0.7;
   }

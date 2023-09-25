@@ -6,7 +6,6 @@
       {
         maskPosition: `calc(${xPosition}px - calc(${clippingMaskStore.maskSize}px/2)) calc(${yPosition}px - calc(${clippingMaskStore.maskSize}px/2))`
       },
-      {maskImage: `url(${svgIcon.get('maskImage')})`},
       {maskSize: `${clippingMaskStore.maskSize}px`},
       {backgroundColor: maskBackgroundColor}
     ]"
@@ -72,5 +71,6 @@ $Y: 0px;
   mask-position: calc($X - 10vh), calc($Y - 10vh);
   pointer-events: none;
   transition: background-color 0.3s;
+  mask-image: url("public/images/circle.svg");
 }
 </style>
