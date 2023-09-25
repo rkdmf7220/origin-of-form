@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container">
+  <div ref="main" @wheel="(e) => onScrollContent(e)" id="main" class="main-container">
     <MarqueeContent />
   </div>
 </template>
@@ -8,10 +8,22 @@
 import {defineComponent} from "vue";
 import MarqueeContent from "~/components/MarqueeContent.vue";
 import ClippingMask from "~/components/ClippingMask.vue";
+import {checkScrollDone} from "~/utils/scroll";
+import {IHash} from "~/interfaces/IHash";
 
 export default defineComponent({
   name: "main",
-  components: {MarqueeContent, ClippingMask}
+  components: {MarqueeContent, ClippingMask},
+  methods: {
+    onScrollContent(e: WheelEvent) {
+      const refs = this.$refs["main"] as HTMLDivElement;
+      const result = checkScrollDone(refs, e);
+      console.log(e, checkScrollDone(refs, e));
+      if (result === "next") {
+        this.$emit("change-hash", IHash.Works, result);
+      }
+    }
+  }
 });
 </script>
 

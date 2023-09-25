@@ -8,8 +8,9 @@
             {'is-active': item.id === 'origin' && $route.name === 'origin-id'}
           ]"
           class="nav-item"
-          v-for="item in navData"
+          v-for="(item, index) in navData"
           :key="item.id"
+          @click="() => onClickNav(index)"
           @mouseenter="clippingMaskStore.setClickable(true)"
           @mouseleave="clippingMaskStore.setClickable(false)"
         >
@@ -68,7 +69,11 @@ export default defineComponent({
       clippingMaskStore: useClippingMaskStore()
     };
   },
-  methods: {}
+  methods: {
+    onClickNav(index: number) {
+      this.$emit("change-index", index);
+    }
+  }
 });
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="origin" class="contents origin-wrap">
+  <div ref="origin" @wheel="(e) => onScrollContent(e)" id="origin" class="contents origin-wrap">
     <PeopleCardSwiper @set:peopleId="setPeopleId" />
     <PeopleDetail :show-delayed="showDelayed" :people-data="peopleData" />
   </div>
@@ -12,6 +12,8 @@ import {defineComponent} from "vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
 import {IPeople} from "~/interfaces/PeopleInterface";
 import {defaultPeopleData} from "~/dto/PeopleData";
+import {checkScrollDone} from "~/utils/scroll";
+import {IHash} from "~/interfaces/IHash";
 
 export default defineComponent({
   name: "origin",
@@ -44,6 +46,13 @@ export default defineComponent({
   methods: {
     setPeopleId(id: string) {
       this.peopleId = id;
+    },
+    onScrollContent(e: WheelEvent) {
+      const refs = this.$refs["origin"] as HTMLDivElement;
+      const result = checkScrollDone(refs, e);
+      if (result !== null) {
+        this.$emit("change-hash", IHash.Origin, result);
+      }
     }
   }
 });
