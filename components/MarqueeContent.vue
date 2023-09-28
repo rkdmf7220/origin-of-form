@@ -1,12 +1,19 @@
 <template>
-  <div @mouseenter="() => onHoverMarquee('enter')" @mouseleave="() => onHoverMarquee('leave')" class="marquee-list">
-    <div v-for="item in marqueeList" class="marquee-item">
-      <div class="marquee-inner">
-        <div class="marquee-text-wrapper">
-          <div class="marquee-text-list" v-for="index in 2">
-            <span :key="index" class="marquee-text" v-for="name in item">
-              {{ name }}
-            </span>
+  <div
+    :class="{'is-loaded': isLoaded}"
+    @mouseenter="() => onHoverMarquee('enter')"
+    @mouseleave="() => onHoverMarquee('leave')"
+    class="marquee-list"
+  >
+    <div v-for="index in 3" class="marquee-item-wrap">
+      <div v-for="item in marqueeList" class="marquee-item" :key="index">
+        <div class="marquee-inner">
+          <div class="marquee-text-wrapper">
+            <div class="marquee-text-list" v-for="index in 2">
+              <span :key="index" class="marquee-text" v-for="name in item">
+                {{ name }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -23,17 +30,38 @@ export default defineComponent({
   name: "MarqueeContent",
   data() {
     return {
-      store: useClippingMaskStore()
+      store: useClippingMaskStore(),
+      peopleStore: usePeopleStore(),
+      isLoaded: false
     };
   },
   computed: {
     marqueeList(): string[] {
-      return usePeopleStore().marqueeTextList;
+      return this.peopleStore.marqueeTextList;
+    },
+    peopleLoaded(): boolean {
+      return this.peopleStore.isLoaded;
     }
   },
   methods: {
     onHoverMarquee(type: "clickable" | "enter" | "leave" | "clickable-leave" | "is-loaded"): void {
       this.store.setMaskSize(type);
+    }
+  },
+  watch: {
+    // peopleLoaded(newValue, oldValue) {
+    //   if (newValue) {
+    //     setTimeout(() => {
+    //       this.isLoaded = true;
+    //     }, 500);
+    //   }
+    // }
+    peopleLoaded: function (newValue, oldValue) {
+      if (newValue) {
+        setTimeout(() => {
+          this.isLoaded = true;
+        }, 500);
+      }
     }
   }
 });
@@ -41,12 +69,12 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @import "assets/styles/variables";
+@import "assets/styles/default";
 
 .marquee-list {
-  height: 90vh;
+  height: calc(100vh - 100px);
   display: flex;
   flex-direction: row;
-  gap: 20px;
   font-size: 2.5em;
   overflow: hidden;
   pointer-events: auto;
@@ -54,15 +82,16 @@ export default defineComponent({
   font-family: "KOTRA Bold", serif;
   font-weight: bold;
 
-  .marquee-test {
+  .marquee-item-wrap {
     display: flex;
-    gap: 20px;
+    padding-bottom: 20px;
   }
 
   .marquee-item {
     height: 100%;
     position: relative;
     min-width: 1.35em;
+    padding: 0 10px;
     //animation-duration: 10s;
     //overflow: hidden;
 
@@ -86,7 +115,6 @@ export default defineComponent({
         flex-direction: column;
         position: absolute;
         transform: translate3d(0, $MOVE_INITIAL, 0);
-        gap: 40px;
         //animation: marquee 5s linear infinite;
       }
 
