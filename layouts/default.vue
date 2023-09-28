@@ -72,6 +72,7 @@ export default defineComponent({
       if (state === null || this.isScrolling) return;
       if (hashEnum === 0 && state === "prev") return;
       if (hashEnum === 5 && state === "next") return;
+      console.log("before >>", hashEnum, state, this.hashIndex, Date.now());
       this.isScrolling = true;
       if (state === "prev") {
         this.hashIndex = this.hashIndex - 1;
@@ -79,6 +80,7 @@ export default defineComponent({
         this.hashIndex = this.hashIndex + 1;
       }
       window.location.href = `#${IHash[this.hashIndex].toLowerCase()}`;
+      console.log("after >>", hashEnum, state, this.hashIndex, Date.now());
       setTimeout(() => {
         this.isScrolling = false;
       }, 300);
