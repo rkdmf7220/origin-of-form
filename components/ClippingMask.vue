@@ -72,5 +72,9 @@ $Y: 0px;
   pointer-events: none;
   transition: background-color 0.3s;
   mask-image: url("public/images/circle.svg");
+
+  .marquee-list {
+    pointer-events: none;
+  }
 }
 </style>
