@@ -1,6 +1,6 @@
 <template>
   <div ref="origin" @wheel="(e) => onScrollContent(e)" id="origin" class="contents origin-wrap">
-    <PeopleCardSwiper @set:peopleId="setPeopleId" />
+    <PeopleCardSwiper />
     <PeopleDetail :show-delayed="showDelayed" :people-data="peopleData" />
   </div>
 </template>
@@ -20,7 +20,10 @@ export default defineComponent({
   components: {PeopleDetail, PeopleCardSwiper},
   computed: {
     peopleInfo: function (): IPeople {
-      return toRaw(this.store.getPeopleInformation(this.store.selectedPeopleId));
+      return toRaw(this.store.getPeopleInformation(this.store.selectedPeopleId)) as IPeople;
+    },
+    selectedPeopleId: function (): string {
+      return this.store.selectedPeopleId;
     }
   },
   watch: {
@@ -44,9 +47,6 @@ export default defineComponent({
     };
   },
   methods: {
-    setPeopleId(id: string) {
-      this.peopleId = id;
-    },
     onScrollContent(e: WheelEvent) {
       const refs = this.$refs["origin"] as HTMLDivElement;
       const result = checkScrollDone(refs, e);
