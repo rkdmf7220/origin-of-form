@@ -20,7 +20,7 @@ export default defineComponent({
       const result = checkScrollDone(refs, e);
       console.log(e, checkScrollDone(refs, e));
       if (result === "next") {
-        this.$emit("change-hash", IHash.Works, result);
+        this.$emit("change-hash", IHash.Main, result);
       }
     }
   }
