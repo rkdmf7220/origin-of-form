@@ -25,12 +25,6 @@ import Research from "~/layouts/research.vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
 import {IHash} from "~/interfaces/IHash";
 
-interface IClippingData {
-  xPosition: number;
-  yPosition: number;
-  size: string;
-}
-
 export default defineComponent({
   name: "default",
   components: {Research, Introduction, Works, Origin, Main},
@@ -40,8 +34,6 @@ export default defineComponent({
       e.stopPropagation();
     };
     // window.addEventListener("wheel", (e) => preventScroll(e), {passive: false});
-    window.addEventListener("mousemove", (e) => this.getCursorPosition(e));
-    window.addEventListener("wheel", (e) => this.getCursorPosition(e));
     const hashData = window.location.hash;
     const hashEnum = hashData.replace("#", "").charAt(0).toUpperCase() + hashData.replace("#", "").slice(1);
     this.hashIndex = hashEnum ? IHash[hashEnum as keyof typeof IHash] : IHash.Main;
@@ -59,12 +51,6 @@ export default defineComponent({
     };
   },
   methods: {
-    getCursorPosition(e: MouseEvent): void {
-      // todo: smooth behavior
-      const clippingMask = this.$refs["clipping-mask"] as IClippingData;
-      clippingMask.xPosition = e.pageX;
-      clippingMask.yPosition = e.pageY;
-    },
     onScrollWrap(e: WheelEvent) {
       if (this.isScrolling) e.preventDefault();
     },

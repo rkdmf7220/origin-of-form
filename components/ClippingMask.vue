@@ -1,10 +1,9 @@
 <template>
-  <!--  <div :style="{maskImage: `url(${svgIcon.get('maskImage')})`}" class="mask-wrap">-->
   <div
     ref="mask-wrap"
     :style="[
       {
-        maskPosition: `calc(${xPosition}px - calc(${clippingMaskStore.maskSize}px/2)) calc(${yPosition}px - calc(${clippingMaskStore.maskSize}px/2))`
+        maskPosition: `${xPosition - clippingMaskStore.maskSize / 2}px ${yPosition - clippingMaskStore.maskSize / 2}px`
       },
       {maskSize: `${clippingMaskStore.maskSize}px`},
       {backgroundColor: maskBackgroundColor}
@@ -14,6 +13,9 @@
   >
     <MarqueeContent />
   </div>
+  <!--  <div ref="mask-wrap" id="mask-wrap" class="mask-wrap">-->
+  <!--    <MarqueeContent />-->
+  <!--  </div>-->
 </template>
 
 <script lang="ts">
@@ -33,6 +35,10 @@ export default defineComponent({
       peopleStore: usePeopleStore()
     };
   },
+  mounted() {
+    window.addEventListener("mousemove", (e) => this.getCursorPosition(e));
+    window.addEventListener("wheel", (e) => this.getCursorPosition(e));
+  },
   computed: {
     maskBackgroundColor() {
       return this.clippingMaskStore.getClickable ? "#ffffff" : "#dddddd";
@@ -47,6 +53,17 @@ export default defineComponent({
         // setTimeout(() => {});
       }
     }
+  },
+  methods: {
+    getCursorPosition(e: MouseEvent): void {
+      // todo: smooth behavior
+      this.xPosition = e.pageX;
+      this.yPosition = e.pageY;
+
+      // const ref = document.querySelector("#mask-wrap") as HTMLDivElement;
+      // ref.style.setProperty("--x", e.pageX - 15 + "px");
+      // ref.style.setProperty("--y", e.pageY - 15 + "px");
+    }
   }
 });
 </script>
@@ -54,10 +71,9 @@ export default defineComponent({
 <style scoped lang="scss">
 @import "assets/styles/variables";
 
-$X: 0px;
-$Y: 0px;
-
 .mask-wrap {
+  --x: 10px;
+  --y: 10px;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -65,10 +81,10 @@ $Y: 0px;
   background-color: #fff;
   left: 0;
   top: 0;
-  mask-size: 30px;
+  mask-size: 40px;
   mask-repeat: no-repeat;
   mask-origin: content-box;
-  mask-position: calc($X - 10vh), calc($Y - 10vh);
+  mask-position: calc(var(--x)) calc(var(--y));
   pointer-events: none;
   transition: background-color 0.3s;
   mask-image: url("public/images/circle.svg");
