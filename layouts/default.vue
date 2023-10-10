@@ -74,8 +74,4 @@ export default defineComponent({
 });
 </script>
 
-<style>
-.wrap {
-  position: relative;
-}
-</style>
+<style></style>

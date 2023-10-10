@@ -1,5 +1,5 @@
 <template>
-  <div ref="works" @wheel="(e) => onScrollContent(e)" id="works" class="contents">
+  <div ref="works" @wheel="(e) => onScrollContent(e)" id="works" class="contents is-scrollable">
     <p>is works layout.</p>
     <div class="box-wrap">
       <div class="box"></div>
@@ -27,26 +27,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.contents {
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    width: 5px;
-    height: 10px;
-    background-color: #ffffff;
-    border-radius: 5px;
-  }
-
-  &::-webkit-scrollbar-track {
-    width: 3px;
-    background-color: transparent;
-  }
-}
-
 .box-wrap {
   height: 100vh;
   //overflow-y: scroll;

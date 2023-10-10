@@ -46,8 +46,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .contents {
-  overflow-y: scroll;
-
   .introduction-content-wrap {
     display: flex;
     justify-content: center;
