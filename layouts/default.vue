@@ -4,9 +4,9 @@
     <!--    <Main :show-delayed="showDelayed" />-->
     <div>
       <GlobalNav @change-index="setIndex" />
+      <Introduction @change-hash="changeHash" />
       <Origin @change-hash="changeHash" />
       <Works @change-hash="changeHash" />
-      <Introduction @change-hash="changeHash" />
       <Research @change-hash="changeHash" />
     </div>
 
@@ -18,9 +18,9 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import Main from "~/layouts/main.vue";
+import Introduction from "~/layouts/introduction.vue";
 import Origin from "~/layouts/origin.vue";
 import Works from "~/layouts/works.vue";
-import Introduction from "~/layouts/introduction.vue";
 import Research from "~/layouts/research.vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
 import {IHash} from "~/interfaces/IHash";

@@ -7,7 +7,7 @@
             {'is-active': $route.name === item.id},
             {'is-active': item.id === 'origin' && $route.name === 'origin-id'}
           ]"
-          class="nav-item"
+          class="nav-item is-clickable"
           v-for="(item, index) in navData"
           :key="item.id"
           @click="() => onClickNav(index)"
@@ -45,6 +45,11 @@ export default defineComponent({
           path: "#"
         },
         {
+          id: "introduction",
+          title: "전시 소개",
+          path: "#introduction"
+        },
+        {
           id: "origin",
           title: "형태의 뿌리",
           path: "#origin"
@@ -53,11 +58,6 @@ export default defineComponent({
           id: "works",
           title: "손원혁 작품",
           path: "#works"
-        },
-        {
-          id: "introduction",
-          title: "전시 소개",
-          path: "#introduction"
         },
         {
           id: "research",

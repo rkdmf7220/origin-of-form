@@ -1,8 +1,8 @@
 export enum IHash {
   Main,
+  Introduction,
   Origin,
   Works,
-  Introduction,
   Research,
   Copyright
 }
