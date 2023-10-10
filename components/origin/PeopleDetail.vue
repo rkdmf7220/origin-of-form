@@ -214,6 +214,7 @@ export default defineComponent({
           width: 280px;
           height: 200px;
           background-image: url("public/images/map.png");
+          background-size: contain;
           position: relative;
         }
 
