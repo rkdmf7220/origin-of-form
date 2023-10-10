@@ -1,7 +1,7 @@
 <template>
   <div @wheel="(e) => onScrollWrap(e)" class="wrap">
     <Main @change-hash="changeHash" />
-    <!--    <Main @scroll.prevent="onHandleScroll" :show-delayed="showDelayed" />-->
+    <!--    <Main :show-delayed="showDelayed" />-->
     <div>
       <GlobalNav @change-index="setIndex" />
       <Origin @change-hash="changeHash" />
@@ -29,11 +29,6 @@ export default defineComponent({
   name: "default",
   components: {Research, Introduction, Works, Origin, Main},
   mounted() {
-    const preventScroll = (e: WheelEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-    };
-    // window.addEventListener("wheel", (e) => preventScroll(e), {passive: false});
     const hashData = window.location.hash;
     const hashEnum = hashData.replace("#", "").charAt(0).toUpperCase() + hashData.replace("#", "").slice(1);
     this.hashIndex = hashEnum ? IHash[hashEnum as keyof typeof IHash] : IHash.Main;
