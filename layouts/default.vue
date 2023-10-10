@@ -53,9 +53,12 @@ export default defineComponent({
   methods: {
     onScrollWrap(e: WheelEvent) {
       if (this.isScrolling) e.preventDefault();
+      const target = e.target as HTMLElement;
+      // people detail 활성화 시 detail 외부 스크롤 방지
+      if (this.store.selectedPeopleId && !target.closest(".people-detail-wrap")) e.preventDefault();
     },
     changeHash(hashEnum: IHash, state: "prev" | "next" | null) {
-      if (state === null || this.isScrolling) return;
+      if (state === null || this.isScrolling || this.store.selectedPeopleId) return;
       if (hashEnum === 0 && state === "prev") return;
       if (hashEnum === 5 && state === "next") return;
       this.isScrolling = true;

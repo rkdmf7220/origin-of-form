@@ -121,6 +121,7 @@ export default defineComponent({
   overflow: auto;
   line-height: 1.5em;
   transition: right 0.3s;
+  overscroll-behavior: none;
 
   &.is-show {
     right: 0;
