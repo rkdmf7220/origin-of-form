@@ -70,16 +70,19 @@ export default defineComponent({
     left: 0;
     z-index: 10;
     display: inline-block;
-    //background-color: #949381;
-    //background-color: #4f4d4d;
-    background-color: #868694;
-    //background-color: #fff2e1;
-    opacity: 0.7;
+    background-color: #dadde3;
+    opacity: 0.5;
     mix-blend-mode: multiply;
+    transition: opacity 0.3s;
   }
 
   &.is-clickable::before {
-    background-color: #fff2e1;
+    background-color: #ffdfb6;
+  }
+
+  &.is-clickable:hover::before,
+  &.is-active::before {
+    opacity: 1;
   }
 
   &.is-active {
