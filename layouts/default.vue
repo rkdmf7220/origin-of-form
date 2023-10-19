@@ -54,18 +54,18 @@ export default defineComponent({
     },
     changeHash(hashEnum: IHash, state: "prev" | "next" | null) {
       if (state === null || this.isScrolling || this.store.selectedPeopleId) return;
-      if (hashEnum === 0 && state === "prev") return;
-      if (hashEnum === 5 && state === "next") return;
+      if (this.hashIndex === 0 && state === "prev") return;
+      if (this.hashIndex === 5 && state === "next") return;
       this.isScrolling = true;
       if (state === "prev") {
-        this.hashIndex = this.hashIndex - 1;
+        this.hashIndex = hashEnum - 1;
       } else if (state === "next") {
-        this.hashIndex = this.hashIndex + 1;
+        this.hashIndex = hashEnum + 1;
       }
       window.location.href = `#${IHash[this.hashIndex].toLowerCase()}`;
       setTimeout(() => {
         this.isScrolling = false;
-      }, 300);
+      }, 800);
     },
     setIndex(index: number) {
       this.hashIndex = index;
