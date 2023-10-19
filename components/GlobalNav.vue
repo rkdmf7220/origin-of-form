@@ -1,6 +1,14 @@
 <template>
   <ClientOnly>
-    <div :class="[$route.name === 'index' ? '--main' : '--sub', hideGlobalNav ? 'is-hide' : '']" class="nav-menu">
+    <div
+      @wheel="
+        (e: MouseEvent) => {
+          e.preventDefault();
+        }
+      "
+      :class="[$route.name === 'index' ? '--main' : '--sub', hideGlobalNav ? 'is-hide' : '']"
+      class="nav-menu"
+    >
       <ul class="nav-list">
         <li
           :class="[
