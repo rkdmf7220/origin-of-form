@@ -19,8 +19,6 @@
           v-for="(item, index) in navData"
           :key="item.id"
           @click="() => onClickNav(index)"
-          @mouseenter="clippingMaskStore.setClickable(true)"
-          @mouseleave="clippingMaskStore.setClickable(false)"
         >
           <a :href="item.path">
             {{ item.title }}
@@ -35,7 +33,6 @@
 import {defineComponent} from "vue";
 import {INavData} from "~/interfaces/NavigationInterface";
 import {usePeopleStore} from "~/stores/PeopleStore";
-import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 
 export default defineComponent({
   name: "GlobalNav",
@@ -73,8 +70,7 @@ export default defineComponent({
           path: "#research"
         }
       ] as INavData[],
-      store: usePeopleStore(),
-      clippingMaskStore: useClippingMaskStore()
+      store: usePeopleStore()
     };
   },
   methods: {

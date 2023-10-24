@@ -2,11 +2,8 @@
   <div
     ref="mask-wrap"
     :style="[
-      {
-        maskPosition: `${xPosition - clippingMaskStore.maskSize / 2}px ${yPosition - clippingMaskStore.maskSize / 2}px`
-      },
-      {maskSize: `${clippingMaskStore.maskSize}px`},
-      {backgroundColor: maskBackgroundColor}
+      {maskPosition: `${xPosition - maskSize / 2}px ${yPosition - maskSize / 2}px`},
+      {maskSize: `${maskSize}px`}
     ]"
     id="mask-wrap"
     class="mask-wrap"
@@ -21,7 +18,6 @@
 <script lang="ts">
 import svgIcon from "public/images/svgIcon";
 import {defineComponent} from "vue";
-import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 import {usePeopleStore} from "~/stores/PeopleStore";
 
 export default defineComponent({
@@ -31,18 +27,21 @@ export default defineComponent({
       svgIcon,
       xPosition: 0 as number,
       yPosition: 0 as number,
-      clippingMaskStore: useClippingMaskStore(),
-      peopleStore: usePeopleStore()
+      peopleStore: usePeopleStore(),
+      maskSize: 0
     };
   },
   mounted() {
     window.addEventListener("mousemove", (e) => this.getCursorPosition(e));
+    window.addEventListener("mousemove", (e) => this.onHandleMaskSize(e));
     window.addEventListener("wheel", (e) => this.getCursorPosition(e));
   },
+  unmounted() {
+    window.removeEventListener("mousemove", (e) => this.getCursorPosition(e));
+    window.removeEventListener("mousemove", (e) => this.onHandleMaskSize(e));
+    window.removeEventListener("wheel", (e) => this.getCursorPosition(e));
+  },
   computed: {
-    maskBackgroundColor() {
-      return this.clippingMaskStore.getClickable ? "#ffffff" : "#dddddd";
-    },
     isLoaded() {
       return this.peopleStore.isLoaded;
     }
@@ -63,9 +62,21 @@ export default defineComponent({
       // const ref = document.querySelector("#mask-wrap") as HTMLDivElement;
       // ref.style.setProperty("--x", e.pageX - 15 + "px");
       // ref.style.setProperty("--y", e.pageY - 15 + "px");
+    },
+    onHandleMaskSize(e: MouseEvent): void {
+      const target = e.target as HTMLElement;
+      if (target.closest(".is-interactable")) {
+        this.maskSize = 400;
+      } else if (target.closest(".is-clickable")) {
+        this.maskSize = 40;
+      } else {
+        this.maskSize = 20;
+      }
     }
   }
 });
+// todo: closet 으로 clickable, interactable 감지해 size 변경.
+// todo: clippingMaskStore 제거
 </script>
 
 <style scoped lang="scss">
@@ -86,7 +97,9 @@ export default defineComponent({
   mask-origin: content-box;
   mask-position: calc(var(--x)) calc(var(--y));
   pointer-events: none;
-  transition: background-color 0.3s;
+  transition:
+    background-color 0.3s,
+    mask-size 0.3s;
   mask-image: url("public/images/circle.svg");
 
   .marquee-list {

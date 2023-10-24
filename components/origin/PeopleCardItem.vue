@@ -3,8 +3,6 @@
     v-if="itemData?.detail"
     :class="[{'is-active': itemData?.id === store.selectedPeopleId && isRendered}]"
     class="people-card-item is-clickable"
-    @mouseenter="clippingMaskStore.setClickable(true)"
-    @mouseleave="clippingMaskStore.setClickable(false)"
   >
     <div
       :style="{backgroundImage: `url(/images/thumbnails/${itemData.thumbnail})`}"
@@ -23,7 +21,6 @@
 import {defineComponent} from "vue";
 import {IPeople} from "~/interfaces/PeopleInterface";
 import {usePeopleStore} from "~/stores/PeopleStore";
-import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 
 export default defineComponent({
   name: "PeopleCardItem",
@@ -35,8 +32,7 @@ export default defineComponent({
   data() {
     return {
       isRendered: false,
-      store: usePeopleStore(),
-      clippingMaskStore: useClippingMaskStore()
+      store: usePeopleStore()
     };
   },
   mounted() {
