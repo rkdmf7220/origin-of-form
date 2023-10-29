@@ -22,15 +22,6 @@ import {usePeopleStore} from "~/stores/PeopleStore";
 
 export default defineComponent({
   name: "ClippingMask",
-  data() {
-    return {
-      svgIcon,
-      xPosition: 0 as number,
-      yPosition: 0 as number,
-      peopleStore: usePeopleStore(),
-      maskSize: 0
-    };
-  },
   mounted() {
     window.addEventListener("mousemove", (e) => this.getCursorPosition(e));
     window.addEventListener("mousemove", (e) => this.onHandleMaskSize(e));
@@ -53,6 +44,17 @@ export default defineComponent({
       }
     }
   },
+  data() {
+    return {
+      svgIcon,
+      xPosition: 0 as number,
+      yPosition: 0 as number,
+      peopleStore: usePeopleStore(),
+      maskSize: 0 as number,
+      animationCancelled: false as boolean,
+      cursorClosest: null as null | "interactable" | "clickable"
+    };
+  },
   methods: {
     getCursorPosition(e: MouseEvent): void {
       // todo: smooth behavior
@@ -65,13 +67,63 @@ export default defineComponent({
     },
     onHandleMaskSize(e: MouseEvent): void {
       const target = e.target as HTMLElement;
+      let targetClosest: null | "interactable" | "clickable";
+      const oldMaskSize = this.maskSize;
+      let newMaskSize: number;
       if (target.closest(".is-interactable")) {
-        this.maskSize = 400;
+        newMaskSize = 400;
+        targetClosest = "interactable";
       } else if (target.closest(".is-clickable")) {
-        this.maskSize = 40;
+        newMaskSize = 40;
+        targetClosest = "clickable";
       } else {
-        this.maskSize = 20;
+        newMaskSize = 20;
+        targetClosest = null;
       }
+      if (targetClosest === this.cursorClosest) {
+        return;
+      } else {
+        this.animationCancelled = true;
+        this.cursorClosest = targetClosest;
+        this.maskSizeAnimate(oldMaskSize, newMaskSize);
+      }
+    },
+    easeInOut(startValue: number, endValue: number, duration: number, currentTime: number): number {
+      currentTime /= duration;
+      if (currentTime < 1) {
+        return ((endValue - startValue) / 2) * currentTime * currentTime * currentTime + startValue;
+      }
+      currentTime -= 2;
+      return ((endValue - startValue) / 2) * (currentTime * currentTime * currentTime + 2) + startValue;
+    },
+    ease(startValue: number, endValue: number, duration: number, currentTime: number): number {
+      currentTime /= duration;
+      return (endValue - startValue) * (-Math.pow(currentTime, 2) + currentTime) + startValue;
+    },
+    linear(startValue: number, endValue: number, duration: number, currentTime: number) {
+      return startValue + (endValue - startValue) * (currentTime / duration);
+    },
+    easeInOutSine(x: number): number {
+      return -(Math.cos(Math.PI * x) - 1) / 2;
+    },
+    maskSizeAnimate(startValue: number, endValue: number) {
+      this.animationCancelled = false;
+      const startTime = Date.now();
+      const duration = 300;
+      const step = () => {
+        if (this.animationCancelled) {
+          return;
+        }
+        const currentTime = Date.now() - startTime;
+        if (currentTime < duration) {
+          const progress = this.easeInOutSine(currentTime / duration);
+          this.maskSize = startValue + (endValue - startValue) * progress;
+          requestAnimationFrame(step);
+        } else {
+          this.maskSize = endValue;
+        }
+      };
+      step();
     }
   }
 });
@@ -97,9 +149,7 @@ export default defineComponent({
   mask-origin: content-box;
   mask-position: calc(var(--x)) calc(var(--y));
   pointer-events: none;
-  transition:
-    background-color 0.3s,
-    mask-size 0.3s;
+  transition: background-color 0.3s;
   mask-image: url("public/images/circle.svg");
 
   .marquee-list {
