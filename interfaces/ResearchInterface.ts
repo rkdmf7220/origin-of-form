@@ -20,6 +20,7 @@ export interface IChart {
   x: number;
   y: number;
   value: number;
+  color?: string;
 }
 
 export interface IGroup {

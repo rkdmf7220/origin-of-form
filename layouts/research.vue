@@ -16,6 +16,20 @@
           <div class="indicator-map-outer">
             <div class="indicator-map-inner">
               <img src="/images/map.png" alt="세계 지도" />
+              <div class="indicator-coordinate-wrap">
+                <div
+                  v-if="indicatorMap.charts"
+                  v-for="(item, index) in indicatorMap.charts"
+                  :style="[
+                    {left: item.x * 2.0714 + 'px'},
+                    {bottom: item.y * 2.0714 + 'px'},
+                    {height: item.value * 6 + 'px'},
+                    {backgroundColor: item.color}
+                  ]"
+                  :key="index"
+                  class="indicator-coordinate-item"
+                ></div>
+              </div>
             </div>
           </div>
           <div class="text-list">
@@ -27,11 +41,28 @@
         <h2 class="text-title">{{ research.title }}</h2>
         <div class="indicator-wrap">
           <div class="text-list">
-            <p v-for="item in indicatorMap.textList">{{ item }}</p>
+            <p v-for="item in indicatorIndex.textList">{{ item }}</p>
           </div>
           <div class="indicator-chart-outer">
-            <div class="indicator-chart-inner">
-              <div :style="{backgroundImage: `url(${svgIcon.get('indexIcon')})`}" class="indicator-index"></div>
+            <div class="indicator-chart-sticky">
+              <div class="indicator-chart-inner">
+                <span class="indicator-index-axis top-axis">동시대 기술 활용도</span>
+                <span class="indicator-index-axis left-axis">구성</span>
+                <span class="indicator-index-axis right-axis">추상</span>
+                <div
+                  :style="{backgroundImage: `url(${svgIcon.get('indexIcon')})`}"
+                  class="indicator-index indicator-coordinate-wrap"
+                >
+                  <div
+                    v-if="indicatorIndex.coordinates"
+                    v-for="(item, index) in indicatorIndex.coordinates"
+                    :style="[{left: item.x * 2 + 'px'}, {top: item.y * 2 + 'px'}, {backgroundColor: item.color}]"
+                    :key="index"
+                    class="indicator-coordinate-item"
+                  ></div>
+                </div>
+                <div class=""></div>
+              </div>
             </div>
           </div>
         </div>
@@ -57,7 +88,6 @@ export default defineComponent({
       return svgIcon;
     },
     research(): IResearch {
-      console.log("myData >>", this.researchData?.find((item) => item.id === "research"));
       return this.researchData?.find((item) => item.id === "research") as IResearch;
     },
     indicatorMap(): IIndicatorMap {
@@ -66,6 +96,7 @@ export default defineComponent({
     indicatorIndex(): IIndicatorIndex {
       return this.researchData?.find((item) => item.id === "indicatorIndex") as IIndicatorIndex;
     }
+    // todo: indicator의 크기 계산해서 비례대로 부여
   },
   data() {
     return {
@@ -84,7 +115,6 @@ export default defineComponent({
       // await nextTick();
       const fetchData = await useFetch("/data/research.json");
       this.researchData = toRaw(fetchData.data.value as (IResearch | IIndicatorMap | IIndicatorIndex)[]);
-      console.log("data >>", fetchData, fetchData.data, this.researchData);
     }
   }
 });
@@ -147,13 +177,31 @@ export default defineComponent({
 
       .indicator-map-outer {
         width: 50%;
+        position: relative;
 
         .indicator-map-inner {
           position: sticky;
           top: 200px;
+          display: flex;
 
           img {
             width: 100%;
+            max-height: 415px;
+          }
+
+          .indicator-coordinate-wrap {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            .indicator-coordinate-item {
+              width: 10px;
+              position: absolute;
+              background-color: #ff0000;
+              opacity: 0.8;
+            }
           }
         }
       }
@@ -172,19 +220,66 @@ export default defineComponent({
         width: 50%;
         position: relative;
 
-        .indicator-chart-inner {
-          height: 520px;
+        .indicator-chart-sticky {
+          height: 480px;
           position: sticky;
-          top: 100px;
+          top: 200px;
 
-          .indicator-index {
-            //width: 380px;
-            //height: 400px;
+          .indicator-chart-inner {
             width: 100%;
             height: 100%;
-            background-size: 73%;
-            background-repeat: no-repeat;
-            background-position: center;
+            position: relative;
+
+            .indicator-index-axis {
+              position: absolute;
+              font-size: 1.25em;
+
+              &.top-axis {
+                left: 50%;
+                transform: translateX(-50%);
+              }
+
+              &.left-axis {
+                left: 0;
+                top: 52%;
+                transform: translateY(-50%);
+              }
+
+              &.right-axis {
+                right: 0;
+                top: 52%;
+                transform: translateY(-50%);
+              }
+            }
+
+            .indicator-index {
+              width: 380px;
+              height: 400px;
+              position: absolute;
+              left: 50%;
+              top: 60px;
+              transform: translateX(-50%);
+              background-size: 100%;
+              background-repeat: no-repeat;
+              background-position: center;
+
+              .indicator-coordinate-item {
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                border-radius: 10px;
+                border: 2px solid rgba(255, 255, 255, 0.25);
+                box-sizing: border-box;
+              }
+            }
+
+            .indicator-coordinate-wrap {
+              /*width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;*/
+            }
           }
         }
       }
