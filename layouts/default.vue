@@ -54,6 +54,7 @@ export default defineComponent({
     },
     changeHash(hashEnum: IHash, state: "prev" | "next" | null) {
       if (state === null || this.isScrolling || this.store.selectedPeopleId) return;
+      if (this.hashIndex !== hashEnum) return;
       if (this.hashIndex === 0 && state === "prev") return;
       if (this.hashIndex === 5 && state === "next") return;
       this.isScrolling = true;
