@@ -35,7 +35,8 @@
           </div>
         </div>
       </div>
-      <div class="spotlight"></div>
+      <div class="dim-area"></div>
+      <div class="spotlight-area"></div>
     </div>
   </div>
 </template>
@@ -62,12 +63,16 @@ export default defineComponent({
 <style scoped lang="scss">
 #works {
   position: relative;
+  background-color: #726a57;
 
   .works-wrap {
     width: 100%;
     height: 100vh;
     position: absolute;
     overflow: hidden;
+    background-image: url("/images/grain-texture.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 
     .works-list {
       width: 500px;
@@ -132,9 +137,49 @@ export default defineComponent({
       }
     }
 
-    .spotlight {
+    .dim-area {
       width: 100%;
       height: 100%;
+      position: absolute;
+      z-index: 9;
+      top: 0;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+
+      &::before,
+      &::after {
+        content: "";
+        width: 15%;
+        height: 100%;
+        position: absolute;
+      }
+
+      &::before {
+        left: 0;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+      }
+
+      &::after {
+        right: 0;
+        background: linear-gradient(270deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+      }
+    }
+
+    .spotlight-area {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: -1;
+      background: radial-gradient(
+        18.37% 46.06% at 50% 45.19%,
+        rgba(255, 199, 147, 0.5) 0%,
+        rgba(255, 206, 161, 0) 100%
+      );
+      filter: blur(90px);
     }
   }
 }
