@@ -18,7 +18,6 @@ export default defineComponent({
     onScrollContent(e: WheelEvent) {
       const refs = this.$refs["main"] as HTMLDivElement;
       const result = checkScrollDone(refs, e);
-      console.log(e, checkScrollDone(refs, e));
       if (result === "next") {
         this.$emit("change-hash", IHash.Main, result);
       }

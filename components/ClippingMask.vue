@@ -16,7 +16,6 @@
 </template>
 
 <script lang="ts">
-import svgIcon from "public/images/svgIcon";
 import {defineComponent} from "vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
 
@@ -46,7 +45,6 @@ export default defineComponent({
   },
   data() {
     return {
-      svgIcon,
       xPosition: 0 as number,
       yPosition: 0 as number,
       peopleStore: usePeopleStore(),
