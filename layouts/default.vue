@@ -3,7 +3,7 @@
     <Main @change-hash="changeHash" />
     <!--    <Main :show-delayed="showDelayed" />-->
     <div>
-      <GlobalNav @change-index="setIndex" />
+      <GlobalNav @change-index="setIndex" :hash-index="hashIndex" />
       <Introduction @change-hash="changeHash" />
       <Origin @change-hash="changeHash" />
       <Works @change-hash="changeHash" />
