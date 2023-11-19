@@ -90,6 +90,7 @@ export default defineComponent({
           margin-top: 20px;
           font-size: 24px;
           line-height: 1.6em;
+          word-break: keep-all;
 
           &:first-child {
             margin-top: 0;

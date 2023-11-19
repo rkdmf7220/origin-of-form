@@ -64,6 +64,7 @@ $BORDER_COLOR: #777777;
     height: 40px;
     cursor: none;
     background-color: transparent;
+    background-size: contain;
     border: none;
     transition: opacity 0.3s;
 
