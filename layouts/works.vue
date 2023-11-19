@@ -52,16 +52,23 @@
 import {defineComponent} from "vue";
 import {checkScrollDone} from "~/utils/scroll";
 import {IHash} from "~/interfaces/IHash";
+import {IWorks} from "~/interfaces/WorksInterface";
 
 export default defineComponent({
   name: "works",
+  mounted() {
+    this.getWorksData();
+  },
   data() {
     return {
-      slideIndex: 0,
-      isSlide: false
+      worksData: null as null | IWorks[]
     };
   },
   methods: {
+    async getWorksData() {
+      const fetchData = await useFetch("/data/works.json");
+      this.worksData = toRaw(fetchData.data.value) as IWorks[];
+    },
     onScrollContent(e: WheelEvent) {
       const refs = this.$refs["works"] as HTMLDivElement;
       const result = checkScrollDone(refs, e);
