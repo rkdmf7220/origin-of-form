@@ -5,38 +5,24 @@
         :style="{transform: `translateX(calc(-${50 * this.slideIndex}vw - ${100 * this.slideIndex}px))`}"
         class="works-list"
       >
-        <div class="works-item">
-          <div class="works-inner">
-            <div class="works-img-outer is-clickable">
-              <img src="/images/works/01.jpg" alt="사진 1" />
-            </div>
-            <div class="works-caption">
-              <div class="works-caption-inner">
-                <div class="works-overlay"></div>
-                <div class="works-caption-text-wrap">
-                  <h4 class="works-title">194</h4>
-                  <span class="works-caption-text">2020, Lego brick on acrylic, 86.6 x 65 cm</span>
+        <template v-if="worksData">
+          <div v-for="(item, index) in worksData" :key="item.id" class="works-item">
+            <div class="works-inner">
+              <div @click="() => onClickThumbnail(index)" class="works-img-outer is-clickable">
+                <img :src="item.img" :alt="item.title + ' 작품 사진'" />
+              </div>
+              <div class="works-caption">
+                <div class="works-caption-inner">
+                  <div class="works-overlay"></div>
+                  <div class="works-caption-text-wrap">
+                    <h4 class="works-title">{{ item.title }}</h4>
+                    <span class="works-caption-text">{{ item.caption }}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="works-item">
-          <div class="works-inner">
-            <div class="works-img-outer is-clickable">
-              <img src="/images/works/02.jpg" alt="사진 2" />
-            </div>
-            <div class="works-caption">
-              <div class="works-caption-inner">
-                <div class="works-overlay"></div>
-                <div class="works-caption-text-wrap">
-                  <h4 class="works-title">The fall of opera</h4>
-                  <span class="works-caption-text">2019, Lego brick, 41 x 24 x94cm </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </template>
       </div>
       <div class="works-btn-wrap">
         <div @click="onClickPrevImage" class="works-image-btn prev-btn is-clickable"></div>
@@ -44,6 +30,9 @@
       </div>
       <div class="dim-area"></div>
       <div :class="{'is-slide': this.isSlide}" class="spotlight-area"></div>
+    </div>
+    <div class="image-slider-wrap">
+      <ImageSlider ref="slider-component" :img-list="worksData!" />
     </div>
   </div>
 </template>
@@ -61,7 +50,8 @@ export default defineComponent({
   },
   data() {
     return {
-      worksData: null as null | IWorks[]
+      worksData: null as null | IWorks[],
+      isSlide: false
     };
   },
   methods: {
@@ -81,14 +71,18 @@ export default defineComponent({
       this.isSlide = true;
       setTimeout(() => {
         this.isSlide = false;
-      }, 200);
+      }, 500);
     },
     onClickPrevImage() {
       this.slideIndex--;
       this.isSlide = true;
       setTimeout(() => {
         this.isSlide = false;
-      }, 200);
+      }, 500);
+    },
+    onClickThumbnail(index: number) {
+      const sliderRef = this.$refs["slider-component"] as any;
+      setTimeout(() => (sliderRef.$refs["slide-inner"].isPreventTransition = false), 10);
     }
   }
 });
@@ -101,7 +95,8 @@ export default defineComponent({
 
   .works-wrap {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 100px);
+    padding-top: 100px;
     position: absolute;
     overflow: hidden;
     background-image: url("/images/grain-texture4.jpg");
@@ -117,7 +112,7 @@ export default defineComponent({
       gap: calc(50vw - 400px);
       position: relative;
       z-index: 3;
-      transition: transform 0.3s ease-in-out;
+      transition: transform 0.5s ease-in-out;
 
       .works-item {
         width: 100%;
@@ -130,6 +125,8 @@ export default defineComponent({
 
         .works-inner {
           .works-img-outer {
+            box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.4);
+
             img {
               display: block;
               width: 100%;
@@ -146,7 +143,6 @@ export default defineComponent({
             .works-caption-inner {
               max-width: 350px;
               position: relative;
-              background-color: #000000;
 
               .works-overlay {
                 width: 100%;
@@ -157,11 +153,12 @@ export default defineComponent({
               .works-caption-text-wrap {
                 padding: 20px;
                 color: #fff;
+                opacity: 0.9;
 
                 .works-title {
                   font-size: 1.25rem;
                   font-weight: 400;
-                  margin: 0 0 20px;
+                  margin: 0 0 10px;
                 }
 
                 .works-caption-text {
@@ -184,61 +181,56 @@ export default defineComponent({
       right: 0;
 
       .works-image-btn {
-        width: 300px;
+        width: 200px;
         height: 100%;
         position: absolute;
         top: 0;
-        transition: all 0.3s ease-in-out;
+        transition: opacity 0.5s ease-in-out;
         z-index: 50;
+        opacity: 1;
+        pointer-events: none;
+
+        &.is-clickable {
+          pointer-events: auto;
+        }
+
+        &::before {
+          width: 400px;
+          height: 100%;
+          pointer-events: none;
+        }
 
         &.prev-btn {
           left: 0;
-          background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
 
-          &:hover {
-            background: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+          &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+          }
+
+          &.is-clickable:hover {
+            opacity: 0.7;
           }
         }
 
         &.next-btn {
           right: 0;
-          background: linear-gradient(270deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
 
-          &:hover {
-            background: linear-gradient(270deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+          &::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            background: linear-gradient(270deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+          }
+
+          &.is-clickable:hover {
+            opacity: 0.7;
           }
         }
       }
     }
-
-    /*.dim-area {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      z-index: 9;
-      top: 0;
-      left: 0;
-      right: 0;
-      pointer-events: none;
-
-      &::before,
-      &::after {
-        content: "";
-        width: 15%;
-        height: 100%;
-        position: absolute;
-      }
-
-      &::before {
-        left: 0;
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
-      }
-
-      &::after {
-        right: 0;
-        background: linear-gradient(270deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
-      }
-    }*/
 
     .spotlight-area {
       width: 100%;
@@ -258,7 +250,19 @@ export default defineComponent({
       transition: opacity 0.2s ease-in-out;
 
       &.is-slide {
-        opacity: 0.3;
+        animation: spotlighting 0.5s ease-in-out;
+        animation-iteration-count: infinite;
+        @keyframes spotlighting {
+          0% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.2;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
       }
     }
   }
