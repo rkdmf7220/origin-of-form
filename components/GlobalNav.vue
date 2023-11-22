@@ -26,6 +26,7 @@
 import {defineComponent} from "vue";
 import {INavData} from "~/interfaces/NavigationInterface";
 import {usePeopleStore} from "~/stores/PeopleStore";
+import {useWorksStore} from "~/stores/WorksStore";
 import {IHash} from "~/interfaces/IHash";
 
 export default defineComponent({
@@ -35,7 +36,7 @@ export default defineComponent({
       return IHash;
     },
     hideGlobalNav(): boolean {
-      return !!this.store.selectedPeopleId;
+      return !!this.store.selectedPeopleId || !!this.worksStore.sliderState;
     }
   },
   props: {
@@ -70,7 +71,8 @@ export default defineComponent({
           path: "#research"
         }
       ] as INavData[],
-      store: usePeopleStore()
+      store: usePeopleStore(),
+      worksStore: useWorksStore()
     };
   },
   methods: {

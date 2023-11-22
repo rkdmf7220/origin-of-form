@@ -68,10 +68,10 @@ export default {
   },
   methods: {
     decreaseCurrentIndex() {
-      this.store.setListIndex(this.store.listIndex - 1);
+      this.store.decreaseListIndex();
     },
     increaseCurrentIndex() {
-      this.store.setListIndex(this.store.listIndex + 1);
+      this.store.increaseListIndex();
     },
     changeZoomScale(zoomType) {
       this.$refs["slide-inner"].prevZoomScale = this.pinchZoomScale;

@@ -5,6 +5,10 @@ html {
   font-family: "Noto Sans KR", sans-serif;
 }
 
+body.show-slider {
+  overflow: hidden;
+}
+
 .wrap {
   position: relative;
 }

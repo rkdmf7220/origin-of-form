@@ -2,14 +2,14 @@
   <div ref="works" @wheel="(e) => onScrollContent(e)" id="works" class="contents">
     <div class="works-wrap">
       <div
-        :style="{transform: `translateX(calc(-${50 * this.slideIndex}vw - ${100 * this.slideIndex}px))`}"
+        :style="{transform: `translateX(calc(-${50 * this.store.listIndex}vw - ${100 * this.store.listIndex}px))`}"
         class="works-list"
       >
         <template v-if="worksData">
           <div v-for="(item, index) in worksData" :key="item.id" class="works-item">
             <div class="works-inner">
               <div @click="() => onClickThumbnail(index)" class="works-img-outer is-clickable">
-                <img :src="item.img" :alt="item.title + ' 작품 사진'" />
+                <img :src="item.img" :alt="item.title + ' 작품 사진'" draggable="false" />
               </div>
               <div class="works-caption">
                 <div class="works-caption-inner">
@@ -25,8 +25,16 @@
         </template>
       </div>
       <div class="works-btn-wrap">
-        <div @click="onClickPrevImage" class="works-image-btn prev-btn is-clickable"></div>
-        <div @click="onClickNextImage" class="works-image-btn next-btn is-clickable"></div>
+        <div
+          :class="{'is-clickable': this.store.listIndex !== 0}"
+          @click="onClickPrevImage"
+          class="works-image-btn prev-btn"
+        ></div>
+        <div
+          :class="{'is-clickable': this.store.listIndex !== worksData?.length - 1}"
+          @click="onClickNextImage"
+          class="works-image-btn next-btn"
+        ></div>
       </div>
       <div class="dim-area"></div>
       <div :class="{'is-slide': this.isSlide}" class="spotlight-area"></div>
@@ -42,6 +50,7 @@ import {defineComponent} from "vue";
 import {checkScrollDone} from "~/utils/scroll";
 import {IHash} from "~/interfaces/IHash";
 import {IWorks} from "~/interfaces/WorksInterface";
+import {useWorksStore} from "~/stores/WorksStore";
 
 export default defineComponent({
   name: "works",
@@ -51,7 +60,8 @@ export default defineComponent({
   data() {
     return {
       worksData: null as null | IWorks[],
-      isSlide: false
+      isSlide: false,
+      store: useWorksStore()
     };
   },
   methods: {
@@ -67,14 +77,14 @@ export default defineComponent({
       }
     },
     onClickNextImage() {
-      this.slideIndex++;
+      this.store.increaseListIndex();
       this.isSlide = true;
       setTimeout(() => {
         this.isSlide = false;
       }, 500);
     },
     onClickPrevImage() {
-      this.slideIndex--;
+      this.store.decreaseListIndex();
       this.isSlide = true;
       setTimeout(() => {
         this.isSlide = false;
@@ -82,6 +92,8 @@ export default defineComponent({
     },
     onClickThumbnail(index: number) {
       const sliderRef = this.$refs["slider-component"] as any;
+      this.store.setListIndex(index);
+      this.store.showSlider();
       setTimeout(() => (sliderRef.$refs["slide-inner"].isPreventTransition = false), 10);
     }
   }
