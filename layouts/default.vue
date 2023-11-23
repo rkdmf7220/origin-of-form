@@ -23,6 +23,7 @@ import Origin from "~/layouts/origin.vue";
 import Works from "~/layouts/works.vue";
 import Research from "~/layouts/research.vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
+import {useWorksStore} from "~/stores/WorksStore";
 import {IHash} from "~/interfaces/IHash";
 
 export default defineComponent({
@@ -40,6 +41,7 @@ export default defineComponent({
       timeoutId: null,
       showGlobalNav: false,
       store: usePeopleStore(),
+      worksStore: useWorksStore(),
       isLoaded: false,
       hashIndex: 0 as number, // IHash
       isScrolling: false
@@ -53,7 +55,7 @@ export default defineComponent({
       if (this.store.selectedPeopleId && !target.closest(".people-detail-wrap")) e.preventDefault();
     },
     changeHash(hashEnum: IHash, state: "prev" | "next" | null) {
-      if (state === null || this.isScrolling || this.store.selectedPeopleId) return;
+      if (state === null || this.isScrolling || this.store.selectedPeopleId || this.worksStore.sliderState) return;
       if (this.hashIndex !== hashEnum) return;
       if (this.hashIndex === 0 && state === "prev") return;
       if (this.hashIndex === 5 && state === "next") return;

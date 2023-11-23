@@ -21,9 +21,11 @@ export const useWorksStore = defineStore("works", {
     },
     showSlider() {
       this.sliderState = true;
+      document.body.classList.add("show-slider");
     },
     hideSlider() {
       this.sliderState = false;
+      document.body.classList.remove("show-slider");
     },
     increaseListIndex() {
       this.listIndex++;
