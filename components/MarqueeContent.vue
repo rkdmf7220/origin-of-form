@@ -1,10 +1,5 @@
 <template>
-  <div
-    :class="{'is-loaded': isLoaded}"
-    @mouseenter="() => onHoverMarquee('enter')"
-    @mouseleave="() => onHoverMarquee('leave')"
-    class="marquee-list"
-  >
+  <div :class="{'is-loaded': isLoaded}" class="marquee-list is-interactable">
     <div v-for="index in 3" class="marquee-item-wrap">
       <div v-for="item in marqueeList" class="marquee-item" :key="index">
         <div class="marquee-inner">
@@ -24,28 +19,21 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
-import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 
 export default defineComponent({
   name: "MarqueeContent",
   data() {
     return {
-      store: useClippingMaskStore(),
-      peopleStore: usePeopleStore(),
+      store: usePeopleStore(),
       isLoaded: false
     };
   },
   computed: {
     marqueeList(): string[] {
-      return this.peopleStore.marqueeTextList;
+      return this.store.marqueeTextList;
     },
     peopleLoaded(): boolean {
-      return this.peopleStore.isLoaded;
-    }
-  },
-  methods: {
-    onHoverMarquee(type: "clickable" | "enter" | "leave" | "clickable-leave" | "is-loaded"): void {
-      this.store.setMaskSize(type);
+      return this.store.isLoaded;
     }
   },
   watch: {

@@ -3,10 +3,8 @@
     <div v-if="peopleData" class="people-detail-inner">
       <button
         @click="onClickCloseBtn"
-        @mouseenter="clippingMaskStore.setClickable(true)"
-        @mouseleave="clippingMaskStore.setClickable(false)"
         :style="{backgroundImage: 'url(' + svgIcon.get(`closeIcon`) + ')'}"
-        class="btn-close"
+        class="btn-close is-clickable"
       ></button>
       <h2 class="people-name">{{ peopleData.name }}</h2>
       <ul class="people-info-list">
@@ -65,7 +63,6 @@ import {usePeopleStore} from "~/stores/PeopleStore";
 import svgIcon from "public/images/svgIcon";
 import {ID, IIndicator, IPeople} from "~/interfaces/PeopleInterface";
 import {defineComponent} from "vue";
-import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 
 export default defineComponent({
   name: "PeopleDetail",
@@ -92,7 +89,6 @@ export default defineComponent({
     return {
       indicatorId: ID,
       peopleStore: usePeopleStore(),
-      clippingMaskStore: useClippingMaskStore(),
       showDelayed: false
     };
   },
@@ -121,6 +117,7 @@ export default defineComponent({
   overflow: auto;
   line-height: 1.5em;
   transition: right 0.3s;
+  overscroll-behavior: none;
 
   &.is-show {
     right: 0;
@@ -147,10 +144,14 @@ export default defineComponent({
     position: relative;
 
     .btn-close {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
+      padding: 10px;
+      box-sizing: content-box;
       border: none;
       background-color: transparent;
+      background-position: center;
+      background-repeat: no-repeat;
       position: sticky;
       float: right;
       top: 0;
@@ -214,6 +215,7 @@ export default defineComponent({
           width: 280px;
           height: 200px;
           background-image: url("public/images/map.png");
+          background-size: contain;
           position: relative;
         }
 

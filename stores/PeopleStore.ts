@@ -29,7 +29,7 @@ export const usePeopleStore = defineStore("people", {
     },
     async setMarqueeTextList() {
       await nextTick();
-      const fetchData = await useFetch("/data/introName.json");
+      const fetchData = await useFetch("/data/intro-name.json");
       this.marqueeTextList = fetchData.data.value as string[];
     },
     setSelectedPeopleId(id: string) {

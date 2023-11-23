@@ -1,18 +1,17 @@
 <template>
   <ClientOnly>
-    <div :class="[$route.name === 'index' ? '--main' : '--sub', hideGlobalNav ? 'is-hide' : '']" class="nav-menu">
+    <div
+      @wheel="(e) => preventScroll(e)"
+      :class="[$route.name === 'index' ? '--main' : '--sub', hideGlobalNav ? 'is-hide' : '']"
+      class="nav-menu"
+    >
       <ul class="nav-list">
         <li
-          :class="[
-            {'is-active': $route.name === item.id},
-            {'is-active': item.id === 'origin' && $route.name === 'origin-id'}
-          ]"
-          class="nav-item"
+          :class="[{'is-active': IHash[hashIndex].toLowerCase() === item.id}]"
+          class="nav-item is-clickable"
           v-for="(item, index) in navData"
           :key="item.id"
           @click="() => onClickNav(index)"
-          @mouseenter="clippingMaskStore.setClickable(true)"
-          @mouseleave="clippingMaskStore.setClickable(false)"
         >
           <a :href="item.path">
             {{ item.title }}
@@ -27,14 +26,21 @@
 import {defineComponent} from "vue";
 import {INavData} from "~/interfaces/NavigationInterface";
 import {usePeopleStore} from "~/stores/PeopleStore";
-import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
+import {useWorksStore} from "~/stores/WorksStore";
+import {IHash} from "~/interfaces/IHash";
 
 export default defineComponent({
   name: "GlobalNav",
   computed: {
+    IHash() {
+      return IHash;
+    },
     hideGlobalNav(): boolean {
-      return !!this.store.selectedPeopleId;
+      return !!this.store.selectedPeopleId || !!this.worksStore.sliderState;
     }
+  },
+  props: {
+    hashIndex: Number
   },
   data() {
     return {
@@ -43,6 +49,11 @@ export default defineComponent({
           id: "index",
           title: "메인",
           path: "#"
+        },
+        {
+          id: "introduction",
+          title: "전시 소개",
+          path: "#introduction"
         },
         {
           id: "origin",
@@ -55,23 +66,21 @@ export default defineComponent({
           path: "#works"
         },
         {
-          id: "introduction",
-          title: "전시 소개",
-          path: "#introduction"
-        },
-        {
           id: "research",
           title: "연구 결과",
           path: "#research"
         }
       ] as INavData[],
       store: usePeopleStore(),
-      clippingMaskStore: useClippingMaskStore()
+      worksStore: useWorksStore()
     };
   },
   methods: {
     onClickNav(index: number) {
       this.$emit("change-index", index);
+    },
+    preventScroll(e: MouseEvent) {
+      e.preventDefault();
     }
   }
 });

@@ -1,50 +1,45 @@
 <template>
-  <div @wheel="(e) => onScrollWrap(e)" class="wrap">
-    <Main @change-hash="changeHash" />
-    <!--    <Main @scroll.prevent="onHandleScroll" :show-delayed="showDelayed" />-->
-    <div>
-      <GlobalNav @change-index="setIndex" />
-      <Origin @change-hash="changeHash" />
-      <Works @change-hash="changeHash" />
-      <Introduction @change-hash="changeHash" />
-      <Research @change-hash="changeHash" />
-    </div>
+  <template v-if="!isOpen">
+    <!--  <template v-if="false">-->
+    <Countdown />
+  </template>
+  <template v-else>
+    <div @wheel="(e) => onScrollWrap(e)" class="wrap">
+      <Main @change-hash="changeHash" />
+      <!--    <Main :show-delayed="showDelayed" />-->
+      <div>
+        <GlobalNav @change-index="setIndex" :hash-index="hashIndex" />
+        <Introduction @change-hash="changeHash" />
+        <Origin @change-hash="changeHash" />
+        <Works @change-hash="changeHash" />
+        <Research @change-hash="changeHash" />
+      </div>
 
-    <ClippingMask ref="clipping-mask" />
-    <slot />
-  </div>
+      <ClippingMask ref="clipping-mask" />
+      <slot />
+    </div>
+  </template>
 </template>
 
 <script lang="ts">
 import {defineComponent} from "vue";
 import Main from "~/layouts/main.vue";
+import Introduction from "~/layouts/introduction.vue";
 import Origin from "~/layouts/origin.vue";
 import Works from "~/layouts/works.vue";
-import Introduction from "~/layouts/introduction.vue";
 import Research from "~/layouts/research.vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
+import {useWorksStore} from "~/stores/WorksStore";
 import {IHash} from "~/interfaces/IHash";
-
-interface IClippingData {
-  xPosition: number;
-  yPosition: number;
-  size: string;
-}
 
 export default defineComponent({
   name: "default",
   components: {Research, Introduction, Works, Origin, Main},
   mounted() {
-    const preventScroll = (e: WheelEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-    };
-    // window.addEventListener("wheel", (e) => preventScroll(e), {passive: false});
-    window.addEventListener("mousemove", (e) => this.getCursorPosition(e));
-    window.addEventListener("wheel", (e) => this.getCursorPosition(e));
     const hashData = window.location.hash;
     const hashEnum = hashData.replace("#", "").charAt(0).toUpperCase() + hashData.replace("#", "").slice(1);
     this.hashIndex = hashEnum ? IHash[hashEnum as keyof typeof IHash] : IHash.Main;
+    this.checkOpening();
   },
   data() {
     return {
@@ -53,47 +48,48 @@ export default defineComponent({
       timeoutId: null,
       showGlobalNav: false,
       store: usePeopleStore(),
+      worksStore: useWorksStore(),
       isLoaded: false,
       hashIndex: 0 as number, // IHash
-      isScrolling: false
+      isScrolling: false,
+      isOpen: false
     };
   },
   methods: {
-    getCursorPosition(e: MouseEvent): void {
-      // todo: smooth behavior
-      const clippingMask = this.$refs["clipping-mask"] as IClippingData;
-      clippingMask.xPosition = e.pageX;
-      clippingMask.yPosition = e.pageY;
-    },
     onScrollWrap(e: WheelEvent) {
       if (this.isScrolling) e.preventDefault();
+      const target = e.target as HTMLElement;
+      // people detail 활성화 시 detail 외부 스크롤 방지
+      if (this.store.selectedPeopleId && !target.closest(".people-detail-wrap")) e.preventDefault();
     },
     changeHash(hashEnum: IHash, state: "prev" | "next" | null) {
-      if (state === null || this.isScrolling) return;
-      if (hashEnum === 0 && state === "prev") return;
-      if (hashEnum === 5 && state === "next") return;
-      console.log("before >>", hashEnum, state, this.hashIndex, Date.now());
+      if (state === null || this.isScrolling || this.store.selectedPeopleId || this.worksStore.sliderState) return;
+      if (this.hashIndex !== hashEnum) return;
+      if (this.hashIndex === 0 && state === "prev") return;
+      if (this.hashIndex === 5 && state === "next") return;
       this.isScrolling = true;
       if (state === "prev") {
-        this.hashIndex = this.hashIndex - 1;
+        this.hashIndex = hashEnum - 1;
       } else if (state === "next") {
-        this.hashIndex = this.hashIndex + 1;
+        this.hashIndex = hashEnum + 1;
       }
       window.location.href = `#${IHash[this.hashIndex].toLowerCase()}`;
-      console.log("after >>", hashEnum, state, this.hashIndex, Date.now());
       setTimeout(() => {
         this.isScrolling = false;
-      }, 300);
+      }, 800);
     },
     setIndex(index: number) {
       this.hashIndex = index;
+    },
+    checkOpening() {
+      const opening = new Date("2023-11-29");
+      const today = new Date();
+      if (today > opening) {
+        this.isOpen = true;
+      }
     }
   }
 });
 </script>
 
-<style>
-.wrap {
-  position: relative;
-}
-</style>
+<style></style>

@@ -3,19 +3,18 @@
     v-if="itemData?.detail"
     :class="[{'is-active': itemData?.id === store.selectedPeopleId && isRendered}]"
     class="people-card-item is-clickable"
-    @mouseenter="clippingMaskStore.setClickable(true)"
-    @mouseleave="clippingMaskStore.setClickable(false)"
   >
     <div
-      :style="{backgroundImage: `url(public/images/thumbnails/${itemData.thumbnail})`}"
+      :style="{backgroundImage: `url(/images/thumbnails/${itemData.thumbnail})`}"
       class="people-card-thumbnail"
     ></div>
   </div>
   <div v-else :class="[{'is-active': itemData?.id === store.selectedPeopleId && isRendered}]" class="people-card-item">
     <div
-      :style="[{backgroundImage: `url(public/images/thumbnails/${itemData?.thumbnail})`}]"
+      :style="[{backgroundImage: `url(/images/thumbnails/${itemData?.thumbnail})`}]"
       class="people-card-thumbnail"
     ></div>
+    <div class="people-card-text">{{ itemData.name }}</div>
   </div>
 </template>
 
@@ -23,7 +22,6 @@
 import {defineComponent} from "vue";
 import {IPeople} from "~/interfaces/PeopleInterface";
 import {usePeopleStore} from "~/stores/PeopleStore";
-import {useClippingMaskStore} from "~/stores/ClippingMaskStore";
 
 export default defineComponent({
   name: "PeopleCardItem",
@@ -35,8 +33,7 @@ export default defineComponent({
   data() {
     return {
       isRendered: false,
-      store: usePeopleStore(),
-      clippingMaskStore: useClippingMaskStore()
+      store: usePeopleStore()
     };
   },
   mounted() {
@@ -70,16 +67,19 @@ export default defineComponent({
     left: 0;
     z-index: 10;
     display: inline-block;
-    //background-color: #949381;
-    //background-color: #4f4d4d;
-    background-color: #868694;
-    //background-color: #fff2e1;
-    opacity: 0.7;
+    background-color: #dadde3;
+    opacity: 0.5;
     mix-blend-mode: multiply;
+    transition: opacity 0.3s;
   }
 
   &.is-clickable::before {
-    background-color: #fff2e1;
+    background-color: #ffdfb6;
+  }
+
+  &.is-clickable:hover::before,
+  &.is-active::before {
+    opacity: 1;
   }
 
   &.is-active {
@@ -108,6 +108,27 @@ export default defineComponent({
     background-position: center;
     background-size: cover;
     filter: grayscale(95%);
+  }
+
+  .people-card-text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s;
+    top: 0;
+    left: 0;
+    z-index: 15;
+    background-color: rgba(0, 0, 0, 0.7);
+    word-break: keep-all;
+    font-size: 0.85em;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 </style>
