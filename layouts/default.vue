@@ -39,11 +39,7 @@ export default defineComponent({
     const hashData = window.location.hash;
     const hashEnum = hashData.replace("#", "").charAt(0).toUpperCase() + hashData.replace("#", "").slice(1);
     this.hashIndex = hashEnum ? IHash[hashEnum as keyof typeof IHash] : IHash.Main;
-    // 임시 setTimeout
     this.checkOpening();
-    setTimeout(() => {
-      this.isOpen = true;
-    }, 5000);
   },
   data() {
     return {
