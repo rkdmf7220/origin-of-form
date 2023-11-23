@@ -1,18 +1,24 @@
 <template>
-  <div @wheel="(e) => onScrollWrap(e)" class="wrap">
-    <Main @change-hash="changeHash" />
-    <!--    <Main :show-delayed="showDelayed" />-->
-    <div>
-      <GlobalNav @change-index="setIndex" :hash-index="hashIndex" />
-      <Introduction @change-hash="changeHash" />
-      <Origin @change-hash="changeHash" />
-      <Works @change-hash="changeHash" />
-      <Research @change-hash="changeHash" />
-    </div>
+  <template v-if="!isOpen">
+    <!--  <template v-if="false">-->
+    <Countdown />
+  </template>
+  <template v-else>
+    <div @wheel="(e) => onScrollWrap(e)" class="wrap">
+      <Main @change-hash="changeHash" />
+      <!--    <Main :show-delayed="showDelayed" />-->
+      <div>
+        <GlobalNav @change-index="setIndex" :hash-index="hashIndex" />
+        <Introduction @change-hash="changeHash" />
+        <Origin @change-hash="changeHash" />
+        <Works @change-hash="changeHash" />
+        <Research @change-hash="changeHash" />
+      </div>
 
-    <ClippingMask ref="clipping-mask" />
-    <slot />
-  </div>
+      <ClippingMask ref="clipping-mask" />
+      <slot />
+    </div>
+  </template>
 </template>
 
 <script lang="ts">
@@ -33,6 +39,11 @@ export default defineComponent({
     const hashData = window.location.hash;
     const hashEnum = hashData.replace("#", "").charAt(0).toUpperCase() + hashData.replace("#", "").slice(1);
     this.hashIndex = hashEnum ? IHash[hashEnum as keyof typeof IHash] : IHash.Main;
+    // 임시 setTimeout
+    this.checkOpening();
+    setTimeout(() => {
+      this.isOpen = true;
+    }, 5000);
   },
   data() {
     return {
@@ -44,7 +55,8 @@ export default defineComponent({
       worksStore: useWorksStore(),
       isLoaded: false,
       hashIndex: 0 as number, // IHash
-      isScrolling: false
+      isScrolling: false,
+      isOpen: false
     };
   },
   methods: {
@@ -72,6 +84,13 @@ export default defineComponent({
     },
     setIndex(index: number) {
       this.hashIndex = index;
+    },
+    checkOpening() {
+      const opening = new Date("2023-11-29");
+      const today = new Date();
+      if (today > opening) {
+        this.isOpen = true;
+      }
     }
   }
 });
