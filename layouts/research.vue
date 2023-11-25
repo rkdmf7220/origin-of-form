@@ -107,7 +107,7 @@ export default defineComponent({
     onScrollContent(e: WheelEvent) {
       const refs = this.$refs["research"] as HTMLDivElement;
       const result = checkScrollDone(refs, e);
-      if (result === "prev") {
+      if (result !== null) {
         this.$emit("change-hash", IHash.Research, result);
       }
     },

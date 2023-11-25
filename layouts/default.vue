@@ -14,6 +14,7 @@
         <Works @change-hash="changeHash" />
         <Research @change-hash="changeHash" />
       </div>
+      <Credit @change-hash="changeHash" />
 
       <ClippingMask ref="clipping-mask" />
       <slot />
@@ -31,10 +32,11 @@ import Research from "~/layouts/research.vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
 import {useWorksStore} from "~/stores/WorksStore";
 import {IHash} from "~/interfaces/IHash";
+import Credit from "~/layouts/credit.vue";
 
 export default defineComponent({
   name: "default",
-  components: {Research, Introduction, Works, Origin, Main},
+  components: {Credit, Research, Introduction, Works, Origin, Main},
   mounted() {
     const hashData = window.location.hash;
     const hashEnum = hashData.replace("#", "").charAt(0).toUpperCase() + hashData.replace("#", "").slice(1);

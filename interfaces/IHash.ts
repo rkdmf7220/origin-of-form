@@ -4,5 +4,5 @@ export enum IHash {
   Origin,
   Works,
   Research,
-  Copyright
+  Credit
 }
