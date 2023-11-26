@@ -145,7 +145,7 @@ export default defineComponent({
       this.mobileMask.stageWidth = window.outerWidth;
       this.mobileMask.stageHeight = window.outerHeight;
       this.mobileMask.xPosition = 70 + Math.random() * (this.mobileMask.stageWidth - 140);
-      this.mobileMask.yPosition = 70 + Math.random() * (this.mobileMask.stageHeight - 140);
+      this.mobileMask.yPosition = 120 + Math.random() * (this.mobileMask.stageHeight - 190);
     },
     moveMask() {
       this.mobileMask.xPosition += this.mobileMask.vx;
@@ -157,7 +157,7 @@ export default defineComponent({
       const minX = this.mobileMask.radius - 30;
       const maxX = this.mobileMask.stageWidth - this.mobileMask.radius + 30;
       const minY = this.mobileMask.radius - 30;
-      const maxY = this.mobileMask.stageHeight - this.mobileMask.radius + 30;
+      const maxY = this.mobileMask.stageHeight - this.mobileMask.radius - 20;
 
       if (this.mobileMask.xPosition <= minX || this.mobileMask.xPosition >= maxX) {
         this.mobileMask.vx *= -1;
