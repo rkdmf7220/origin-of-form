@@ -11,7 +11,7 @@
           class="nav-item is-clickable"
           v-for="(item, index) in navData"
           :key="item.id"
-          @click="() => onClickNav(index)"
+          @click="() => onClickNav(index + 1)"
         >
           <a :href="item.path">
             {{ item.title }}
