@@ -16,19 +16,20 @@
           <div class="indicator-map-outer">
             <div class="indicator-map-inner">
               <img src="/images/map.png" alt="세계 지도" />
-              <div class="indicator-coordinate-wrap">
-                <div
-                  v-if="indicatorMap.charts"
-                  v-for="(item, index) in indicatorMap.charts"
-                  :style="[
-                    {left: item.x * 2.0714 + 'px'},
-                    {bottom: item.y * 2.0714 + 'px'},
-                    {height: item.value * 6 + 'px'},
-                    {backgroundColor: item.color}
-                  ]"
-                  :key="index"
-                  class="indicator-coordinate-item"
-                ></div>
+              <div ref="indicator-coordinate-wrap" class="indicator-coordinate-wrap">
+                <template v-if="indicatorMap.charts">
+                  <div
+                    v-for="(item, index) in indicatorMap.charts"
+                    :style="[
+                      {left: item.x * indicatorMapRatio + 'px'},
+                      {bottom: item.y * indicatorMapRatio + 'px'},
+                      {height: item.value * 6 + 'px'},
+                      {backgroundColor: item.color}
+                    ]"
+                    :key="index"
+                    class="indicator-coordinate-item"
+                  ></div>
+                </template>
               </div>
             </div>
           </div>
@@ -51,12 +52,17 @@
                 <span class="indicator-index-axis right-axis">추상</span>
                 <div
                   :style="{backgroundImage: `url(${svgIcon.get('indexIcon')})`}"
+                  ref="indicator-chart-wrap"
                   class="indicator-index indicator-coordinate-wrap"
                 >
                   <div
                     v-if="indicatorIndex.coordinates"
                     v-for="(item, index) in indicatorIndex.coordinates"
-                    :style="[{left: item.x * 2 + 'px'}, {top: item.y * 2 + 'px'}, {backgroundColor: item.color}]"
+                    :style="[
+                      {left: item.x * indicatorChartRatio + 'px'},
+                      {top: item.y * indicatorChartRatio + 'px'},
+                      {backgroundColor: item.color}
+                    ]"
                     :key="index"
                     class="indicator-coordinate-item"
                   ></div>
@@ -80,8 +86,13 @@ import svgIcon from "public/images/svgIcon";
 
 export default defineComponent({
   name: "research",
+  props: {
+    isTouchDevice: Boolean
+  },
   mounted() {
     this.getResearchData();
+    this.computeIndicatorMapRatio();
+    this.computeIndicatorChartRatio();
   },
   computed: {
     svgIcon() {
@@ -100,7 +111,9 @@ export default defineComponent({
   },
   data() {
     return {
-      researchData: null as null | (IResearch | IIndicatorMap | IIndicatorIndex)[]
+      researchData: null as null | (IResearch | IIndicatorMap | IIndicatorIndex)[],
+      indicatorMapRatio: 0 as number,
+      indicatorChartRatio: 0 as number
     };
   },
   methods: {
@@ -115,6 +128,26 @@ export default defineComponent({
       // await nextTick();
       const fetchData = await useFetch("/data/research.json");
       this.researchData = toRaw(fetchData.data.value as (IResearch | IIndicatorMap | IIndicatorIndex)[]);
+    },
+    computeIndicatorMapRatio() {
+      this.$nextTick(() => {
+        const ref = this.$refs["indicator-coordinate-wrap"] as HTMLDivElement | undefined;
+        if (ref) {
+          this.indicatorMapRatio = ref.offsetWidth / 280;
+        } else {
+          setTimeout(this.computeIndicatorMapRatio, 100);
+        }
+      });
+    },
+    computeIndicatorChartRatio() {
+      this.$nextTick(() => {
+        const ref = this.$refs["indicator-chart-wrap"] as HTMLDivElement | undefined;
+        if (ref) {
+          this.indicatorChartRatio = ref.offsetWidth / 200;
+        } else {
+          setTimeout(this.computeIndicatorChartRatio, 100);
+        }
+      });
     }
   }
 });
@@ -279,6 +312,48 @@ export default defineComponent({
               position: absolute;
               top: 0;
               left: 0;*/
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .research-content-wrap {
+    padding: 150px 10px;
+
+    .research-content-item {
+      .text-list {
+        font-size: 1.25em;
+      }
+
+      .caption-list {
+        font-size: 1em;
+      }
+
+      .indicator-wrap {
+        flex-direction: column;
+
+        .indicator-map-outer {
+          width: 100%;
+        }
+
+        .text-list {
+          width: 100%;
+        }
+
+        .indicator-chart-outer {
+          width: 100%;
+
+          .indicator-chart-sticky {
+            height: 100vw;
+
+            .indicator-chart-inner .indicator-index {
+              width: calc(100% - 80px);
+              height: 0;
+              padding-bottom: calc((100% - 80px) * 1.052);
             }
           }
         }

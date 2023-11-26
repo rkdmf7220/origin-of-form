@@ -56,72 +56,103 @@ export default defineComponent({
 #credit {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(69, 69, 69, 0.06) 100%), #2f2f2f;
   box-shadow: 0px -10px 30px 0px rgba(0, 0, 0, 0.3);
+}
 
-  .credit-content-wrap {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+.credit-content-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 200px 0 150px;
+  box-sizing: border-box;
+
+  .credit-content-inner {
+    width: 1180px;
     height: 100%;
-    padding: 200px 0 150px;
-    box-sizing: border-box;
+    border-top: 2px solid #fff;
+    color: white;
+    position: relative;
+    padding-top: 80px;
 
-    .credit-content-inner {
-      width: 1180px;
-      height: 100%;
-      border-top: 2px solid #fff;
-      color: white;
-      position: relative;
-      padding-top: 80px;
+    .credit-list {
+      display: flex;
+      max-height: 450px;
+      flex-direction: column;
+      flex-wrap: wrap;
 
-      .credit-list {
-        display: flex;
-        max-height: 450px;
-        flex-direction: column;
-        flex-wrap: wrap;
+      .credit-item {
+        width: 50%;
+        margin-bottom: 60px;
 
-        .credit-item {
-          width: 50%;
-          margin-bottom: 60px;
+        h4.credit-title {
+          margin: 0 0 20px 0;
+          font-size: 1.5rem;
+        }
 
-          h4.credit-title {
-            margin: 0 0 20px 0;
-            font-size: 1.5rem;
+        .credit-text {
+          font-size: 1.5rem;
+        }
+
+        &.credit-support-item {
+          .support-img {
+            vertical-align: top;
+            margin-bottom: 40px;
+          }
+
+          .support-img-1 {
+            width: 183px;
+            height: 45px;
+          }
+
+          .support-img-2 {
+            width: 180px;
+            height: 45px;
+            margin-left: 50px;
           }
 
           .credit-text {
-            font-size: 1.5rem;
-          }
-
-          &.credit-support-item {
-            .support-img {
-              vertical-align: top;
-              margin-bottom: 40px;
-            }
-
-            .support-img-1 {
-              width: 183px;
-              height: 45px;
-            }
-
-            .support-img-2 {
-              width: 180px;
-              height: 45px;
-              margin-left: 50px;
-            }
-
-            .credit-text {
-              font-size: 1rem;
-              line-height: 1.6rem;
-              word-break: break-word;
-            }
+            font-size: 1rem;
+            line-height: 1.6rem;
+            word-break: break-word;
           }
         }
       }
+    }
 
-      .copyright {
-        position: absolute;
-        bottom: 0;
-        font-weight: 700;
+    .copyright {
+      position: absolute;
+      bottom: 0;
+      font-weight: 700;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .credit-content-wrap {
+    height: auto;
+    padding: 200px 10px 30px;
+
+    .credit-content-inner {
+      width: 100%;
+      height: auto;
+
+      .credit-list {
+        max-height: none;
+        margin-bottom: 80px;
+
+        .credit-item {
+          width: 100%;
+
+          &.credit-support-item {
+            .support-img-list {
+              margin-bottom: 20px;
+
+              .support-img-2 {
+                margin: 0;
+              }
+            }
+          }
+        }
       }
     }
   }

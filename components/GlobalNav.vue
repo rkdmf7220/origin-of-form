@@ -45,11 +45,11 @@ export default defineComponent({
   data() {
     return {
       navData: [
-        {
-          id: "index",
-          title: "메인",
-          path: "#"
-        },
+        // {
+        //   id: "index",
+        //   title: "메인",
+        //   path: "#"
+        // },
         {
           id: "introduction",
           title: "전시 소개",
@@ -141,6 +141,25 @@ export default defineComponent({
         padding: 10px 15px;
         font-weight: 700;
         cursor: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .nav-menu {
+    height: 50px;
+
+    .nav-list .nav-item {
+      width: 25%;
+
+      a {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        font-size: 1em;
+        padding: 0;
       }
     }
   }

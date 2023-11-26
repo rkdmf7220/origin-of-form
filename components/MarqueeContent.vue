@@ -170,4 +170,10 @@ export default defineComponent({
     transform: translate3d(0, -$MOVE_FINAL, 0);
   }
 }
+
+@media screen and (max-width: 767px) {
+  .marquee-list {
+    height: calc(100vh - 50px);
+  }
+}
 </style>

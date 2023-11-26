@@ -201,4 +201,10 @@ export default defineComponent({
     pointer-events: none;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .mask-wrap {
+    height: calc(100vh - 50px);
+  }
+}
 </style>

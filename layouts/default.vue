@@ -12,7 +12,7 @@
         <Introduction @change-hash="changeHash" />
         <Origin @change-hash="changeHash" />
         <Works @change-hash="changeHash" />
-        <Research @change-hash="changeHash" />
+        <Research @change-hash="changeHash" :is-touch-device="isTouchDevice" />
       </div>
       <Credit @change-hash="changeHash" />
 

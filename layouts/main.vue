@@ -48,4 +48,10 @@ export default defineComponent({
     opacity: 0.7;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .main-container {
+    height: calc(100vh - 50px);
+  }
+}
 </style>

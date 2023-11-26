@@ -100,4 +100,14 @@ export default defineComponent({
     }
   }
 }
+
+@media screen and (max-width: 767px) {
+  .contents .introduction-content-wrap {
+    padding: 150px 10px;
+
+    .introduction-content-item .text-list .text-item {
+      font-size: 1.25em;
+    }
+  }
+}
 </style>
