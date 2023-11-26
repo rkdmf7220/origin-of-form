@@ -1,6 +1,6 @@
 <template>
   <div ref="main" @wheel="(e) => onScrollContent(e)" id="main" class="main-container">
-    <MarqueeContent />
+    <MarqueeContent :is-touch-device="isTouchDevice" />
   </div>
 </template>
 
@@ -14,6 +14,9 @@ import {IHash} from "~/interfaces/IHash";
 export default defineComponent({
   name: "main",
   components: {MarqueeContent, ClippingMask},
+  props: {
+    isTouchDevice: Boolean
+  },
   methods: {
     onScrollContent(e: WheelEvent) {
       const refs = this.$refs["main"] as HTMLDivElement;

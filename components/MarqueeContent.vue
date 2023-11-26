@@ -1,18 +1,35 @@
 <template>
   <div :class="{'is-loaded': isLoaded}" class="marquee-list is-interactable">
-    <div v-for="index in 3" class="marquee-item-wrap">
-      <div v-for="item in marqueeList" class="marquee-item" :key="index">
-        <div class="marquee-inner">
-          <div class="marquee-text-wrapper">
-            <div class="marquee-text-list" v-for="index in 2">
-              <span :key="index" class="marquee-text" v-for="name in item">
-                {{ name }}
-              </span>
+    <template v-if="isTouchDevice">
+      <div v-for="index in checkMobileWidth" class="marquee-item-wrap">
+        <div v-for="item in marqueeList" class="marquee-item" :key="index">
+          <div class="marquee-inner">
+            <div class="marquee-text-wrapper">
+              <div class="marquee-text-list" v-for="index in 2">
+                <span :key="index" class="marquee-text" v-for="name in item">
+                  {{ name }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <div v-for="index in 3" class="marquee-item-wrap">
+        <div v-for="item in marqueeList" class="marquee-item" :key="index">
+          <div class="marquee-inner">
+            <div class="marquee-text-wrapper">
+              <div class="marquee-text-list" v-for="index in 2">
+                <span :key="index" class="marquee-text" v-for="name in item">
+                  {{ name }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -22,6 +39,9 @@ import {usePeopleStore} from "~/stores/PeopleStore";
 
 export default defineComponent({
   name: "MarqueeContent",
+  props: {
+    isTouchDevice: Boolean
+  },
   data() {
     return {
       store: usePeopleStore(),
@@ -34,6 +54,18 @@ export default defineComponent({
     },
     peopleLoaded(): boolean {
       return this.store.isLoaded;
+    },
+    checkMobileWidth(): number {
+      const width = window.outerWidth;
+      let count;
+      if (width < 768) {
+        count = 1;
+      } else if (width >= 768 && width < 1024) {
+        count = 2;
+      } else {
+        count = 3;
+      }
+      return count;
     }
   },
   watch: {

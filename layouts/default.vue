@@ -1,11 +1,11 @@
 <template>
-  <template v-if="!isOpen">
-    <!--  <template v-if="false">-->
+  <!--  <template v-if="!isOpen">-->
+  <template v-if="false">
     <Countdown />
   </template>
   <template v-else>
     <div @wheel="(e) => onScrollWrap(e)" class="wrap">
-      <Main @change-hash="changeHash" />
+      <Main @change-hash="changeHash" :is-touch-device="isTouchDevice" />
       <!--    <Main :show-delayed="showDelayed" />-->
       <div>
         <GlobalNav @change-index="setIndex" :hash-index="hashIndex" />
@@ -16,7 +16,7 @@
       </div>
       <Credit @change-hash="changeHash" />
 
-      <ClippingMask ref="clipping-mask" />
+      <ClippingMask ref="clipping-mask" :is-touch-device="isTouchDevice" />
       <slot />
     </div>
   </template>
@@ -37,11 +37,24 @@ import Credit from "~/layouts/credit.vue";
 export default defineComponent({
   name: "default",
   components: {Credit, Research, Introduction, Works, Origin, Main},
+  computed: {
+    isTouchDevice() {
+      return !!(navigator.maxTouchPoints || "ontouchstart" in document.documentElement);
+    }
+  },
   mounted() {
     const hashData = window.location.hash;
     const hashEnum = hashData.replace("#", "").charAt(0).toUpperCase() + hashData.replace("#", "").slice(1);
     this.hashIndex = hashEnum ? IHash[hashEnum as keyof typeof IHash] : IHash.Main;
     this.checkOpening();
+    history.pushState(null, "", "");
+    console.log("router >>", window.location);
+    console.log("url >>", location.hash);
+    if (window.location.hash) {
+      // window.location.replace("");
+      location.hash = "";
+      this.hashIndex = 0;
+    }
   },
   data() {
     return {
