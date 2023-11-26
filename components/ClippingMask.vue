@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!isTouchDevice"
     ref="mask-wrap"
     :style="[
       {maskPosition: `${xPosition - maskSize / 2}px ${yPosition - maskSize / 2}px`},
@@ -9,6 +10,22 @@
     class="mask-wrap"
   >
     <MarqueeContent />
+  </div>
+  <div
+    v-else
+    ref="mask-wrap"
+    :style="[
+      {
+        maskPosition: `${this.mobileMask.xPosition - this.mobileMask.diameter / 2}px ${
+          this.mobileMask.yPosition - this.mobileMask.diameter / 2
+        }px`
+      },
+      {maskSize: `${this.mobileMask.diameter}px`}
+    ]"
+    id="mask-wrap"
+    class="mask-wrap"
+  >
+    <MarqueeContent :is-touch-device="isTouchDevice" />
   </div>
   <!--  <div ref="mask-wrap" id="mask-wrap" class="mask-wrap">-->
   <!--    <MarqueeContent />-->
@@ -22,17 +39,28 @@ import {usePeopleStore} from "~/stores/PeopleStore";
 export default defineComponent({
   name: "ClippingMask",
   mounted() {
-    window.addEventListener("mousemove", (e) => this.getCursorPosition(e));
-    window.addEventListener("mousemove", (e) => this.onHandleMaskSize(e));
-    window.addEventListener("wheel", (e) => this.getCursorPosition(e));
+    if (!this.isTouchDevice) {
+      window.addEventListener("mousemove", (e) => this.getCursorPosition(e));
+      window.addEventListener("mousemove", (e) => this.onHandleMaskSize(e));
+      window.addEventListener("wheel", (e) => this.getCursorPosition(e));
+    } else {
+      this.onSetMaskInMobile();
+      this.animate(this.animate.bind(this));
+    }
   },
   unmounted() {
-    window.removeEventListener("mousemove", (e) => this.getCursorPosition(e));
-    window.removeEventListener("mousemove", (e) => this.onHandleMaskSize(e));
-    window.removeEventListener("wheel", (e) => this.getCursorPosition(e));
+    if (!this.isTouchDevice) {
+      window.removeEventListener("mousemove", (e) => this.getCursorPosition(e));
+      window.removeEventListener("mousemove", (e) => this.onHandleMaskSize(e));
+      window.removeEventListener("wheel", (e) => this.getCursorPosition(e));
+    } else {
+    }
+  },
+  props: {
+    isTouchDevice: Boolean
   },
   computed: {
-    isLoaded() {
+    isLoaded(): boolean {
       return this.peopleStore.isLoaded;
     }
   },
@@ -50,18 +78,23 @@ export default defineComponent({
       peopleStore: usePeopleStore(),
       maskSize: 0 as number,
       animationCancelled: false as boolean,
-      cursorClosest: null as null | "interactable" | "clickable"
+      cursorClosest: null as null | "interactable" | "clickable",
+      mobileMask: {
+        xPosition: 0 as number,
+        yPosition: 0 as number,
+        vx: 1,
+        vy: 1,
+        radius: 100,
+        diameter: 200,
+        stageWidth: 0,
+        stageHeight: 0
+      }
     };
   },
   methods: {
     getCursorPosition(e: MouseEvent): void {
-      // todo: smooth behavior
       this.xPosition = e.pageX;
       this.yPosition = e.pageY;
-
-      // const ref = document.querySelector("#mask-wrap") as HTMLDivElement;
-      // ref.style.setProperty("--x", e.pageX - 15 + "px");
-      // ref.style.setProperty("--y", e.pageY - 15 + "px");
     },
     onHandleMaskSize(e: MouseEvent): void {
       const target = e.target as HTMLElement;
@@ -86,21 +119,6 @@ export default defineComponent({
         this.maskSizeAnimate(oldMaskSize, newMaskSize);
       }
     },
-    easeInOut(startValue: number, endValue: number, duration: number, currentTime: number): number {
-      currentTime /= duration;
-      if (currentTime < 1) {
-        return ((endValue - startValue) / 2) * currentTime * currentTime * currentTime + startValue;
-      }
-      currentTime -= 2;
-      return ((endValue - startValue) / 2) * (currentTime * currentTime * currentTime + 2) + startValue;
-    },
-    ease(startValue: number, endValue: number, duration: number, currentTime: number): number {
-      currentTime /= duration;
-      return (endValue - startValue) * (-Math.pow(currentTime, 2) + currentTime) + startValue;
-    },
-    linear(startValue: number, endValue: number, duration: number, currentTime: number) {
-      return startValue + (endValue - startValue) * (currentTime / duration);
-    },
     easeInOutSine(x: number): number {
       return -(Math.cos(Math.PI * x) - 1) / 2;
     },
@@ -122,11 +140,40 @@ export default defineComponent({
         }
       };
       step();
+    },
+    onSetMaskInMobile() {
+      this.mobileMask.stageWidth = window.outerWidth;
+      this.mobileMask.stageHeight = window.outerHeight;
+      this.mobileMask.xPosition = 70 + Math.random() * (this.mobileMask.stageWidth - 140);
+      this.mobileMask.yPosition = 70 + Math.random() * (this.mobileMask.stageHeight - 140);
+    },
+    moveMask() {
+      this.mobileMask.xPosition += this.mobileMask.vx;
+      this.mobileMask.yPosition += this.mobileMask.vy;
+      this.bounceWindow();
+    },
+    bounceWindow() {
+      if (!this.mobileMask.stageWidth && !this.mobileMask.stageHeight) return;
+      const minX = this.mobileMask.radius - 30;
+      const maxX = this.mobileMask.stageWidth - this.mobileMask.radius + 30;
+      const minY = this.mobileMask.radius - 30;
+      const maxY = this.mobileMask.stageHeight - this.mobileMask.radius + 30;
+
+      if (this.mobileMask.xPosition <= minX || this.mobileMask.xPosition >= maxX) {
+        this.mobileMask.vx *= -1;
+        this.mobileMask.stageHeight += this.mobileMask.vx;
+      }
+      if (this.mobileMask.yPosition <= minY || this.mobileMask.yPosition >= maxY) {
+        this.mobileMask.vy *= -1;
+        this.mobileMask.yPosition += this.mobileMask.vy;
+      }
+    },
+    animate(t: any) {
+      window.requestAnimationFrame(this.animate.bind(this));
+      this.moveMask();
     }
   }
 });
-// todo: closet 으로 clickable, interactable 감지해 size 변경.
-// todo: clippingMaskStore 제거
 </script>
 
 <style scoped lang="scss">
