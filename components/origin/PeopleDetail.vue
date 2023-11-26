@@ -192,7 +192,7 @@ export default defineComponent({
 
     .indicator-text-list {
       width: 100%;
-      max-height: 650px;
+      max-height: 700px;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
@@ -203,6 +203,7 @@ export default defineComponent({
       .indicator-text-item {
         width: calc(50% - 20px);
         word-break: keep-all;
+        min-height: 240px;
       }
     }
 
