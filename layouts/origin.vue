@@ -1,6 +1,6 @@
 <template>
   <div ref="origin" @wheel="(e) => onScrollContent(e)" id="origin" class="contents origin-wrap">
-    <PeopleCardSwiper />
+    <PeopleCardSwiper :is-touch-device="isTouchDevice" />
     <PeopleDetail :show-delayed="showDelayed" :people-data="peopleData" />
   </div>
 </template>
@@ -17,6 +17,9 @@ import {IHash} from "~/interfaces/IHash";
 
 export default defineComponent({
   name: "origin",
+  props: {
+    isTouchDevice: Boolean
+  },
   components: {PeopleDetail, PeopleCardSwiper},
   computed: {
     peopleInfo: function (): IPeople {

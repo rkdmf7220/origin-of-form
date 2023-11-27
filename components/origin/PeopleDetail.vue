@@ -60,7 +60,7 @@
 
 <script lang="ts">
 import {usePeopleStore} from "~/stores/PeopleStore";
-import svgIcon from "public/images/svgIcon";
+import svgIcon from "~/public/images/svgIcon";
 import {ID, IIndicator, IPeople} from "~/interfaces/PeopleInterface";
 import {defineComponent} from "vue";
 
@@ -71,7 +71,7 @@ export default defineComponent({
       return svgIcon;
     },
     peopleData: function (): IPeople {
-      return toRaw(this.peopleStore.getPeopleInformation(this.peopleStore.selectedPeopleId));
+      return toRaw(this.peopleStore.getPeopleInformation(this.peopleStore.selectedPeopleId)) as IPeople;
     },
     peopleIndicatorMap: function (): IIndicator {
       return this.peopleData.indicators!.find((item: IIndicator) => item.id === ID.Map)!;
@@ -270,5 +270,43 @@ export default defineComponent({
 
 .title {
   margin-bottom: 15px;
+}
+
+@media screen and (max-width: 767px) {
+  .people-detail-wrap {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    padding: 50px 10px 50px 20px;
+
+    &.is-show {
+      right: 0;
+    }
+
+    .people-detail-inner {
+      .people-indicator-wrap {
+        .people-indicator-title {
+          margin-bottom: 40px;
+        }
+
+        .indicator-text-list .indicator-text-item {
+          width: 100%;
+          min-height: initial;
+        }
+
+        .indicator-chart-list {
+          flex-direction: column;
+          gap: 40px;
+        }
+      }
+
+      .btn-close {
+        margin-right: 0;
+        padding: 0;
+        backdrop-filter: blur(4px);
+      }
+    }
+  }
 }
 </style>

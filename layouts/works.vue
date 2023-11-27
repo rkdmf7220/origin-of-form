@@ -2,6 +2,7 @@
   <div ref="works" @wheel="(e) => onScrollContent(e)" id="works" class="contents">
     <div class="works-wrap">
       <div
+        v-if="!isTouchDevice"
         :style="{transform: `translateX(calc(-${50 * this.store.listIndex}vw - ${100 * this.store.listIndex}px))`}"
         class="works-list"
       >
@@ -44,7 +45,7 @@
             <div class="works-inner">
               <div @click="() => onClickThumbnail(index)" class="works-img-outer is-clickable">
                 <img
-                  :src="`(https://wonhyukson.github.io/images/origin-of-form/works/)${item.img}`"
+                  :src="'https://wonhyukson.github.io/images/origin-of-form/works/' + item.img"
                   :alt="item.title + ' 작품 사진'"
                   draggable="false"
                 />
@@ -63,16 +64,34 @@
         </template>
       </div>
       <div class="works-btn-wrap">
-        <div
-          :class="{'is-clickable': this.store.listIndex !== 0}"
-          @click="onClickPrevImage"
-          class="works-image-btn prev-btn"
-        ></div>
-        <div
-          :class="{'is-clickable': this.store.listIndex !== worksData?.length - 1}"
-          @click="onClickNextImage"
-          class="works-image-btn next-btn"
-        ></div>
+        <template v-if="!isTouchDevice">
+          <div
+            :class="{'is-clickable': this.store.listIndex !== 0}"
+            @click="onClickPrevImage"
+            class="works-image-btn prev-btn"
+          ></div>
+          <div
+            :class="{'is-clickable': this.store.listIndex !== worksData?.length - 1}"
+            @click="onClickNextImage"
+            class="works-image-btn next-btn"
+          ></div>
+        </template>
+        <template v-else>
+          <div
+            :class="{'is-clickable': this.store.listIndex !== 0}"
+            @click="onClickPrevImage"
+            class="works-image-btn prev-btn"
+          >
+            <div :style="{backgroundImage: `url(${svgIcon.get('prevIcon')})`}" class="btn-icon"></div>
+          </div>
+          <div
+            :class="{'is-clickable': this.store.listIndex !== worksData?.length - 1}"
+            @click="onClickNextImage"
+            class="works-image-btn next-btn"
+          >
+            <div :style="{backgroundImage: `url(${svgIcon.get('nextIcon')})`}" class="btn-icon"></div>
+          </div>
+        </template>
       </div>
       <div class="dim-area"></div>
       <div :class="{'is-slide': this.isSlide}" class="spotlight-area"></div>
@@ -89,11 +108,20 @@ import {checkScrollDone} from "~/utils/scroll";
 import {IHash} from "~/interfaces/IHash";
 import {IWorks} from "~/interfaces/WorksInterface";
 import {useWorksStore} from "~/stores/WorksStore";
+import svgIcon from "public/images/svgIcon";
 
 export default defineComponent({
   name: "works",
+  computed: {
+    svgIcon() {
+      return svgIcon;
+    }
+  },
   mounted() {
     this.getWorksData();
+  },
+  props: {
+    isTouchDevice: Boolean
   },
   data() {
     return {
@@ -139,14 +167,15 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-#works {
+.contents {
   position: relative;
   background-color: #726a57;
 
   .works-wrap {
     width: 100%;
-    height: calc(100vh - 100px);
+    height: 100vh;
     padding-top: 100px;
+    box-sizing: border-box;
     position: absolute;
     overflow: hidden;
     background-image: url("/images/grain-texture4.jpg");
@@ -313,6 +342,128 @@ export default defineComponent({
             opacity: 1;
           }
         }
+      }
+    }
+  }
+}
+
+.show-slider .image-slider-wrap {
+  pointer-events: none;
+}
+
+@media screen and (max-width: 767px) {
+  .contents {
+    .works-wrap {
+      height: auto;
+      padding: 100px 0 150px 0;
+
+      .works-list {
+        width: 100%;
+        height: 100%;
+        padding: 0 40px;
+        gap: 80px;
+        margin-left: 0;
+        box-sizing: border-box;
+        align-items: center;
+
+        .works-item {
+          .works-inner {
+            text-align: center;
+
+            .works-img-outer {
+              // todo: shadow 조정
+              box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.4);
+              display: inline-block;
+              text-align: center;
+
+              img {
+                // todo: 값 체크
+                max-width: calc(100vw - 100px);
+                max-height: 60vh;
+                object-fit: contain;
+              }
+            }
+
+            .works-caption {
+              margin-top: 20px;
+              text-align: left;
+
+              .works-caption-inner {
+                //max-width: 350px;
+                position: relative;
+
+                .works-overlay {
+                  width: 100%;
+                  height: 100%;
+                  position: absolute;
+                }
+
+                .works-caption-text-wrap {
+                  padding: 10px;
+                  color: #fff;
+                  opacity: 0.9;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .works-btn-wrap {
+        .works-image-btn {
+          width: 50px;
+
+          &::before {
+            width: 40px;
+            background: none !important;
+          }
+
+          &.prev-btn {
+            left: 0;
+          }
+
+          &.next-btn {
+            right: 0;
+          }
+
+          .btn-icon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            top: 50%;
+            background-size: contain;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+          }
+
+          &.is-clickable {
+            &.prev-btn .btn-icon,
+            &.next-btn .btn-icon {
+              opacity: 1;
+            }
+          }
+
+          &:not(.is-clickable) {
+            &.prev-btn::before {
+              background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+            }
+
+            &.next-btn::before {
+              background: linear-gradient(270deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+            }
+          }
+        }
+      }
+
+      .spotlight-area {
+        // todo: set spotlight
+        background: radial-gradient(
+          18.37% 46.06% at 50% 45.19%,
+          rgba(255, 199, 147, 1) 0%,
+          rgba(255, 206, 161, 0) 100%
+        );
+        filter: blur(90px);
       }
     }
   }

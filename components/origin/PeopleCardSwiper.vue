@@ -7,10 +7,18 @@
       :style="[{transform: `translate(${isSwiperPosition.xPosition}px, ${isSwiperPosition.yPosition}px)`}]"
     >
       <div :style="{transform: `scale(${currentZoomScale / 4})`}" ref="people-card-wrap" class="people-card-wrap">
-        <PeopleCardList @mousedown="(e) => onDragStartSlider(e)" />
+        <template v-if="!isTouchDevice">
+          <PeopleCardList @mousedown="(e) => onDragStartSlider(e)" />
+        </template>
+        <template v-else>
+          <PeopleCardList />
+        </template>
       </div>
     </div>
     <ZoomIconWrap @change:zoom="applyZoomScale" :current-zoom-scale="currentZoomScale" />
+    <template v-if="isTouchDevice">
+      <SwiperMoveIconWrap @move:swiper="(direction) => movePositionInMobile(direction)" />
+    </template>
   </div>
 </template>
 
@@ -20,10 +28,15 @@ import PeopleCardList from "~/components/origin/PeopleCardList.vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
 import {IPosition} from "~/interfaces/PeopleInterface";
 import ZoomIconWrap from "~/components/origin/ZoomIconWrap.vue";
+import PeopleDetail from "~/components/origin/PeopleDetail.vue";
+import SwiperMoveIconWrap from "~/components/origin/SwiperMoveIconWrap.vue";
 
 export default defineComponent({
   name: "PeopleCardSwiper",
-  components: {ZoomIconWrap, PeopleCardList},
+  components: {SwiperMoveIconWrap, PeopleDetail, ZoomIconWrap, PeopleCardList},
+  props: {
+    isTouchDevice: Boolean
+  },
   computed: {
     isTouchDevice() {
       return navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
@@ -62,8 +75,8 @@ export default defineComponent({
       isPreventTransition: true,
       startDragPointX: 0 as number,
       startDragPointY: 0 as number,
-      currentZoomPositionX: 0,
-      currentZoomPositionY: 0,
+      currentZoomPositionX: 0 as any,
+      currentZoomPositionY: 0 as any,
       currentZoomScale: 2 as number,
       prevZoomScale: 2 as number,
       transitionDuration: 0,
@@ -157,6 +170,29 @@ export default defineComponent({
       setTimeout(() => {
         swiperContents.style.transitionDuration = "0s";
       }, 0.3);
+    },
+    movePositionInMobile(direction: "top" | "left" | "right" | "bottom") {
+      let moveXPosition = 0;
+      let moveYPosition = 0;
+      switch (direction) {
+        case "top":
+          moveYPosition = 100;
+          break;
+        case "right":
+          moveXPosition = -100;
+          break;
+        case "left":
+          moveXPosition = 100;
+          break;
+        case "bottom":
+          moveYPosition = -100;
+          break;
+      }
+      this.currentZoomPositionX = this.currentZoomPositionX + moveXPosition;
+      this.currentZoomPositionY = this.currentZoomPositionY + moveYPosition;
+      const swiperContents = this.$refs["swiper-contents"] as HTMLDivElement;
+      swiperContents.style.transition = "translate, 0.3s";
+      this.applyMovedSwiperPosition({xPosition: this.currentZoomPositionX, yPosition: this.currentZoomPositionY});
     }
   }
 });
