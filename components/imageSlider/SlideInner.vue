@@ -30,9 +30,10 @@
         <picture :id="`slide-img-wrap-${index + 1}`" class="slide-img-wrap">
           <img
             :id="`slide-img-${index + 1}`"
-            :src="item.img"
+            :src="'https://wonhyukson.github.io/images/origin-of-form/works/' + item.img"
             :alt="item.title + ' 작품 사진'"
             :draggable="isTouchDevice"
+            loading="lazy"
           />
         </picture>
       </div>

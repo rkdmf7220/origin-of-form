@@ -9,7 +9,45 @@
           <div v-for="(item, index) in worksData" :key="item.id" class="works-item">
             <div class="works-inner">
               <div @click="() => onClickThumbnail(index)" class="works-img-outer is-clickable">
-                <img :src="item.img" :alt="item.title + ' 작품 사진'" draggable="false" />
+                <template v-if="index < 3">
+                  <img
+                    :src="'https://wonhyukson.github.io/images/origin-of-form/works/' + item.img"
+                    :alt="item.title + ' 작품 사진'"
+                    draggable="false"
+                  />
+                </template>
+                <template v-else>
+                  <img
+                    :src="'https://wonhyukson.github.io/images/origin-of-form/works/' + item.img"
+                    :alt="item.title + ' 작품 사진'"
+                    draggable="false"
+                    loading="lazy"
+                  />
+                </template>
+              </div>
+              <div class="works-caption">
+                <div class="works-caption-inner">
+                  <div class="works-overlay"></div>
+                  <div class="works-caption-text-wrap">
+                    <h4 class="works-title">{{ item.title }}</h4>
+                    <span class="works-caption-text">{{ item.caption }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+      <div v-else :style="{transform: `translateX(-${100 * this.store.listIndex}vw)`}" class="works-list">
+        <template v-if="worksData">
+          <div v-for="(item, index) in worksData" :key="item.id" class="works-item">
+            <div class="works-inner">
+              <div @click="() => onClickThumbnail(index)" class="works-img-outer is-clickable">
+                <img
+                  :src="`(https://wonhyukson.github.io/images/origin-of-form/works/)${item.img}`"
+                  :alt="item.title + ' 작품 사진'"
+                  draggable="false"
+                />
               </div>
               <div class="works-caption">
                 <div class="works-caption-inner">
