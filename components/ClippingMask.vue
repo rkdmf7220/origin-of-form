@@ -144,8 +144,8 @@ export default defineComponent({
     onSetMaskInMobile() {
       this.mobileMask.stageWidth = window.outerWidth;
       this.mobileMask.stageHeight = window.outerHeight;
-      this.mobileMask.xPosition = 70 + Math.random() * (this.mobileMask.stageWidth - 140);
-      this.mobileMask.yPosition = 120 + Math.random() * (this.mobileMask.stageHeight - 190);
+      this.mobileMask.xPosition = 70 + Math.floor(Math.random() * (this.mobileMask.stageWidth - 140));
+      this.mobileMask.yPosition = 120 + Math.floor(Math.random() * (this.mobileMask.stageHeight - 190));
     },
     moveMask() {
       this.mobileMask.xPosition += this.mobileMask.vx;
