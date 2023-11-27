@@ -35,7 +35,6 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
-import {clearInterval} from "timers";
 
 export default defineComponent({
   name: "ClippingMask",
