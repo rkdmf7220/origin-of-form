@@ -1,6 +1,6 @@
 <template>
   <!--  <template v-if="!isOpen">-->
-  <template v-if="false">
+  <template v-if="true">
     <Countdown />
   </template>
   <template v-else>
