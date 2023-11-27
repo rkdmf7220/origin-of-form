@@ -35,6 +35,7 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
+import {clearInterval} from "timers";
 
 export default defineComponent({
   name: "ClippingMask",
@@ -45,7 +46,8 @@ export default defineComponent({
       window.addEventListener("wheel", (e) => this.getCursorPosition(e));
     } else {
       this.onSetMaskInMobile();
-      this.animate(this.animate.bind(this));
+      // this.animate(this.animate.bind(this));
+      this.intervalId = setInterval(() => this.moveMask(), 100);
     }
   },
   unmounted() {
@@ -54,6 +56,7 @@ export default defineComponent({
       window.removeEventListener("mousemove", (e) => this.onHandleMaskSize(e));
       window.removeEventListener("wheel", (e) => this.getCursorPosition(e));
     } else {
+      clearInterval(this.intervalId);
     }
   },
   props: {
@@ -88,7 +91,8 @@ export default defineComponent({
         diameter: 200,
         stageWidth: 0,
         stageHeight: 0
-      }
+      },
+      intervalId: null as any
     };
   },
   methods: {
@@ -167,11 +171,11 @@ export default defineComponent({
         this.mobileMask.vy *= -1;
         this.mobileMask.yPosition += this.mobileMask.vy;
       }
-    },
-    animate(t: any) {
+    }
+    /*animate(t: any) {
       window.requestAnimationFrame(this.animate.bind(this));
       this.moveMask();
-    }
+    }*/
   }
 });
 </script>
