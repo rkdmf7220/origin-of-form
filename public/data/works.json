@@ -1,14 +1,182 @@
 [
   {
-    "id": "194",
-    "title": "194",
-    "caption": "2020, 아크릴에 레고 블록, 86.6 x 65cm",
-    "img": "/images/works/01.jpg"
+    "id": "Assembly 20231028-1",
+    "title": "조립 20231028-1",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 116.8x91cm",
+    "img": "1.jpg"
   },
   {
-    "id": "opera",
-    "title": "오페라의 몰락",
-    "caption": "2019, 레고 블록, 41 x 24 x94cm",
-    "img": "/images/works/02.jpg"
+    "id": "Assembly 20231028-2",
+    "title": "조립 20231028-2",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 116.8x91cm",
+    "img": "2.jpg"
+  },
+  {
+    "id": "Assembly 20230911-1",
+    "title": "조립 20230911-1",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 116.8x72.7cm",
+    "img": "3.jpg"
+  },
+  {
+    "id": "Assembly 20230911-2",
+    "title": "조립 20230911-2",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 116.8x72.7cm",
+    "img": "4.jpg"
+  },
+  {
+    "id": "Assembly 20231006",
+    "title": "조립 20231006",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 72.7x60.6cm",
+    "img": "5.jpg"
+  },
+  {
+    "id": "Assembly 20230919",
+    "title": "조립 20230919",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 72.7x53cm",
+    "img": "6.jpg"
+  },
+  {
+    "id": "Assembly 20230930",
+    "title": "조립 20230930",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 53x45.5cm",
+    "img": "7.jpg"
+  },
+  {
+    "id": "Assembly 20231107-2",
+    "title": "조립 20231107-2",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 72.7x60.6cm",
+    "img": "8.jpg"
+  },
+  {
+    "id": "Assembly 20231107-1",
+    "title": "조립 20231107-1",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 72.7x60.6cm",
+    "img": "9.jpg"
+  },
+  {
+    "id": "Assembly 20230901-1",
+    "title": "조립 20230901-1",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 76.6x32.3cm",
+    "img": "10.jpg"
+  },
+  {
+    "id": "Assembly 20230901-2",
+    "title": "조립 20230901-2",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 76.6x32.3cm",
+    "img": "11.jpg"
+  },
+  {
+    "id": "Assembly 20230901-3",
+    "title": "조립 20230901-3",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 76.6x32.3cm",
+    "img": "12.jpg"
+  },
+  {
+    "id": "Assembly 20230901-4",
+    "title": "조립 20230901-4",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 76.6x32.3cm",
+    "img": "13.jpg"
+  },
+  {
+    "id": "Assembly 20231106",
+    "title": "조립 20231106",
+    "caption": "캔버스에 아크릴, 90.9x72.7cm",
+    "img": "14.jpg"
+  },
+  {
+    "id": "Assembly 20230904",
+    "title": "조립 20230904",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 80.3x80.3cm",
+    "img": "15.jpg"
+  },
+  {
+    "id": "Assembly 20231005",
+    "title": "조립 20231005",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 72.7x60.6cm",
+    "img": "16.jpg"
+  },
+  {
+    "id": "Assembly 20230824",
+    "title": "조립 20230824",
+    "caption": "캔버스에 아크릴, 45.5x53cm",
+    "img": "17.jpg"
+  },
+  {
+    "id": "Assembly 20231011",
+    "title": "조립 20231011",
+    "caption": "캔버스에 아크릴 및 채색된 레고, 24.2x24.2cm",
+    "img": "18.jpg"
+  },
+  {
+    "id": "Block 20231002",
+    "title": "블록 20231002",
+    "caption": "캔버스에 아크릴, 45.5x45.5cm",
+    "img": "19.jpg"
+  },
+  {
+    "id": "Assemble Dawn-1",
+    "title": "조립여명-1",
+    "caption": "캔버스에 아크릴, 37.9x37.9cm",
+    "img": "20.jpg"
+  },
+  {
+    "id": "Assemble Dawn-2",
+    "title": "조립여명-2",
+    "caption": "캔버스에 아크릴, 37.9x37.9cm",
+    "img": "21.jpg"
+  },
+  {
+    "id": "Assembly 20231020",
+    "title": "조립 20231020",
+    "caption": "종이에 실크스크린, 39.4x27.2cm",
+    "img": "22.jpg"
+  },
+  {
+    "id": "Assembly 20231011",
+    "title": "조립 20231011",
+    "caption": "종이에 아크릴, 39.4x27.2cm",
+    "img": "23.jpg"
+  },
+  {
+    "id": "Assembly 20231021",
+    "title": "조립 20231021",
+    "caption": "종이에 아크릴, 39.4x27.2cm",
+    "img": "24.jpg"
+  },
+  {
+    "id": "Assembly 20231008",
+    "title": "조립 20231008",
+    "caption": "종이에 아크릴, 39.4x27.2cm",
+    "img": "25.jpg"
+  },
+  {
+    "id": "Assembly 20231022",
+    "title": "조립 20231022",
+    "caption": "종이에 아크릴, 54.5x39.4cm",
+    "img": "26.jpg"
+  },
+  {
+    "id": "Assembly 20231027",
+    "title": "조립 20231027",
+    "caption": "종이에 아크릴, 39.4x27.2cm",
+    "img": "27.jpg"
+  },
+  {
+    "id": "Form 20231010",
+    "title": "형태 20231010",
+    "caption": "종이에 아크릴, 65x48cm",
+    "img": "28.jpg"
+  },
+  {
+    "id": "Form 20230921",
+    "title": "형태 20230921",
+    "caption": "종이에 아크릴, 65x48cm",
+    "img": "29.jpg"
+  },
+  {
+    "id": "Form 20230923",
+    "title": "형태 20230923",
+    "caption": "종이에 아크릴, 65x48cm",
+    "img": "30.jpg"
   }
 ]
