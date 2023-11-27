@@ -13,13 +13,13 @@
     height: 100%;
     display: flex;
     transition-duration: 0ms;
+
     &.is-drag {
       .slide-img-item .slide-img-wrap {
         transition-duration: 0ms;
 
         img {
           transition-duration: 0ms;
-          cursor: grabbing;
         }
       }
     }
@@ -45,7 +45,6 @@
           width: auto;
           height: auto;
           //object-fit: contain;
-          cursor: grab;
           transition: transform 0.15s;
         }
       }
