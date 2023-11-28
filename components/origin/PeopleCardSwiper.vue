@@ -58,7 +58,11 @@ export default defineComponent({
   mounted() {
     window.addEventListener("mousemove", this.onDragSwiper);
     window.addEventListener("mouseup", (e) => this.onDropSwiper(e));
-    this.applyMovedSwiperPosition({xPosition: this.currentZoomPositionX, yPosition: this.currentZoomPositionY});
+    if (this.isTouchDevice) {
+      this.currentZoomPositionX = -600;
+      this.currentZoomPositionY = -100;
+      this.applyMovedSwiperPosition({xPosition: this.currentZoomPositionX, yPosition: this.currentZoomPositionY});
+    }
     // this.applyMovedSwiperPosition({xPosition})
   },
   unmounted() {
@@ -72,8 +76,8 @@ export default defineComponent({
       isPreventTransition: true,
       startDragPointX: 0 as number,
       startDragPointY: 0 as number,
-      currentZoomPositionX: -200 as any,
-      currentZoomPositionY: -200 as any,
+      currentZoomPositionX: 0 as any,
+      currentZoomPositionY: 0 as any,
       currentZoomScale: 2 as number,
       prevZoomScale: 2 as number,
       transitionDuration: 0,
