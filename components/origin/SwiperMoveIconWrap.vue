@@ -1,25 +1,17 @@
 <template>
   <div class="swiper-move-btn-wrap">
-    <div
-      @click="() => onClickMoveBtn('top')"
-      :style="{backgroundImage: `url(${svgIcon.get('upIcon')})`}"
-      class="slide-btn top-btn"
-    ></div>
-    <div
-      @click="() => onClickMoveBtn('left')"
-      :style="{backgroundImage: `url(${svgIcon.get('prevIcon')})`}"
-      class="slide-btn left-btn"
-    ></div>
-    <div
-      @click="() => onClickMoveBtn('right')"
-      :style="{backgroundImage: `url(${svgIcon.get('nextIcon')})`}"
-      class="slide-btn right-btn"
-    ></div>
-    <div
-      @click="() => onClickMoveBtn('bottom')"
-      :style="{backgroundImage: `url(${svgIcon.get('downIcon')})`}"
-      class="slide-btn bottom-btn"
-    ></div>
+    <div @click="() => onClickMoveBtn('top')" class="slide-btn top-btn">
+      <div :style="{backgroundImage: `url(${svgIcon.get('upIcon')})`}" class="btn-icon"></div>
+    </div>
+    <div @click="() => onClickMoveBtn('left')" class="slide-btn left-btn">
+      <div :style="{backgroundImage: `url(${svgIcon.get('prevIcon')})`}" class="btn-icon"></div>
+    </div>
+    <div @click="() => onClickMoveBtn('right')" class="slide-btn right-btn">
+      <div :style="{backgroundImage: `url(${svgIcon.get('nextIcon')})`}" class="btn-icon"></div>
+    </div>
+    <div @click="() => onClickMoveBtn('bottom')" class="slide-btn bottom-btn">
+      <div :style="{backgroundImage: `url(${svgIcon.get('downIcon')})`}" class="btn-icon"></div>
+    </div>
   </div>
 </template>
 
@@ -45,9 +37,9 @@ export default defineComponent({
 <style scoped lang="scss">
 .swiper-move-btn-wrap {
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
   z-index: 30;
-  top: 50px;
+  top: 0;
   left: 0;
   position: absolute;
   pointer-events: none;
@@ -57,6 +49,14 @@ export default defineComponent({
     pointer-events: auto;
     background-repeat: no-repeat;
     background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .btn-icon {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   .top-btn,
@@ -70,25 +70,49 @@ export default defineComponent({
   .left-btn,
   .right-btn {
     width: 40px;
-    height: 100%;
-    top: 0;
-    bottom: 0;
+    height: calc(100% - 80px);
+    top: 40px;
+    bottom: 40px;
   }
 
   .top-btn {
     top: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 75%
+    );
   }
 
   .bottom-btn {
     bottom: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 75%
+    );
   }
 
   .left-btn {
     left: 0;
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 75%
+    );
   }
 
   .right-btn {
     right: 0;
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 75%
+    );
   }
 }
 </style>
