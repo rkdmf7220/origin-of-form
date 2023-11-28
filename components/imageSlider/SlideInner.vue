@@ -1,6 +1,9 @@
 <template>
   <div class="slide-inner">
-    <div :class="{'is-disable': this.currentIndex === 1}" class="slide-btn-wrap prev-btn-wrap">
+    <div
+      :class="{'is-disable': this.currentIndex === 1, 'is-clickable': this.currentIndex !== 1}"
+      class="slide-btn-wrap prev-btn-wrap"
+    >
       <SlideBtn
         v-show="!isTouchDevice || !pinchZoom"
         @click="onClickPrevBtn"
@@ -8,7 +11,10 @@
         class="slide-prev-btn"
       />
     </div>
-    <div :class="{'is-disable': this.currentIndex === maxIndex}" class="slide-btn-wrap next-btn-wrap">
+    <div
+      :class="{'is-disable': this.currentIndex === maxIndex, 'is-clickable': this.currentIndex !== maxIndex}"
+      class="slide-btn-wrap next-btn-wrap"
+    >
       <SlideBtn
         v-show="!isTouchDevice || !pinchZoom"
         @click="onClickNextBtn"

@@ -3,13 +3,13 @@
     <div class="slide-counter">
       <span>{{ currentIndex }} / {{ maxIndex }}</span>
     </div>
-    <div :class="{'is-disable': pinchZoomScale === 1}" class="slide-btn-wrap">
+    <div :class="{'is-disable': pinchZoomScale === 1, 'is-clickable': pinchZoomScale !== 1}" class="slide-btn-wrap">
       <SlideBtn @click="onClickZoomOutBtn" icon-type="zoomOutIcon" class="slide-zoom-btn slide-zoom-out-btn" />
     </div>
-    <div :class="{'is-disable': pinchZoomScale === 4}" class="slide-btn-wrap">
+    <div :class="{'is-disable': pinchZoomScale === 4, 'is-clickable': pinchZoomScale !== 4}" class="slide-btn-wrap">
       <SlideBtn @click="onClickZoomInBtn" icon-type="zoomInIcon" class="slide-zoom-btn slide-zoom-in-btn" />
     </div>
-    <div class="slide-btn-wrap">
+    <div class="slide-btn-wrap is-clickable">
       <SlideBtn @click="onClickCloseBtn" icon-type="closeIcon" class="slide-close-btn" />
     </div>
   </div>
