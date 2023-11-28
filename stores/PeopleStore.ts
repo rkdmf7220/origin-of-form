@@ -22,10 +22,16 @@ export const usePeopleStore = defineStore("people", {
   },
   actions: {
     async setPeopleList() {
+      const now = new Date().valueOf();
       await nextTick();
       const fetchData = await useFetch("/data/people.json");
       this.peopleList = fetchData.data.value as IPeople[];
-      this.isLoaded = true;
+      const done = new Date().valueOf();
+      if (done - now > 4000) {
+        this.isLoaded = true;
+      } else {
+        setTimeout(() => (this.isLoaded = true), 4000 - (done - now));
+      }
     },
     async setMarqueeTextList() {
       await nextTick();
