@@ -23,6 +23,7 @@ export default defineComponent({
       const result = checkScrollDone(refs, e);
       if (result === "next") {
         this.$emit("change-hash", IHash.Main, result);
+        setTimeout(() => document.body.classList.remove("is-main"), 500);
       }
     }
   }

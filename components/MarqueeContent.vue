@@ -135,6 +135,7 @@ export default defineComponent({
         flex-direction: column;
         position: absolute;
         transform: translate3d(0, $MOVE_INITIAL, 0);
+        animation-play-state: paused;
         //animation: marquee 5s linear infinite;
       }
 
@@ -151,6 +152,10 @@ export default defineComponent({
 
 .mask-wrap .marquee-item .marquee-inner .marquee-text {
   color: #000;
+}
+
+.is-main .marquee-text-wrapper {
+  animation-play-state: running !important;
 }
 
 @keyframes marquee {
