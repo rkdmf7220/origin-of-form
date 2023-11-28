@@ -99,7 +99,7 @@ export default defineComponent({
   overflow: hidden;
   pointer-events: auto;
   justify-content: center;
-  font-family: "KOTRA Bold", serif;
+  font-family: "KOTRA Bold", sans-serif;
   font-weight: bold;
 
   .marquee-item-wrap {
