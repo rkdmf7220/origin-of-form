@@ -21,6 +21,7 @@ onMounted(() => {
   peopleStore.setMarqueeTextList();
   window.onload = function () {
     console.log("is loaded");
+    debugger;
   };
 });
 watch(
