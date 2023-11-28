@@ -184,7 +184,6 @@ export default defineComponent({
     height: 100vh;
     padding-top: 100px;
     box-sizing: border-box;
-    position: absolute;
     overflow: hidden;
     background-image: url("/images/grain-texture4.jpg");
     background-size: cover;
@@ -474,6 +473,13 @@ export default defineComponent({
         filter: blur(90px);
       }
     }
+  }
+
+  .image-slider-wrap {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
   }
 }
 </style>

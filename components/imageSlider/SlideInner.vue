@@ -142,10 +142,6 @@ export default {
         this.resetZoomScale();
         this.$emit("decrease:index");
       }
-      // let testWidth = document.getElementById(`slide-img-${this.currentIndex}`).offsetWidth
-      // let testHeight = document.getElementById(`slide-img-${this.currentIndex}`).offsetHeight
-      // console.log('가로 확인 >>', testWidth, testHeight)
-      // this.applyMovedSliderPosition()
     },
     onClickNextBtn() {
       if (this.currentIndex < this.maxIndex) {

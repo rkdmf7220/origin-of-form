@@ -1,11 +1,6 @@
 <template>
   <div class="origin-swiper">
-    <div
-      class="origin-swiper-contents"
-      ref="swiper-contents"
-      :class="{'is-swipe': isSwipe}"
-      :style="[{transform: `translate(${isSwiperPosition.xPosition}px, ${isSwiperPosition.yPosition}px)`}]"
-    >
+    <div class="origin-swiper-contents" ref="swiper-contents" :class="{'is-swipe': isSwipe}">
       <div :style="{transform: `scale(${currentZoomScale / 4})`}" ref="people-card-wrap" class="people-card-wrap">
         <template v-if="!isTouchDevice">
           <PeopleCardList @mousedown="(e) => onDragStartSlider(e)" />
@@ -63,6 +58,8 @@ export default defineComponent({
   mounted() {
     window.addEventListener("mousemove", this.onDragSwiper);
     window.addEventListener("mouseup", (e) => this.onDropSwiper(e));
+    this.applyMovedSwiperPosition({xPosition: this.currentZoomPositionX, yPosition: this.currentZoomPositionY});
+    // this.applyMovedSwiperPosition({xPosition})
   },
   unmounted() {
     window.removeEventListener("mousemove", this.onDragSwiper);
@@ -75,8 +72,8 @@ export default defineComponent({
       isPreventTransition: true,
       startDragPointX: 0 as number,
       startDragPointY: 0 as number,
-      currentZoomPositionX: 0 as any,
-      currentZoomPositionY: 0 as any,
+      currentZoomPositionX: -200 as any,
+      currentZoomPositionY: -200 as any,
       currentZoomScale: 2 as number,
       prevZoomScale: 2 as number,
       transitionDuration: 0,
@@ -219,6 +216,13 @@ export default defineComponent({
       transform-style: preserve-3d;
       transform-origin: 0 0;
     }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .origin-swiper {
+    height: calc(100vh - 50px);
+    background-color: #000;
   }
 }
 </style>

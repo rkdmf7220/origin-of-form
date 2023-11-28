@@ -65,8 +65,16 @@ export default defineComponent({
 .origin-wrap {
   width: 100%;
   height: 100vh;
-  background-color: #131313;
+  background-color: #000;
   position: relative;
   overflow: hidden;
+}
+
+@media screen and (max-width: 767px) {
+  .origin-wrap {
+    padding-top: 50px;
+    height: calc(100vh - 50px);
+    background-color: transparent;
+  }
 }
 </style>
