@@ -4,7 +4,6 @@
 @font-face {
   font-family: "KOTRA Bold";
   src: local("KOTRA_Bold"), url("../fonts/KOTRA_BOLD.otf") format("opentype");
-  //src: local("KOTRA_Bold"), url("~/assets/fonts/KOTRA_BOLD.otf") format("opentype");
   font-weight: bold;
   font-style: normal;
 }
@@ -14,6 +13,14 @@ html {
   background-color: #131313;
   cursor: none;
   font-family: "Noto Sans KR", sans-serif;
+}
+
+button {
+  cursor: none;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
 }
 
 body.show-slider {
