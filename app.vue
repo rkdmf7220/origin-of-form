@@ -33,6 +33,18 @@ watch(
     }
   }
 );
+useHead({
+  htmlAttrs: {
+    lang: "ko"
+  },
+  title: "형태의 뿌리"
+});
+useSeoMeta({
+  title: "형태의 뿌리",
+  ogTitle: "형태의 뿌리",
+  ogDescription: "과거 및 동시대 문자 예술에 대한 연구 및 실험",
+  ogUrl: "//originofform.com"
+});
 </script>
 
 <style lang="scss">
