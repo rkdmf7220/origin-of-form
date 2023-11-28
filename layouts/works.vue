@@ -356,6 +356,10 @@ export default defineComponent({
 
 .show-slider .image-slider-wrap {
   pointer-events: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
 }
 
 @media screen and (max-width: 767px) {
@@ -476,10 +480,6 @@ export default defineComponent({
   }
 
   .image-slider-wrap {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 999;
   }
 }
 </style>
