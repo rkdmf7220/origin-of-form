@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import svgIcon from "public/images/svgIcon";
+import svgIcon from "~/public/images/svgIcon";
 
 export default defineComponent({
   name: "ZoomIconWrap",
