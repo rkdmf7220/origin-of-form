@@ -1,6 +1,7 @@
 <template>
   <!--  <template v-if="!isOpen">-->
-  <template v-if="true">
+  <!--  <template v-if="true">-->
+  <template v-if="false">
     <Countdown />
   </template>
   <template v-else>
@@ -46,12 +47,10 @@ export default defineComponent({
     const hashData = window.location.hash;
     const hashEnum = hashData.replace("#", "").charAt(0).toUpperCase() + hashData.replace("#", "").slice(1);
     this.hashIndex = hashEnum ? IHash[hashEnum as keyof typeof IHash] : IHash.Main;
+    document.body.classList.add("is-main");
     this.checkOpening();
     history.pushState(null, "", "");
-    console.log("router >>", window.location);
-    console.log("url >>", location.hash);
     if (window.location.hash) {
-      // window.location.replace("");
       location.hash = "";
       this.hashIndex = 0;
     }

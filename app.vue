@@ -19,6 +19,9 @@ onMounted(() => {
   const peopleStore = usePeopleStore();
   peopleStore.setPeopleList();
   peopleStore.setMarqueeTextList();
+  window.onload = function () {
+    console.log("is loaded");
+  };
 });
 watch(
   () => usePeopleStore().isLoaded,
