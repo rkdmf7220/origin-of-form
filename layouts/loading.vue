@@ -159,4 +159,10 @@ export default defineComponent({
     }
   }
 }
+
+@media screen and (max-width: 767px) {
+  .loading-wrap .loading-inner h1 {
+    font-size: 4em;
+  }
+}
 </style>
