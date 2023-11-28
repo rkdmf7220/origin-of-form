@@ -1,11 +1,12 @@
 <template>
   <div>
-    <slot>
-      <Loading :is-loaded="isLoaded" :show-delayed="showDelayed" />
-    </slot>
-    <slot v-if="usePeopleStore().isLoaded">
-      <NuxtLayout />
-    </slot>
+    <!--    <slot>
+          <Loading :is-loaded="isLoaded" :show-delayed="showDelayed" />
+        </slot>
+        <slot v-if="usePeopleStore().isLoaded">
+          <NuxtLayout />
+        </slot>-->
+    <NuxtLayout />
   </div>
 </template>
 <script setup lang="ts">
@@ -37,7 +38,8 @@ useHead({
   htmlAttrs: {
     lang: "ko"
   },
-  title: "형태의 뿌리"
+  title: "형태의 뿌리",
+  meta: [{"http-equiv": "Content-Security-Policy", content: "connect-src 'self' vitals.vercel-insights.com"}]
 });
 useSeoMeta({
   title: "형태의 뿌리",
