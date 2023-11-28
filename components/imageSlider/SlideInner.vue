@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     slideTranslatePosition() {
-      return (this.currentIndex - 1) * -document.body.clientWidth;
+      return (this.currentIndex - 1) * -window.innerWidth;
     },
     maxIndex() {
       return this.imgList?.length;
