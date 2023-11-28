@@ -110,6 +110,7 @@ export default {
       this.$refs["slide-inner"].isPreventTransition = true;
       this.changeZoomScale("reset");
       this.store.hideSlider();
+      this.$emit("close:slider");
     }
   }
 };

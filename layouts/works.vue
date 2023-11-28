@@ -96,8 +96,8 @@
       <div class="dim-area"></div>
       <div :class="{'is-slide': this.isSlide}" class="spotlight-area"></div>
     </div>
-    <div class="image-slider-wrap">
-      <ImageSlider ref="slider-component" :img-list="worksData!" />
+    <div v-if="slideCondition" class="image-slider-wrap">
+      <ImageSlider ref="slider-component" @close:slider="closeSlider" :img-list="worksData!" />
     </div>
   </div>
 </template>
@@ -127,7 +127,8 @@ export default defineComponent({
     return {
       worksData: null as null | IWorks[],
       isSlide: false,
-      store: useWorksStore()
+      store: useWorksStore(),
+      slideCondition: false
     };
   },
   methods: {
@@ -157,10 +158,17 @@ export default defineComponent({
       }, 500);
     },
     onClickThumbnail(index: number) {
-      const sliderRef = this.$refs["slider-component"] as any;
       this.store.setListIndex(index);
-      this.store.showSlider();
-      setTimeout(() => (sliderRef.$refs["slide-inner"].isPreventTransition = false), 10);
+      this.slideCondition = true;
+      setTimeout(() => this.store.showSlider(), 10);
+      setTimeout(() => this.setPreventToFalse(), 50);
+    },
+    closeSlider() {
+      setTimeout(() => (this.slideCondition = false), 300);
+    },
+    setPreventToFalse() {
+      const sliderRef = this.$refs["slider-component"] as any;
+      sliderRef.$refs["slide-inner"].isPreventTransition = false;
     }
   }
 });
