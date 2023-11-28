@@ -19,10 +19,10 @@ onMounted(() => {
   const peopleStore = usePeopleStore();
   peopleStore.setPeopleList();
   peopleStore.setMarqueeTextList();
-  window.onload = function () {
+  window.addEventListener("load", () => {
     console.log("is loaded");
     debugger;
-  };
+  });
 });
 watch(
   () => usePeopleStore().isLoaded,
