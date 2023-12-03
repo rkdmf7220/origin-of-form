@@ -1,0 +1,29 @@
+@import "slide-btn";
+@import "slide-inner";
+
+
+.image-slider {
+  height: 100vh;
+  transition: opacity 150ms;
+  position: relative;
+  z-index: 101;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+
+  &.is-show {
+    pointer-events: initial;
+  }
+
+  .slide-dim {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 109;
+    left: 0;
+    top: 0;
+    background-color: #160F09;
+    opacity: 0.3;
+  }
+}
+

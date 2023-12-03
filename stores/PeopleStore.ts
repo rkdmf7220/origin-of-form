@@ -5,8 +5,11 @@ export const usePeopleStore = defineStore("people", {
   state: () => {
     return {
       peopleList: [] as IPeople[],
+      marqueeTextList: [] as string[],
       swiperPosition: {} as IPosition,
-      isLoaded: false
+      // isLoaded: false,
+      isLoaded: false,
+      selectedPeopleId: "" as string
     };
   },
   getters: {
@@ -19,15 +22,24 @@ export const usePeopleStore = defineStore("people", {
   },
   actions: {
     async setPeopleList() {
+      const now = new Date().valueOf();
       await nextTick();
       const fetchData = await useFetch("/data/people.json");
       this.peopleList = fetchData.data.value as IPeople[];
-      this.isLoaded = true;
+      const done = new Date().valueOf();
+      if (done - now > 4000) {
+        this.isLoaded = true;
+      } else {
+        setTimeout(() => (this.isLoaded = true), 4000 - (done - now));
+      }
     },
-    async setSwiperPosition(xPosition: number, yPosition: number) {
+    async setMarqueeTextList() {
       await nextTick();
-      this.swiperPosition = {xPosition, yPosition};
-      return this.swiperPosition;
+      const fetchData = await useFetch("/data/intro-name.json");
+      this.marqueeTextList = fetchData.data.value as string[];
+    },
+    setSelectedPeopleId(id: string) {
+      return (this.selectedPeopleId = id);
     }
   }
 });

@@ -1,0 +1,67 @@
+// font
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+@font-face {
+  font-family: "KOTRA Bold";
+  src: local("KOTRA_Bold"), url("../fonts/KOTRA_BOLD.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #131313;
+  cursor: none;
+  font-family: "Noto Sans KR", sans-serif, "KOTRA Bold";
+}
+
+button {
+  cursor: none;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+}
+
+body.show-slider {
+  overflow: hidden;
+}
+
+.wrap {
+  position: relative;
+}
+
+.contents {
+  width: 100%;
+  height: 100vh;
+
+  &.is-scrollable {
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 5px;
+      height: 10px;
+      background-color: #ffffff;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      width: 3px;
+      background-color: transparent;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .contents {
+    height: auto;
+
+    &.is-scrollable {
+      overflow: auto;
+    }
+  }
+}

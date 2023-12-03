@@ -1,13 +1,19 @@
 <template>
   <div class="origin-swiper">
-    <div class="origin-swiper-contents"
-         ref="swiper-contents"
-         :class="[{'is-grabbing': isMouseDown}, {'is-swipe': isSwipe}]"
-         :style="{'transform': `translate(${isSwiperPosition.xPosition}px, ${isSwiperPosition.yPosition}px)`}"
-         @mousedown="(e) => onDragStartSlider(e)"
-    >
-      <PeopleCardList />
+    <div class="origin-swiper-contents" ref="swiper-contents" :class="{'is-swipe': isSwipe}">
+      <div :style="{transform: `scale(${currentZoomScale / 4})`}" ref="people-card-wrap" class="people-card-wrap">
+        <template v-if="!isTouchDevice">
+          <PeopleCardList @mousedown="(e) => onDragStartSlider(e)" />
+        </template>
+        <template v-else>
+          <PeopleCardList />
+        </template>
+      </div>
     </div>
+    <ZoomIconWrap @change:zoom="applyZoomScale" :current-zoom-scale="currentZoomScale" />
+    <template v-if="isTouchDevice">
+      <SwiperMoveIconWrap @move:swiper="(direction) => movePositionInMobile(direction)" />
+    </template>
   </div>
 </template>
 
@@ -16,10 +22,16 @@ import {defineComponent} from "vue";
 import PeopleCardList from "~/components/origin/PeopleCardList.vue";
 import {usePeopleStore} from "~/stores/PeopleStore";
 import {IPosition} from "~/interfaces/PeopleInterface";
+import ZoomIconWrap from "~/components/origin/ZoomIconWrap.vue";
+import PeopleDetail from "~/components/origin/PeopleDetail.vue";
+import SwiperMoveIconWrap from "~/components/origin/SwiperMoveIconWrap.vue";
 
 export default defineComponent({
   name: "PeopleCardSwiper",
-  components: {PeopleCardList},
+  components: {SwiperMoveIconWrap, PeopleDetail, ZoomIconWrap, PeopleCardList},
+  props: {
+    isTouchDevice: Boolean
+  },
   computed: {
     isTouchDevice() {
       return navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
@@ -27,11 +39,31 @@ export default defineComponent({
     isSwiperPosition() {
       // todo: maximum/minimum position
       return usePeopleStore().swiperPosition;
+    },
+    swiperMaxWidth(): number {
+      // 스와이퍼는 (0, 0) ~ (swiperMaxWidth, swiperMaxHeight)까지 움직일 수 있음
+      const peopleCardWrap = this.$refs["people-card-wrap"] as HTMLDivElement;
+      const contentsSize = (peopleCardWrap.offsetWidth / 4) * this.currentZoomScale;
+      // 회댓값 = 화면 크기 - 배율 반영된 div 크기 - 600(상하단 margin 각 300씩 추가)
+      const result = window.innerWidth - contentsSize - 600;
+      return result > 0 ? 0 : result;
+    },
+    swiperMaxHeight(): number {
+      const peopleCardWrap = this.$refs["people-card-wrap"] as HTMLDivElement;
+      const contentsSize = (peopleCardWrap.offsetHeight / 4) * this.currentZoomScale;
+      const result = window.innerHeight - contentsSize - 600;
+      return result > 0 ? 0 : result;
     }
   },
   mounted() {
     window.addEventListener("mousemove", this.onDragSwiper);
     window.addEventListener("mouseup", (e) => this.onDropSwiper(e));
+    if (this.isTouchDevice) {
+      this.currentZoomPositionX = -600;
+      this.currentZoomPositionY = -100;
+      this.applyMovedSwiperPosition({xPosition: this.currentZoomPositionX, yPosition: this.currentZoomPositionY});
+    }
+    // this.applyMovedSwiperPosition({xPosition})
   },
   unmounted() {
     window.removeEventListener("mousemove", this.onDragSwiper);
@@ -44,15 +76,15 @@ export default defineComponent({
       isPreventTransition: true,
       startDragPointX: 0 as number,
       startDragPointY: 0 as number,
-      currentZoomPositionX: 0,
-      currentZoomPositionY: 0,
-      prevZoomScale: 0 as number,
+      currentZoomPositionX: 0 as any,
+      currentZoomPositionY: 0 as any,
+      currentZoomScale: 2 as number,
+      prevZoomScale: 2 as number,
+      transitionDuration: 0,
       store: usePeopleStore()
     };
   },
   methods: {
-    // todo: swiperStore 만들어서 좌표를 store에 저장하는 방식 사용.
-    // todo: swiper 이동 한계 구현
     applyMovedSwiperPosition({xPosition, yPosition}: IPosition) {
       const swiperContents = this.$refs["swiper-contents"] as HTMLDivElement;
       swiperContents.style.transform = `translate(${xPosition}px, ${yPosition}px)`;
@@ -84,12 +116,24 @@ export default defineComponent({
         currentPointX = e.clientX;
         currentPointY = e.clientY;
       }
-      // compute drag distance
+      // compute dragged distance
       const moveDragDistanceX = currentPointX! - this.startDragPointX;
       const moveDragDistanceY = currentPointY! - this.startDragPointY;
-      const movedDragPositionX = this.store.swiperPosition.xPosition + moveDragDistanceX;
-      const movedDragPositionY = this.store.swiperPosition.yPosition + moveDragDistanceY;
-      // todo: maximum/minimum position
+      // compute dragged position
+      let movedDragPositionX = this.currentZoomPositionX + moveDragDistanceX;
+      let movedDragPositionY = this.currentZoomPositionY + moveDragDistanceY;
+      // compute maximum/minimum X position
+      if (movedDragPositionX > 0) {
+        movedDragPositionX = 0;
+      } else if (movedDragPositionX < this.swiperMaxWidth) {
+        movedDragPositionX = this.swiperMaxWidth;
+      }
+      // compute maximum/minimum Y position
+      if (movedDragPositionY > 0) {
+        movedDragPositionY = 0;
+      } else if (movedDragPositionY < this.swiperMaxHeight) {
+        movedDragPositionY = this.swiperMaxHeight;
+      }
       return {xPosition: movedDragPositionX, yPosition: movedDragPositionY};
     },
     moveSwiperPosition(e: MouseEvent | TouchEvent) {
@@ -104,7 +148,52 @@ export default defineComponent({
       this.isMouseDown = false;
       this.isSwipe = false;
       const {xPosition, yPosition} = this.calcSwipePosition(e);
-      this.store.setSwiperPosition(xPosition, yPosition);
+      this.currentZoomPositionX = xPosition;
+      this.currentZoomPositionY = yPosition;
+    },
+    applyZoomScale(zoomOpt: string) {
+      // todo: run moveSwiperPosition when zoom scale changes
+      const swiperContents = this.$refs["swiper-contents"] as HTMLDivElement;
+      swiperContents.style.transitionDuration = "0.3s";
+      if (zoomOpt === "zoomIn") {
+        this.currentZoomScale++;
+      } else {
+        this.currentZoomScale--;
+      }
+      // calc new xy position
+      const xPosition = (this.currentZoomPositionX / this.prevZoomScale) * this.currentZoomScale;
+      const yPosition = (this.currentZoomPositionY / this.prevZoomScale) * this.currentZoomScale;
+      // store new xy position
+      this.currentZoomPositionX = xPosition;
+      this.currentZoomPositionY = yPosition;
+      this.applyMovedSwiperPosition({xPosition, yPosition});
+      this.prevZoomScale = this.currentZoomScale;
+      setTimeout(() => {
+        swiperContents.style.transitionDuration = "0s";
+      }, 0.3);
+    },
+    movePositionInMobile(direction: "top" | "left" | "right" | "bottom") {
+      let moveXPosition = 0;
+      let moveYPosition = 0;
+      switch (direction) {
+        case "top":
+          moveYPosition = 100;
+          break;
+        case "right":
+          moveXPosition = -100;
+          break;
+        case "left":
+          moveXPosition = 100;
+          break;
+        case "bottom":
+          moveYPosition = -100;
+          break;
+      }
+      this.currentZoomPositionX = this.currentZoomPositionX + moveXPosition;
+      this.currentZoomPositionY = this.currentZoomPositionY + moveYPosition;
+      const swiperContents = this.$refs["swiper-contents"] as HTMLDivElement;
+      swiperContents.style.transition = "translate, 0.3s";
+      this.applyMovedSwiperPosition({xPosition: this.currentZoomPositionX, yPosition: this.currentZoomPositionY});
     }
   }
 });
@@ -119,16 +208,25 @@ export default defineComponent({
   overflow: hidden;
 
   .origin-swiper-contents {
-    padding: 100px;
-    cursor: grab;
-
-    &.is-grabbing {
-      cursor: grabbing;
-    }
+    padding: 300px;
 
     &.is-swipe {
       pointer-events: none;
     }
+
+    .people-card-wrap {
+      width: fit-content;
+      transition: transform 0.3s;
+      transform-style: preserve-3d;
+      transform-origin: 0 0;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .origin-swiper {
+    height: calc(100vh - 50px);
+    background-color: #000;
   }
 }
 </style>
