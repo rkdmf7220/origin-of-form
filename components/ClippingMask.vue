@@ -142,8 +142,8 @@ export default defineComponent({
       step();
     },
     onSetMaskInMobile() {
-      this.mobileMask.stageWidth = window.outerWidth;
-      this.mobileMask.stageHeight = window.outerHeight;
+      this.mobileMask.stageWidth = window.innerWidth;
+      this.mobileMask.stageHeight = window.innerHeight;
       this.mobileMask.xPosition = 80 + Math.floor(Math.random() * (this.mobileMask.stageWidth - 160));
       // (최솟값 + 보정값 10)  +  Math.floor(화면 크기 -
       this.mobileMask.yPosition = 80 + Math.floor(Math.random() * (this.mobileMask.stageHeight - 160));
